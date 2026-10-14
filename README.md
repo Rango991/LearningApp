@@ -1,14 +1,15 @@
 # BrainBoost
 
-A Duolingo-style revision app for KS3 (and later GCSE) science and maths. It's
-built as an installable web app (PWA): it goes on an Android tablet like a
-normal app, works offline, and has a parent dashboard that works on any phone.
+A Duolingo-style revision app for KS3 and GCSE. It's built as an installable
+web app (PWA): it goes on an Android tablet like a normal app, works offline,
+and has a parent dashboard that works on any phone.
 
-**Right now:** 81 lessons and about 590 questions across four subjects:
-- **Biology:** Year 7 (cells, body systems, reproduction) and Years 8–9 (nutrition and digestion, respiration and photosynthesis, genetics and evolution, ecosystems)
-- **Chemistry, KS3:** particles and mixtures, atoms and the periodic table, reactions, acids and metals, Earth and atmosphere
-- **Physics, KS3:** forces, energy, electricity and magnetism, waves, space
-- **Maths, KS3:** number, fractions/percentages/ratio, algebra, geometry, statistics and probability
+**Right now:** 218 lessons and about 1,450 questions across seven subjects, each with a diagram on every lesson:
+- **Biology, Chemistry, Physics:** Year 7, Years 8–9, and GCSE (AQA Combined Science Trilogy)
+- **Maths:** Year 7, Years 8–9, and GCSE (AQA 8300, Foundation and crossover, with some Higher)
+- **English:** Year 7 (grammar and punctuation, spelling and vocabulary, reading like a writer) and Years 8–9 (poetry and Shakespeare, writing with purpose)
+- **History:** Year 7 (1066 and the Normans, medieval life, the Tudors) and Years 8–9 (revolution and empire, the twentieth century)
+- **Geography:** Year 7 (map skills, weather and climate, rivers) and Years 8–9 (earthquakes and volcanoes, population and development, climate change and rainforests)
 
 The content follows the National Curriculum and is pitched to lead into AQA GCSE. Any unit test can be taken at any time: passing it unlocks the whole unit, so she can skip what she already knows.
 
