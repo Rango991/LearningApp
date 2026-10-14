@@ -3,7 +3,7 @@ import { Emoji } from './components/Emoji';
 import { TopBar } from './components/Hud';
 import { Mascot } from './components/Mascot';
 import { applySession } from './game/engine';
-import type { RewardSummary, SessionKind, SessionResult } from './game/types';
+import type { Progress, RewardSummary, SessionKind, SessionResult } from './game/types';
 import { sfx } from './sound';
 import { useStore } from './store';
 import { Badges } from './screens/Badges';
@@ -30,43 +30,67 @@ export function App() {
   const { ready, role, progress } = useStore();
   if (!ready) return null;
   if (!role) return <Welcome />;
-  if (role === 'parent') return <ParentApp />;
+  if (role === 'parent') return <ParentRoot />;
   if (!progress) return <StudentSetup />;
   return <StudentApp />;
 }
 
-function StudentApp() {
-  const { progress, setProgress, streakNotice, dismissStreakNotice } = useStore();
+/** The parent's phone: the dashboard, plus a read-only look at her side of the app. */
+function ParentRoot() {
+  const [viewing, setViewing] = useState(false);
+  if (viewing) return <StudentApp readOnly onExit={() => { setViewing(false); window.scrollTo(0, 0); }} />;
+  return <ParentApp onViewHer={() => { setViewing(true); window.scrollTo(0, 0); }} />;
+}
+
+/**
+ * Her side of the app. With readOnly (a parent previewing it), everything works
+ * but nothing is saved or uploaded.
+ */
+function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?: () => void }) {
+  const store = useStore();
+  const { progress, dismissStreakNotice } = store;
+  const streakNotice = readOnly ? null : store.streakNotice;
+  const setProgress = readOnly ? () => {} : store.setProgress;
   const [tab, setTab] = useState<Tab>('learn');
   const [plan, setPlan] = useState<SessionPlan | null>(null);
   const [results, setResults] = useState<{ summary: RewardSummary; kind: SessionKind } | null>(null);
   const [parent, setParent] = useState(false);
+  // In preview, show the results of a lesson against her data without saving them.
+  const [previewProgress, setPreviewProgress] = useState<Progress | null>(null);
   if (!progress) return null;
+  const shown = (readOnly && results && previewProgress) || progress;
 
   function finish(result: SessionResult) {
     const { progress: next, summary } = applySession(progress!, result);
     setProgress(next);
+    if (readOnly) setPreviewProgress(next);
     setPlan(null);
     setResults({ summary, kind: result.kind });
   }
 
   if (parent) return <ParentGate onClose={() => setParent(false)} />;
   if (results) {
-    return <Results summary={results.summary} kind={results.kind} progress={progress} onDone={() => { setResults(null); window.scrollTo(0, 0); }} />;
+    return <Results summary={results.summary} kind={results.kind} progress={shown} onDone={() => { setResults(null); setPreviewProgress(null); window.scrollTo(0, 0); }} />;
   }
   if (plan) {
     return <Session plan={plan} accessory={progress.equipped} onQuit={() => setPlan(null)} onFinish={finish} />;
   }
 
   return (
-    <div className="app">
+    <div className={`app ${readOnly ? 'previewing' : ''}`}>
+      {readOnly && (
+        <div className="preview-banner">
+          <span>👀 Viewing {progress.profile.name}’s app · nothing you do here is saved</span>
+          <button className="btn small-btn" onClick={onExit}>Exit</button>
+        </div>
+      )}
       <TopBar progress={progress} onStreak={() => setTab('me')} onBank={() => { setTab('learn'); window.scrollTo(0, 0); }} />
       <main className="content">
         {tab === 'learn' && <Learn progress={progress} onStart={setPlan} />}
         {tab === 'practice' && <Practice progress={progress} onStart={setPlan} />}
         {tab === 'badges' && <Badges progress={progress} />}
         {tab === 'shop' && <Shop progress={progress} setProgress={setProgress} />}
-        {tab === 'me' && <Me progress={progress} setProgress={setProgress} onParent={() => setParent(true)} />}
+        {tab === 'me' && <Me progress={progress} setProgress={setProgress} onParent={() => (readOnly ? onExit?.() : setParent(true))} readOnly={readOnly} />}
       </main>
       <nav className="tabbar">
         {TABS.map((t) => (

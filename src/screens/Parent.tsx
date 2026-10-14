@@ -6,7 +6,7 @@ import { cloudConfigured, signOut } from '../sync/cloud';
 import { ParentDashboard } from './ParentDashboard';
 
 /** The parent's own phone: signs in to the family account and mirrors the tablet's progress. */
-export function ParentApp() {
+export function ParentApp({ onViewHer }: { onViewHer: () => void }) {
   const { progress, cloudEmail, sync, lastSynced, refresh, setRole, ready } = useStore();
 
   if (!cloudConfigured) {
@@ -38,6 +38,11 @@ export function ParentApp() {
         <span className="muted small">{sync === 'syncing' ? 'Updating…' : sync === 'error' ? '⚠️ Offline' : lastSynced ? `Updated ${lastSynced.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}` : ''}</span>
         <button className="btn ghost small-btn" onClick={() => void refresh()}>↻ Refresh</button>
       </header>
+      {progress && (
+        <div className="view-her">
+          <button className="btn primary wide" onClick={onViewHer}>👀 See {progress.profile.name}’s app</button>
+        </div>
+      )}
       {progress ? <ParentDashboard progress={progress} /> : (
         <div className="welcome">
           <p className="muted">No progress has been uploaded yet. Sign in to <b>{cloudEmail}</b> on her tablet (Me → Cloud sync) and it’ll appear here.</p>

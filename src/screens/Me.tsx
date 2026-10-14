@@ -15,7 +15,7 @@ const GOALS = [
   { xp: 60, label: 'Intense', note: '~3 lessons' },
 ];
 
-export function Me({ progress, setProgress, onParent }: { progress: Progress; setProgress: (p: Progress) => void; onParent: () => void }) {
+export function Me({ progress, setProgress, onParent, readOnly = false }: { progress: Progress; setProgress: (p: Progress) => void; onParent: () => void; readOnly?: boolean }) {
   const { cloudEmail, sync, lastSynced, refresh } = useStore();
   const [signingIn, setSigningIn] = useState(false);
   const lvl = levelFor(progress.xp);
@@ -65,7 +65,7 @@ export function Me({ progress, setProgress, onParent }: { progress: Progress; se
         </label>
       </section>
 
-      <section className="card">
+      {!readOnly && <section className="card">
         <h3>Cloud sync</h3>
         {!cloudConfigured && <p className="muted small">Not set up yet. Progress is saved on this device. (See docs/SETUP.md.)</p>}
         {cloudConfigured && cloudEmail && (
@@ -80,9 +80,9 @@ export function Me({ progress, setProgress, onParent }: { progress: Progress; se
         {cloudConfigured && !cloudEmail && (signingIn
           ? <CloudSignIn onDone={async () => { setSigningIn(false); await refresh(); }} />
           : <button className="btn primary" onClick={() => setSigningIn(true)}>Connect family account</button>)}
-      </section>
+      </section>}
 
-      <button className="btn ghost wide parent-link" onClick={onParent}>👪 Parent area</button>
+      <button className="btn ghost wide parent-link" onClick={onParent}>{readOnly ? '← Back to parent dashboard' : '👪 Parent area'}</button>
     </div>
   );
 }

@@ -463,3 +463,8 @@ h3 .emoji, h1 .emoji { margin-right: 4px; vertical-align: -6px; }
   .learn-side .daily-goal { margin-bottom: 8px; }
   .learn-side .quest-list { gap: 8px; }
 }
+
+/* ---------- parent preview of her app ---------- */
+.preview-banner { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: calc(8px + env(safe-area-inset-top)) 16px 8px; background: var(--ink); color: #fff; font-weight: 800; font-size: 0.85rem; }
+.preview-banner .btn { --b: #fff; --s: #bdb6d0; color: var(--ink); }
+.view-her { max-width: 960px; margin: 0 auto; padding: 16px 16px 0; }
