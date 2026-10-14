@@ -2,6 +2,7 @@ import { biologyDiagrams } from './biology';
 import { chemistryDiagrams } from './chemistry';
 import { gcseBiologyDiagrams } from './gcse-biology';
 import { gcseChemistryDiagrams } from './gcse-chemistry';
+import { gcsePhysicsDiagrams } from './gcse-physics';
 import { mathsDiagrams } from './maths';
 import { physicsDiagrams } from './physics';
 
@@ -13,6 +14,7 @@ export const diagrams: Record<string, () => JSX.Element> = {
   ...mathsDiagrams,
   ...gcseBiologyDiagrams,
   ...gcseChemistryDiagrams,
+  ...gcsePhysicsDiagrams,
 };
 
 export function Diagram({ id }: { id: string }) {
