@@ -43,6 +43,8 @@ your phone reads it.
    "Confirm email". This is optional, but it saves waiting for a confirmation email.
 
 ### b. Connect the app to it
+(Already done for this project: the values are in `.env.production`. Use the Vercel steps below only if you'd rather keep them out of the repo.)
+
 1. In Supabase, open **Project Settings → API** and copy:
    - the **Project URL**
    - the **anon / publishable key** (this key is designed to be public, and the table's security rules protect the data)
