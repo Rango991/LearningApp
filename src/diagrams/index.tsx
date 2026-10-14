@@ -6,6 +6,7 @@ import { gcseMathsDiagrams } from './gcse-maths';
 import { gcsePhysicsDiagrams } from './gcse-physics';
 import { mathsDiagrams } from './maths';
 import { physicsDiagrams } from './physics';
+import { year7Diagrams } from './year7';
 
 // All lesson diagrams by id. Content refers to them with `diagram: 'id'` on a learn card.
 export const diagrams: Record<string, () => JSX.Element> = {
@@ -17,6 +18,7 @@ export const diagrams: Record<string, () => JSX.Element> = {
   ...gcseChemistryDiagrams,
   ...gcsePhysicsDiagrams,
   ...gcseMathsDiagrams,
+  ...year7Diagrams,
 };
 
 export function Diagram({ id }: { id: string }) {

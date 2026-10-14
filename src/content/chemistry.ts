@@ -9,6 +9,71 @@ const Y89 = 'Years 8–9';
 
 export const chemistry: Unit[] = [
   {
+    id: 'chem-y7-lab',
+    title: 'Working like a scientist',
+    stage: Y7,
+    description: 'Staying safe in the lab, using a Bunsen burner, and planning a fair test.',
+    colour: '#e0634f',
+    lessons: [
+      {
+        id: 'cy-safety',
+        title: 'Lab safety & hazard symbols',
+        emoji: '🥽',
+        learn: [
+          card('🥽', 'Lab rules', 'Wear safety goggles whenever you heat or use chemicals. Tie long hair back and tuck in loose clothing. Stand up during practicals so you can move away quickly. Never eat or drink in the lab. Tell the teacher straight away about any spill or breakage.', ['safety goggles']),
+          card('⚠️', 'Hazard symbols', 'Hazard symbols are red diamonds that warn you about a chemical. Flammable: catches fire easily. Corrosive: destroys skin and metal. Toxic: can kill, even in small amounts. Harmful or irritant: may make you ill or sore. Oxidising: helps other things burn. Dangerous to the environment: harms living things.', ['hazard symbol', 'flammable', 'corrosive', 'toxic'], 'hazard-symbols'),
+        ],
+        questions: [
+          match('q1', 'Match the hazard to its meaning', [
+            ['Flammable', 'Catches fire easily'],
+            ['Corrosive', 'Destroys skin and metal'],
+            ['Toxic', 'Can kill in small amounts'],
+          ]),
+          mcq('q2', 'What should you wear when heating chemicals?', ['Safety goggles', 'Sunglasses', 'A hat', 'Gloves only'], 0),
+          tf('q3', 'It’s fine to eat your snack in the lab if you’re careful.', false, 'Never eat or drink in a lab: chemicals could get on your food.'),
+          mcq('q4', 'What colour are hazard symbol borders?', ['Red', 'Green', 'Blue', 'Yellow'], 0),
+          mcq('q5', 'A substance that helps other things burn is…', ['Oxidising', 'Toxic', 'Corrosive', 'Inert'], 0),
+          tf('q6', 'You should stand up during practicals.', true, 'So you can move out of the way quickly if something spills.'),
+          mcq('q7', 'You break a beaker. What should you do first?', ['Tell the teacher', 'Pick up the glass with your hands', 'Hide it', 'Carry on'], 0),
+        ],
+      },
+      {
+        id: 'cy-bunsen',
+        title: 'The Bunsen burner',
+        emoji: '🔥',
+        learn: [
+          card('🔥', 'Two flames', 'A Bunsen burner burns gas. Air hole closed: a yellow, wobbly safety flame. It’s easy to see, so leave it on when you’re not heating. Air hole open: a blue roaring flame. It’s much hotter and is used for heating. The hottest part is just above the tip of the inner blue cone.', ['safety flame', 'roaring flame', 'air hole'], 'bunsen'),
+          card('📋', 'Lighting it safely', 'Put the burner on a heatproof mat. Close the air hole. Light your splint, then turn on the gas and hold the flame to the top of the tube. Open the air hole only when you need to heat something.', ['heatproof mat', 'splint']),
+        ],
+        questions: [
+          mcq('q1', 'Which flame is the hottest?', ['Blue roaring flame', 'Yellow safety flame', 'They’re the same'], 0),
+          mcq('q2', 'To get the safety flame, the air hole should be…', ['Closed', 'Open', 'Half open'], 0),
+          tf('q3', 'The yellow safety flame is easy to see.', true),
+          order('q4', 'Put the steps for lighting a Bunsen burner in order', ['Put it on a heatproof mat', 'Close the air hole', 'Light a splint', 'Turn on the gas']),
+          mcq('q5', 'Why is the yellow flame called the safety flame?', ['It’s easy to see', 'It’s the hottest', 'It uses no gas', 'It can’t burn you'], 0),
+          mcq('q6', 'What goes under a Bunsen burner?', ['A heatproof mat', 'Paper', 'A wooden block', 'Nothing'], 0),
+        ],
+      },
+      {
+        id: 'cy-fair-test',
+        title: 'Fair tests & variables',
+        emoji: '⚖️',
+        learn: [
+          card('🧪', 'Three kinds of variable', 'Independent variable: the one thing you change. Dependent variable: the thing you measure. Control variables: everything you keep the same, so the test is fair. Testing whether temperature changes how fast sugar dissolves: temperature is independent, time to dissolve is dependent, and the amount of sugar and water are controls.', ['independent variable', 'dependent variable', 'control variable', 'fair test'], 'variables'),
+          card('🔁', 'Good results', 'Repeat each reading and take a mean, so one odd result doesn’t spoil it. A result that doesn’t fit the pattern is an anomaly. A prediction (hypothesis) says what you think will happen and why.', ['repeat', 'mean', 'anomaly', 'hypothesis']),
+        ],
+        questions: [
+          mcq('q1', 'The variable you change is the…', ['Independent variable', 'Dependent variable', 'Control variable'], 0),
+          mcq('q2', 'The variable you measure is the…', ['Dependent variable', 'Independent variable', 'Control variable'], 0),
+          mcq('q3', 'Testing how temperature affects dissolving. Which is a control variable?', ['Mass of sugar', 'Temperature', 'Time to dissolve'], 0),
+          gap('q4', 'Repeat readings 10 s, 12 s and 14 s. The mean is ___ s', ['12']),
+          tf('q5', 'In a fair test, you change lots of things at once.', false, 'Change just one thing, the independent variable.'),
+          mcq('q6', 'A result that doesn’t fit the pattern is…', ['An anomaly', 'A control', 'A hypothesis', 'A variable'], 0),
+        ],
+      },
+    ],
+  },
+  {
     id: 'chem-particles',
     title: 'Particles & mixtures',
     stage: Y7,
@@ -103,6 +168,44 @@ export const chemistry: Unit[] = [
           mcq('q5', 'In distillation, what happens in the condenser?', ['Gas cools to a liquid', 'Liquid boils', 'Solid melts', 'Solid dissolves'], 0),
           tf('q6', 'Filtration can separate salt from salt water.', false, 'The salt is dissolved, so it goes straight through the filter paper.'),
           gap('q7', 'Separating dyes in ink uses ___.', ['chromatography']),
+        ],
+      },
+      {
+        id: 'cp-solubility',
+        title: 'Solutions & solubility',
+        emoji: '🧂',
+        learn: [
+          card('🧂', 'Soluble or insoluble?', 'A soluble substance dissolves (salt, sugar); an insoluble one doesn’t (sand, chalk). The solute dissolves in the solvent to make a solution. Mass is conserved: 100 g of water + 10 g of salt makes 110 g of solution.', ['soluble', 'insoluble', 'solution']),
+          card('🌡️', 'Solubility', 'Solubility is how much solute dissolves in a solvent. When no more can dissolve, the solution is saturated. For most solids, more dissolves in hotter water.', ['solubility', 'saturated'], 'solubility-curve'),
+        ],
+        questions: [
+          mcq('q1', 'Which is insoluble in water?', ['Sand', 'Salt', 'Sugar', 'Coffee granules'], 0),
+          gap('q2', '100 g of water + 10 g of salt makes ___ g of solution', ['110']),
+          mcq('q3', 'A solution that can’t dissolve any more solute is…', ['Saturated', 'Insoluble', 'Diluted', 'Evaporated'], 0),
+          tf('q4', 'For most solids, more dissolves in hot water than in cold water.', true),
+          match('q5', 'Match the word to its meaning', [
+            ['Solute', 'The substance that dissolves'],
+            ['Solvent', 'The liquid it dissolves in'],
+            ['Solution', 'The mixture you end up with'],
+          ]),
+          mcq('q6', 'When salt dissolves, what happens to its mass?', ['It stays the same', 'It disappears', 'It doubles', 'It gets less'], 0),
+        ],
+      },
+      {
+        id: 'cp-mixtures',
+        title: 'Elements, compounds & mixtures',
+        emoji: '🧩',
+        learn: [
+          card('🧩', 'Three kinds of stuff', 'Element: only one type of atom (oxygen, iron). Compound: different atoms chemically joined (water, H₂O). Mixture: different substances mixed but not joined (air, sea water), so it’s easy to separate.', ['element', 'compound', 'mixture'], 'element-compound-mixture'),
+          card('💧', 'Pure or not?', 'In science, a pure substance contains only one element or compound. Pure water boils at exactly 100 °C. Sea water is a mixture, so it boils above 100 °C.', ['pure']),
+        ],
+        questions: [
+          mcq('q1', 'Which is an element?', ['Iron', 'Water', 'Air', 'Salt water'], 0),
+          mcq('q2', 'Which is a compound?', ['Water', 'Oxygen', 'Air', 'Gold'], 0),
+          mcq('q3', 'Which is a mixture?', ['Air', 'Carbon', 'Carbon dioxide', 'Copper'], 0),
+          tf('q4', 'The parts of a mixture are chemically joined.', false, 'They’re only mixed, so they can be separated.'),
+          gap('q5', 'Pure water boils at exactly ___ °C', ['100']),
+          tf('q6', 'A compound contains different atoms chemically joined.', true),
         ],
       },
     ],
