@@ -1,12 +1,13 @@
 import { biologyKs3 } from './biology-ks3';
 import { biologyY7 } from './biology-y7';
 import { chemistry } from './chemistry';
+import { gcseBiology } from './gcse-biology';
 import { maths } from './maths';
 import { physics } from './physics';
 import type { Lesson, Question, Subject, Unit } from './types';
 
 export const subjects: Subject[] = [
-  { id: 'biology', title: 'Biology', emoji: '🧬', colour: '#22b07d', units: [...biologyY7, ...biologyKs3] },
+  { id: 'biology', title: 'Biology', emoji: '🧬', colour: '#22b07d', units: [...biologyY7, ...biologyKs3, ...gcseBiology] },
   { id: 'chemistry', title: 'Chemistry', emoji: '⚗️', colour: '#8e5cf7', units: chemistry },
   { id: 'physics', title: 'Physics', emoji: '🪐', colour: '#1c9df6', units: physics },
   { id: 'maths', title: 'Maths', emoji: '📐', colour: '#ff8a3d', units: maths },

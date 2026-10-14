@@ -1,4 +1,4 @@
-import { Arrow, C, E, Svg, T, Tiles } from './kit';
+import { Arrow, C, E, FormulaTriangle, Svg, T, Tiles } from './kit';
 
 // Physics lesson diagrams.
 
@@ -140,21 +140,6 @@ function Skydiver() {
       })}
       <T x={20} y={14} size={9.5} fill={C.blue} anchor="start">↑ drag (air resistance)</T>
       <T x={300} y={14} size={9.5} fill={C.red} anchor="end">↓ weight</T>
-    </Svg>
-  );
-}
-
-function FormulaTriangle({ top, left, right, label, notes }: { top: string; left: string; right: string; label: string; notes: string[] }) {
-  return (
-    <Svg h={180} label={label}>
-      <path d="M90 14 L162 150 L18 150 Z" fill={C.purpleSoft} stroke={C.purple} strokeWidth={3} strokeLinejoin="round" />
-      <line x1={50} y1={92} x2={130} y2={92} stroke={C.purple} strokeWidth={2.5} />
-      <line x1={90} y1={92} x2={90} y2={150} stroke={C.purple} strokeWidth={2.5} />
-      <T x={90} y={64} size={20}>{top}</T>
-      <T x={62} y={124} size={20}>{left}</T>
-      <T x={118} y={124} size={20}>{right}</T>
-      {notes.map((n, i) => <T key={n} x={186} y={46 + i * 34} size={12.5} anchor="start">{n}</T>)}
-      <T x={90} y={170} size={9.5} weight={700} fill={C.muted}>cover the one you want</T>
     </Svg>
   );
 }
