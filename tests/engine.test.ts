@@ -53,7 +53,7 @@ describe('content', () => {
   });
 
   it('covers every subject', () => {
-    expect(subjects.map((s) => s.id)).toEqual(['biology', 'chemistry', 'physics', 'maths', 'geography']);
+    expect(subjects.map((s) => s.id)).toEqual(['biology', 'chemistry', 'physics', 'maths', 'history', 'geography']);
   });
 });
 
