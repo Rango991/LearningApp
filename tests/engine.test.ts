@@ -52,8 +52,8 @@ describe('content', () => {
     }
   });
 
-  it('covers all four subjects', () => {
-    expect(subjects.map((s) => s.id)).toEqual(['biology', 'chemistry', 'physics', 'maths']);
+  it('covers every subject', () => {
+    expect(subjects.map((s) => s.id)).toEqual(['biology', 'chemistry', 'physics', 'maths', 'geography']);
   });
 });
 
