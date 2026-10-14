@@ -32,7 +32,7 @@ export function levenshtein(a: string, b: string): number {
  * Returns null if it isn't a number.
  */
 export function parseNumber(s: string): number | null {
-  const t = s.trim().toLowerCase().replace(/[£$€,\s]/g, '').replace(/−/g, '-').replace(/(cm|mm|km|kg|m|g|s|n|j|w|v|a|°|%|p)+$/, '');
+  const t = s.trim().toLowerCase().replace(/[£$€,\s]/g, '').replace(/−/g, '-').replace(/^\+/, '').replace(/(cm|mm|km|kg|m|g|s|n|j|w|v|a|°|%|p)+$/, '');
   if (/^-?\d*\.?\d+$/.test(t)) return parseFloat(t);
   const frac = /^(-?)(?:(\d+)\s+)?(\d+)\s*\/\s*(\d+)$/.exec(s.trim().replace(/−/g, '-'));
   if (frac) {

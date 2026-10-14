@@ -181,3 +181,11 @@ describe('fractions', () => {
     expect(markGap('365 1/4', ['365.25'])).toBe('correct');
   });
 });
+
+describe('signed numbers', () => {
+  it('accepts a leading plus and a typographic minus', () => {
+    expect(markGap('+200', ['200'])).toBe('correct');
+    expect(markGap('−400', ['-400'])).toBe('correct');
+    expect(markGap('400', ['-400'])).toBe('wrong');
+  });
+});
