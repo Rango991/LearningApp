@@ -59,7 +59,7 @@ function StudentApp() {
 
   return (
     <div className="app">
-      <TopBar progress={progress} onStreak={() => setTab('me')} />
+      <TopBar progress={progress} onStreak={() => setTab('me')} onBank={() => { setTab('learn'); window.scrollTo(0, 0); }} />
       <main className="content">
         {tab === 'learn' && <Learn progress={progress} onStart={setPlan} />}
         {tab === 'practice' && <Practice progress={progress} onStart={setPlan} />}

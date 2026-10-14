@@ -3,6 +3,7 @@ import { comingSoon, qKey, subjects } from '../content';
 import type { Lesson, Unit } from '../content/types';
 import { DailyCard } from '../components/Hud';
 import { Mascot } from '../components/Mascot';
+import { BankCard } from '../components/ScreenTime';
 import { checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, reviewAvailable, streakAtRisk } from '../game/engine';
 import { dayKey } from '../game/dates';
 import type { Progress } from '../game/types';
@@ -119,6 +120,7 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
       </div>
 
       <aside className="learn-side">
+        <BankCard progress={progress} />
         <DailyCard progress={progress} />
       </aside>
 

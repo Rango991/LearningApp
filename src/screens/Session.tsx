@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { correctAnswerText, findQuestion } from '../content';
 import type { LearnCard } from '../content/types';
 import { Mascot } from '../components/Mascot';
 import { QuestionView, questionInstruction, type CheckFn, type CheckResult } from '../components/Questions';
+import { ActiveClock } from '../game/activeClock';
 import type { AnswerRecord, SessionKind, SessionResult } from '../game/types';
 import { sfx } from '../sound';
 
@@ -45,7 +46,22 @@ export function Session({ plan, accessory, onQuit, onFinish }: Props) {
   const maxCombo = useRef(0);
   const answers = useRef(new Map<string, AnswerRecord>());
   const repeats = useRef(new Map<string, number>());
-  const started = useRef(Date.now());
+  const clock = useRef(new ActiveClock(Date.now()));
+
+  // Only active time counts towards study (and screen) time.
+  useEffect(() => {
+    const c = clock.current;
+    const onInput = () => c.tick(Date.now());
+    const onVisibility = () => (document.visibilityState === 'hidden' ? c.pause(Date.now()) : c.resume(Date.now()));
+    window.addEventListener('pointerdown', onInput);
+    window.addEventListener('keydown', onInput);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      window.removeEventListener('pointerdown', onInput);
+      window.removeEventListener('keydown', onInput);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
 
   const key = queue[index];
   const ref = useMemo(() => (key ? findQuestion(key) : undefined), [key]);
@@ -87,7 +103,7 @@ export function Session({ plan, accessory, onQuit, onFinish }: Props) {
         unitId: plan.unitId,
         answers: [...answers.current.values()],
         maxCombo: maxCombo.current,
-        seconds: Math.min(1800, Math.round((Date.now() - started.current) / 1000)),
+        seconds: (clock.current.tick(Date.now()), clock.current.seconds()),
       });
       return;
     }

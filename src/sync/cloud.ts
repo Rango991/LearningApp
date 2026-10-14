@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { ScreenLogEntry } from '../game/screenTime';
 import type { Progress } from '../game/types';
 
 // Optional cloud sync through Supabase. The tablet and the parent's phone sign
@@ -52,5 +53,29 @@ export async function pushProgress(p: Progress): Promise<void> {
   const userId = session.session?.user.id;
   if (!userId) return;
   const { error } = await db().from('progress').upsert({ user_id: userId, data: p, updated_at: p.updatedAt });
+  if (error) throw error;
+}
+
+// ---- Screen-time log: time used (negative) or added (positive) by a parent.
+// Kept in its own table so the parent's phone can write to it without
+// touching the progress the tablet uploads.
+
+export async function pullScreenLog(): Promise<ScreenLogEntry[]> {
+  const { data, error } = await db()
+    .from('screen_time_log')
+    .select('id, minutes, note, created_at')
+    .order('created_at', { ascending: false })
+    .limit(500);
+  if (error) throw error;
+  return data as ScreenLogEntry[];
+}
+
+export async function addScreenLog(minutes: number, note: string | null): Promise<void> {
+  const { error } = await db().from('screen_time_log').insert({ minutes, note });
+  if (error) throw error;
+}
+
+export async function deleteScreenLog(id: ScreenLogEntry['id']): Promise<void> {
+  const { error } = await db().from('screen_time_log').delete().eq('id', id);
   if (error) throw error;
 }

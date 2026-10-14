@@ -82,6 +82,8 @@ export interface Progress {
   daily: Record<string, DayStats>;
   lessons: Record<string, LessonRecord>;
   checkpoints: Record<string, number>; // unitId -> best accuracy
+  /** Screen-time bonus minutes, e.g. for passing a unit test. */
+  screenBonuses: { at: string; unitId: string; minutes: number }[];
   questions: Record<string, QuestionStat>;
   mistakes: MistakeEntry[];
   sessions: SessionEntry[];
@@ -122,4 +124,7 @@ export interface RewardSummary {
   questsCompleted: Quest[];
   allQuestsBonus: boolean;
   passedCheckpoint: boolean;
+  /** Screen-time minutes this session added to the bank (including any bonus). */
+  screenMinutes: number;
+  screenBonus: number;
 }

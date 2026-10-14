@@ -17,6 +17,12 @@ normal app, works offline, and has a parent dashboard that works on any phone.
 - Practice tab: spaced repetition (Leitner boxes). Mistakes come back until fixed, and older questions resurface after 1, 3, 7, 14 and 30 days
 - Sounds, haptics, confetti, combos ("5 in a row! 🔥")
 
+**Screen-time bank**
+- Study time earns tablet time. Weekdays: the first 20 min of study earn 1:1, then 1.5×. Weekends: the same, doubled. Passing a unit test the first time earns +15 min.
+- Only *active* time counts: gaps of more than 2 minutes between taps are capped, and time while the app is in the background doesn't count.
+- Her balance shows in the top bar, on her home screen, and after each lesson. A parent records time used from the dashboard.
+- The rules live in `src/game/screenTime.ts`.
+
 **For the parent**
 - Streak, active days, time studied and accuracy over the last 7 days
 - Minutes studied per day for the last 14 days

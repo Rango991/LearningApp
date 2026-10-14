@@ -98,6 +98,7 @@ input { font: inherit; }
 .hud-item.streak.cold { color: var(--muted); filter: grayscale(1); }
 .hud-item.streak.at-risk .hud-icon { animation: flicker 1s infinite; }
 .hud-item.gems { color: var(--blue); }
+.hud-item.bank { color: var(--green-dark); }
 .hud-item.level { gap: 8px; }
 .level-chip { color: var(--purple); }
 .mini-track { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; min-width: 70px; }
@@ -120,7 +121,7 @@ input { font: inherit; }
 .page > h2 { margin-top: 24px; }
 
 /* ---------- learn path ---------- */
-.learn-layout { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.learn-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
 @media (min-width: 900px) {
   .learn-layout { grid-template-columns: minmax(0, 1fr) 320px; align-items: start; }
   .learn-side { position: sticky; top: 84px; }
@@ -379,3 +380,44 @@ input { font: inherit; }
 .parent-foot { text-align: center; padding-bottom: 24px; }
 .danger-zone { max-width: 960px; margin: 0 auto 24px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .danger-zone h2 { width: 100%; }
+
+/* ---------- screen time ---------- */
+@media (max-width: 899px) { .learn-side { order: -1; } }
+.bank-card { border-color: color-mix(in srgb, var(--green) 45%, var(--line)); background: linear-gradient(180deg, var(--green-soft), #fff 70%); }
+.bank-card p { margin-bottom: 4px; }
+.bank-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.bank-icon { font-size: 2.4rem; }
+.bank-label { font-weight: 900; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--green-dark); margin: 0 !important; }
+.bank-value { font-size: 2rem; font-weight: 900; margin: 0 !important; line-height: 1.1; }
+.weekend-badge { margin-left: auto; background: var(--gold); color: #4a3a00; font-weight: 900; font-size: 0.8rem; border-radius: 99px; padding: 4px 10px; }
+.bank-hint { color: var(--purple-dark); font-weight: 800; }
+.rules { margin: 6px 0 0; padding-left: 18px; }
+.rules li { margin-bottom: 4px; }
+.screen-earned { font-size: 3.4rem; color: var(--green-dark); margin: 0; }
+.bonus-line { font-weight: 900; color: var(--gold-dark); }
+.bank-total { font-size: 1.2rem; }
+.screen-balance { display: flex; flex-direction: column; margin-bottom: 12px; }
+.screen-balance-value { font-size: 2.2rem; font-weight: 900; color: var(--green-dark); }
+.screen-balance-value.neg { color: var(--red-dark); }
+.earned-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 14px; }
+.earned-day { border: 2px solid var(--line); border-radius: 12px; padding: 6px 2px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.earned-day.today { border-color: var(--green); }
+.earned-day b { font-size: 1.05rem; }
+.spend { background: var(--bg); border-radius: 14px; padding: 12px; margin-bottom: 12px; }
+.spend p { margin: 0 0 8px; }
+.spend-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.spend-input { border: 2px solid var(--line); border-radius: 12px; padding: 8px 10px; width: 100px; outline: none; background: #fff; }
+.spend-input:focus { border-color: var(--purple); }
+.screen-log { list-style: none; padding: 0; margin: 0 0 10px; }
+.screen-log li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.screen-log li > span:first-child { font-weight: 900; min-width: 64px; }
+.screen-log .btn.link { padding: 4px 6px; }
+
+@media (max-width: 480px) {
+  .topbar { gap: 6px; padding-left: 8px; padding-right: 8px; }
+  .hud-item { padding: 5px 9px; font-size: 0.95rem; gap: 4px; }
+  .hud-item .mini-track { min-width: 36px; }
+  .earned-week { gap: 3px; }
+  .earned-day { padding: 5px 0; }
+  .earned-day b { font-size: 0.9rem; }
+}

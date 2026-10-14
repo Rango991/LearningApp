@@ -2,6 +2,7 @@ import { correctAnswerText, findLesson, findQuestion, subjects } from '../conten
 import { lessonAccuracy, weakSpots } from '../game/engine';
 import { dayKey, lastNDays, parseDay } from '../game/dates';
 import { levelFor } from '../game/levels';
+import { ScreenTimePanel } from '../components/ScreenTime';
 import type { Progress } from '../game/types';
 
 function ago(iso: string): string {
@@ -62,6 +63,8 @@ export function ParentDashboard({ progress }: { progress: Progress }) {
         <div className="kpi"><span className="kpi-label">Time (7d)</span><span className="kpi-value">{weekStats.seconds > 0 && weekStats.seconds < 60 ? '<1' : Math.round(weekStats.seconds / 60)} min</span><span className="kpi-sub">Goal: {progress.dailyGoal} XP/day</span></div>
         <div className="kpi"><span className="kpi-label">Accuracy (7d)</span><span className="kpi-value">{weekStats.answered ? pct(weekStats.correct / weekStats.answered) : '–'}</span><span className="kpi-sub">{weekStats.answered} questions</span></div>
       </div>
+
+      <ScreenTimePanel progress={progress} />
 
       <section className="panel">
         <h2>Minutes studied: last 14 days</h2>

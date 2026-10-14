@@ -3,6 +3,7 @@ import type { Question, Unit } from '../content/types';
 import { achievementById, newlyEarned } from './achievements';
 import { addDays, daysBetween, dayKey } from './dates';
 import { levelFor } from './levels';
+import { SCREEN_RULES, bonusesOnDay, earnedOnDay } from './screenTime';
 import { MAX_FREEZES, shopItems } from './shop';
 import type {
   DayStats, Progress, Quest, QuestKind, RewardSummary, SessionResult,
@@ -43,6 +44,7 @@ export function createProgress(name: string, now = new Date()): Progress {
     daily: {},
     lessons: {},
     checkpoints: {},
+    screenBonuses: [],
     questions: {},
     mistakes: [],
     sessions: [],
@@ -55,6 +57,12 @@ export function createProgress(name: string, now = new Date()): Progress {
 }
 
 const clone = (p: Progress): Progress => structuredClone(p);
+
+/** Fills in fields added after a progress file was first saved. */
+export function migrate(p: Progress): Progress {
+  if (p.screenBonuses) return p;
+  return { ...p, screenBonuses: [] };
+}
 
 // ---------------------------------------------------------------- streaks
 
@@ -214,10 +222,11 @@ function emptyDay(): DayStats {
  * reward she earned, so the results screen can celebrate each one.
  */
 export function applySession(p: Progress, result: SessionResult, now = new Date()): { progress: Progress; summary: RewardSummary } {
-  const next = clone(p);
+  const next = clone(migrate(p));
   const today = dayKey(now);
   const iso = now.toISOString();
   const levelBefore = levelFor(next.xp).level;
+  const screenBefore = earnedOnDay(next, today) + bonusesOnDay(next, today);
 
   const total = result.answers.length;
   const correct = result.answers.filter((a) => a.correct).length;
@@ -279,6 +288,7 @@ export function applySession(p: Progress, result: SessionResult, now = new Date(
       if (before < 0.8) {
         next.totals.checkpointsPassed++;
         gems += GEMS.checkpointPass;
+        next.screenBonuses.push({ at: iso, unitId: result.unitId, minutes: SCREEN_RULES.unitTestBonus });
       }
     }
   }
@@ -349,6 +359,8 @@ export function applySession(p: Progress, result: SessionResult, now = new Date(
   next.sessions = next.sessions.slice(-MAX_LOG);
 
   next.gems += gems;
+  const screenBonus = bonusesOnDay(next, today) - bonusesOnDay(p, today);
+  const screenMinutes = earnedOnDay(next, today) + bonusesOnDay(next, today) - screenBefore;
 
   // Achievements (after everything else so they see the new totals)
   const earned = newlyEarned(next);
@@ -374,6 +386,8 @@ export function applySession(p: Progress, result: SessionResult, now = new Date(
       questsCompleted,
       allQuestsBonus,
       passedCheckpoint,
+      screenMinutes,
+      screenBonus,
     },
   };
 }

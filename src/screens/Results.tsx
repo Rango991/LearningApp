@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Confetti } from '../components/Confetti';
 import { Mascot } from '../components/Mascot';
 import { StreakWeek } from '../components/StreakWeek';
+import { formatMinutes, useBalance } from '../components/ScreenTime';
+import { nextBoostHint } from '../game/screenTime';
 import { achievementById } from '../game/achievements';
 import { questLabel } from '../game/engine';
 import type { Progress, RewardSummary, SessionKind } from '../game/types';
@@ -14,12 +16,13 @@ interface Props {
   onDone: () => void;
 }
 
-type Step = 'main' | 'streak' | 'goal' | 'quests' | 'level' | `badge:${string}`;
+type Step = 'main' | 'screen' | 'streak' | 'goal' | 'quests' | 'level' | `badge:${string}`;
 
 /** A sequence of celebration cards, one reward at a time, like a slot machine paying out. */
 export function Results({ summary, progress, kind, onDone }: Props) {
   const steps = useMemo<Step[]>(() => {
     const s: Step[] = ['main'];
+    if (summary.screenMinutes > 0) s.push('screen');
     if (summary.streakExtended) s.push('streak');
     if (summary.goalJustMet) s.push('goal');
     if (summary.questsCompleted.length) s.push('quests');
@@ -38,6 +41,7 @@ export function Results({ summary, progress, kind, onDone }: Props) {
 
   const next = () => (i + 1 < steps.length ? setI(i + 1) : onDone());
   const failedTest = kind === 'checkpoint' && !summary.passedCheckpoint;
+  const bank = useBalance(progress);
 
   return (
     <div className="results">
@@ -60,6 +64,17 @@ export function Results({ summary, progress, kind, onDone }: Props) {
             <ul className="breakdown">
               {summary.xpBreakdown.map((b) => <li key={b.label}><span>{b.label}</span><b>+{b.xp} XP</b></li>)}
             </ul>
+          </>
+        )}
+
+        {step === 'screen' && (
+          <>
+            <div className="big-emoji">🎮</div>
+            <h1 className="screen-earned">+{formatMinutes(summary.screenMinutes)}</h1>
+            <h2>screen time earned!</h2>
+            {summary.screenBonus > 0 && <p className="bonus-line">🏆 Includes a {summary.screenBonus} min unit test bonus!</p>}
+            <p className="bank-total">Bank: <b>{formatMinutes(bank)}</b></p>
+            <p className="muted">⚡ {nextBoostHint(progress)}</p>
           </>
         )}
 
