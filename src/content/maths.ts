@@ -20,8 +20,8 @@ export const maths: Unit[] = [
         title: 'Negative numbers',
         emoji: '🌡️',
         learn: [
-          card('↔️', 'Adding and subtracting', 'Use a number line. Adding a negative is the same as subtracting: 5 + (−3) = 2. Subtracting a negative is the same as adding: 5 − (−3) = 8.', ['number line']),
-          card('✖️', 'Multiplying and dividing', 'Same signs give a positive: (−4) × (−3) = 12. Different signs give a negative: (−4) × 3 = −12. The same rule works for dividing: (−20) ÷ (−5) = 4.', ['signs']),
+          card('↔️', 'Adding and subtracting', 'Use a number line. Adding a negative is the same as subtracting: 5 + (−3) = 2. Subtracting a negative is the same as adding: 5 − (−3) = 8.', ['number line'], 'number-line'),
+          card('✖️', 'Multiplying and dividing', 'Same signs give a positive: (−4) × (−3) = 12. Different signs give a negative: (−4) × 3 = −12. The same rule works for dividing: (−20) ÷ (−5) = 4.', ['signs'], 'sign-rules'),
         ],
         questions: [
           gap('q1', '−3 + 5 = ___', ['2']),
@@ -40,7 +40,7 @@ export const maths: Unit[] = [
         title: 'Order of operations',
         emoji: '🧮',
         learn: [
-          card('📋', 'BIDMAS', 'Brackets, Indices (powers), Division and Multiplication (left to right), Addition and Subtraction (left to right). So 2 + 3 × 4 = 2 + 12 = 14, not 20.', ['BIDMAS', 'indices']),
+          card('📋', 'BIDMAS', 'Brackets, Indices (powers), Division and Multiplication (left to right), Addition and Subtraction (left to right). So 2 + 3 × 4 = 2 + 12 = 14, not 20.', ['BIDMAS', 'indices'], 'bidmas'),
         ],
         questions: [
           gap('q1', '2 + 3 × 4 = ___', ['14']),
@@ -59,8 +59,8 @@ export const maths: Unit[] = [
         emoji: '🔢',
         learn: [
           card('🧩', 'Factors and multiples', 'Factors of 12 divide into it exactly: 1, 2, 3, 4, 6, 12. Multiples of 4 are in its times table: 4, 8, 12, 16… A prime number has exactly two factors: 1 and itself (2, 3, 5, 7, 11, 13…). 1 is not prime, and 2 is the only even prime.', ['factor', 'multiple', 'prime']),
-          card('🤝', 'HCF and LCM', 'The highest common factor (HCF) is the biggest number that divides into both: HCF of 12 and 18 is 6. The lowest common multiple (LCM) is the smallest number both go into: LCM of 4 and 6 is 12.', ['HCF', 'LCM']),
-          card('🌳', 'Prime factors', 'Any whole number can be written as a product of primes. Use a factor tree: 60 = 2 × 2 × 3 × 5 = 2² × 3 × 5.', ['prime factorisation']),
+          card('🤝', 'HCF and LCM', 'The highest common factor (HCF) is the biggest number that divides into both: HCF of 12 and 18 is 6. The lowest common multiple (LCM) is the smallest number both go into: LCM of 4 and 6 is 12.', ['HCF', 'LCM'], 'hcf-venn'),
+          card('🌳', 'Prime factors', 'Any whole number can be written as a product of primes. Use a factor tree: 60 = 2 × 2 × 3 × 5 = 2² × 3 × 5.', ['prime factorisation'], 'factor-tree'),
         ],
         questions: [
           gap('q1', 'How many factors does 12 have? ___', ['6']),
@@ -78,8 +78,8 @@ export const maths: Unit[] = [
         title: 'Powers, roots & standard form',
         emoji: '🚀',
         learn: [
-          card('🔼', 'Powers and roots', '2⁵ means 2 × 2 × 2 × 2 × 2 = 32. A square root undoes squaring: √81 = 9. A cube root undoes cubing: ∛64 = 4. Index laws: multiply means add powers (5² × 5³ = 5⁵), divide means subtract powers (7⁶ ÷ 7² = 7⁴).', ['index', 'square root', 'cube root']),
-          card('🔭', 'Standard form', 'Standard form writes big and small numbers as A × 10ⁿ, where A is between 1 and 10. 4,500 = 4.5 × 10³. 0.0062 = 6.2 × 10⁻³. A positive power means a big number; a negative power means a small number.', ['standard form']),
+          card('🔼', 'Powers and roots', '2⁵ means 2 × 2 × 2 × 2 × 2 = 32. A square root undoes squaring: √81 = 9. A cube root undoes cubing: ∛64 = 4. Index laws: multiply means add powers (5² × 5³ = 5⁵), divide means subtract powers (7⁶ ÷ 7² = 7⁴).', ['index', 'square root', 'cube root'], 'powers'),
+          card('🔭', 'Standard form', 'Standard form writes big and small numbers as A × 10ⁿ, where A is between 1 and 10. 4,500 = 4.5 × 10³. 0.0062 = 6.2 × 10⁻³. A positive power means a big number; a negative power means a small number.', ['standard form'], 'standard-form'),
         ],
         questions: [
           gap('q1', '2⁵ = ___', ['32']),
@@ -106,9 +106,9 @@ export const maths: Unit[] = [
         title: 'Working with fractions',
         emoji: '🍕',
         learn: [
-          card('➕', 'Adding and subtracting', 'Make the denominators the same first: 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2.', ['denominator', 'common denominator']),
+          card('➕', 'Adding and subtracting', 'Make the denominators the same first: 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2.', ['denominator', 'common denominator'], 'fraction-add'),
           card('✖️', 'Multiplying and dividing', 'Multiply: tops × tops, bottoms × bottoms: 2/3 × 3/5 = 6/15 = 2/5. Divide: flip the second fraction and multiply: 3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4 = 1½.', ['reciprocal']),
-          card('🔁', 'Fractions of amounts', 'To find 2/5 of 40: divide by the bottom, times by the top. 40 ÷ 5 = 8, then 8 × 2 = 16.'),
+          card('🔁', 'Fractions of amounts', 'To find 2/5 of 40: divide by the bottom, times by the top. 40 ÷ 5 = 8, then 8 × 2 = 16.', undefined, 'fraction-of'),
         ],
         questions: [
           gap('q1', '1/4 + 2/4 = ___', ['3/4']),
@@ -127,7 +127,7 @@ export const maths: Unit[] = [
         emoji: '🔄',
         learn: [
           card('💯', 'Converting', 'Percent means “out of 100”. Decimal → percentage: × 100 (0.35 = 35%). Fraction → decimal: divide the top by the bottom (3/5 = 0.6 = 60%).', ['percentage']),
-          card('🧠', 'Learn these', '1/2 = 0.5 = 50%. 1/4 = 0.25 = 25%. 3/4 = 0.75 = 75%. 1/5 = 0.2 = 20%. 1/10 = 0.1 = 10%. 1/8 = 0.125 = 12.5%. 1/3 ≈ 0.333 = 33⅓%.'),
+          card('🧠', 'Learn these', '1/2 = 0.5 = 50%. 1/4 = 0.25 = 25%. 3/4 = 0.75 = 75%. 1/5 = 0.2 = 20%. 1/10 = 0.1 = 10%. 1/8 = 0.125 = 12.5%. 1/3 ≈ 0.333 = 33⅓%.', undefined, 'fdp-strip'),
         ],
         questions: [
           gap('q1', '0.35 = ___%', ['35']),
@@ -149,8 +149,8 @@ export const maths: Unit[] = [
         title: 'Percentages',
         emoji: '🏷️',
         learn: [
-          card('🔟', 'Percentages of amounts', 'Find 10% by dividing by 10, then build up: 15% of 80 = 10% (8) + 5% (4) = 12. Or use a decimal: 15% of 80 = 0.15 × 80 = 12.', ['percentage of an amount']),
-          card('📈', 'Increase and decrease', 'Use a multiplier. A 10% increase is × 1.10; a 25% decrease is × 0.75. Percentage change = change ÷ original × 100. From 40 to 50 is a change of 10, and 10 ÷ 40 × 100 = 25% increase.', ['multiplier', 'percentage change']),
+          card('🔟', 'Percentages of amounts', 'Find 10% by dividing by 10, then build up: 15% of 80 = 10% (8) + 5% (4) = 12. Or use a decimal: 15% of 80 = 0.15 × 80 = 12.', ['percentage of an amount'], 'percent-bar'),
+          card('📈', 'Increase and decrease', 'Use a multiplier. A 10% increase is × 1.10; a 25% decrease is × 0.75. Percentage change = change ÷ original × 100. From 40 to 50 is a change of 10, and 10 ÷ 40 × 100 = 25% increase.', ['multiplier', 'percentage change'], 'multipliers'),
         ],
         questions: [
           gap('q1', '20% of 60 = ___', ['12']),
@@ -168,7 +168,7 @@ export const maths: Unit[] = [
         title: 'Ratio & proportion',
         emoji: '⚖️',
         learn: [
-          card('🍰', 'Sharing in a ratio', 'Share £30 in the ratio 2 : 3. Add the parts: 2 + 3 = 5. One part = £30 ÷ 5 = £6. So the shares are 2 × £6 = £12 and 3 × £6 = £18.', ['ratio']),
+          card('🍰', 'Sharing in a ratio', 'Share £30 in the ratio 2 : 3. Add the parts: 2 + 3 = 5. One part = £30 ÷ 5 = £6. So the shares are 2 × £6 = £12 and 3 × £6 = £18.', ['ratio'], 'ratio-bar'),
           card('🛒', 'Proportion and best buys', 'If 4 eggs make enough for 6 people, 1 person needs 4 ÷ 6 eggs, so 9 people need 6 eggs. For best buys, work out the cost per gram (or grams per penny) and compare.', ['proportion', 'unit price']),
         ],
         questions: [
@@ -195,7 +195,7 @@ export const maths: Unit[] = [
         title: 'Simplifying & substituting',
         emoji: '🔤',
         learn: [
-          card('🧺', 'Collecting like terms', 'Like terms have exactly the same letters: 3a + 2a = 5a. You can’t combine unlike terms: 2x + 3y stays as it is. 4x + 3y − x + y = 3x + 4y. When multiplying, multiply the numbers and write the letters together: 2a × 3b = 6ab.', ['like terms']),
+          card('🧺', 'Collecting like terms', 'Like terms have exactly the same letters: 3a + 2a = 5a. You can’t combine unlike terms: 2x + 3y stays as it is. 4x + 3y − x + y = 3x + 4y. When multiplying, multiply the numbers and write the letters together: 2a × 3b = 6ab.', ['like terms'], 'like-terms'),
           card('🔁', 'Substitution', 'Swap the letters for numbers. If x = 3, then 4x + 5 = 4 × 3 + 5 = 17. Watch negatives: if x = −2, x² = (−2)² = 4.', ['substitute']),
         ],
         questions: [
@@ -214,7 +214,7 @@ export const maths: Unit[] = [
         title: 'Expanding & factorising',
         emoji: '📦',
         learn: [
-          card('💥', 'Expanding', 'Multiply everything inside the bracket by the term outside: 3(x + 4) = 3x + 12. Watch signs: −2(x − 5) = −2x + 10. Double brackets: (x + 2)(x + 3) = x² + 3x + 2x + 6 = x² + 5x + 6.', ['expand']),
+          card('💥', 'Expanding', 'Multiply everything inside the bracket by the term outside: 3(x + 4) = 3x + 12. Watch signs: −2(x − 5) = −2x + 10. Double brackets: (x + 2)(x + 3) = x² + 3x + 2x + 6 = x² + 5x + 6.', ['expand'], 'expand-grid'),
           card('📥', 'Factorising', 'Factorising is the reverse: take out the highest common factor. 6x + 9 = 3(2x + 3). x² + 5x = x(x + 5).', ['factorise']),
         ],
         questions: [
@@ -232,7 +232,7 @@ export const maths: Unit[] = [
         title: 'Solving equations',
         emoji: '🗝️',
         learn: [
-          card('⚖️', 'Balance it', 'An equation is like a balance: whatever you do to one side, do to the other. To solve 2x + 5 = 17: subtract 5 from both sides (2x = 12), then divide both sides by 2 (x = 6). Check: 2 × 6 + 5 = 17 ✓.', ['solve', 'inverse operation']),
+          card('⚖️', 'Balance it', 'An equation is like a balance: whatever you do to one side, do to the other. To solve 2x + 5 = 17: subtract 5 from both sides (2x = 12), then divide both sides by 2 (x = 6). Check: 2 × 6 + 5 = 17 ✓.', ['solve', 'inverse operation'], 'balance'),
           card('↔️', 'Letters on both sides', 'Get the letters on one side first: 5x − 3 = 2x + 9 → subtract 2x: 3x − 3 = 9 → add 3: 3x = 12 → x = 4. With brackets, expand first, or divide both sides: 3(x − 2) = 15 → x − 2 = 5 → x = 7.'),
         ],
         questions: [
@@ -251,8 +251,8 @@ export const maths: Unit[] = [
         title: 'Sequences',
         emoji: '🪜',
         learn: [
-          card('➕', 'Linear sequences', 'A linear sequence goes up by the same amount each time: 3, 7, 11, 15… (+4 each time). The nth term is 4n − 1: the difference (4) times n, then adjust to hit the first term (4 × 1 − 1 = 3).', ['nth term', 'linear sequence']),
-          card('✨', 'Special sequences', 'Square numbers: 1, 4, 9, 16, 25… Cube numbers: 1, 8, 27, 64… Fibonacci: each term is the sum of the two before: 1, 1, 2, 3, 5, 8, 13…', ['square numbers', 'Fibonacci']),
+          card('➕', 'Linear sequences', 'A linear sequence goes up by the same amount each time: 3, 7, 11, 15… (+4 each time). The nth term is 4n − 1: the difference (4) times n, then adjust to hit the first term (4 × 1 − 1 = 3).', ['nth term', 'linear sequence'], 'sequence-pattern'),
+          card('✨', 'Special sequences', 'Square numbers: 1, 4, 9, 16, 25… Cube numbers: 1, 8, 27, 64… Fibonacci: each term is the sum of the two before: 1, 1, 2, 3, 5, 8, 13…', ['square numbers', 'Fibonacci'], 'square-numbers'),
         ],
         questions: [
           gap('q1', 'Next term: 3, 7, 11, 15, ___', ['19']),
@@ -270,7 +270,7 @@ export const maths: Unit[] = [
         title: 'Straight-line graphs',
         emoji: '📈',
         learn: [
-          card('📏', 'y = mx + c', 'Every straight line can be written y = mx + c. m is the gradient (steepness): how far up for each 1 across. c is the y-intercept: where the line crosses the y-axis. y = 2x + 3 has gradient 2 and crosses at (0, 3).', ['gradient', 'y-intercept']),
+          card('📏', 'y = mx + c', 'Every straight line can be written y = mx + c. m is the gradient (steepness): how far up for each 1 across. c is the y-intercept: where the line crosses the y-axis. y = 2x + 3 has gradient 2 and crosses at (0, 3).', ['gradient', 'y-intercept'], 'line-graph'),
           card('📍', 'Points on a line', 'A point is on a line if its coordinates fit the equation. Is (2, 7) on y = 3x + 1? 3 × 2 + 1 = 7 ✓. Gradient between two points = change in y ÷ change in x. Lines like y = 4 are horizontal.', ['coordinates']),
         ],
         questions: [
@@ -297,8 +297,8 @@ export const maths: Unit[] = [
         title: 'Angle rules',
         emoji: '📐',
         learn: [
-          card('📏', 'Basic rules', 'Angles on a straight line add to 180°. Angles around a point add to 360°. Angles in a triangle add to 180°. Angles in a quadrilateral add to 360°. Vertically opposite angles are equal.', ['straight line', 'vertically opposite']),
-          card('🛤️', 'Parallel lines', 'Where a line crosses parallel lines: alternate angles (Z shape) are equal, corresponding angles (F shape) are equal, and co-interior angles (C shape) add to 180°.', ['alternate', 'corresponding', 'co-interior']),
+          card('📏', 'Basic rules', 'Angles on a straight line add to 180°. Angles around a point add to 360°. Angles in a triangle add to 180°. Angles in a quadrilateral add to 360°. Vertically opposite angles are equal.', ['straight line', 'vertically opposite'], 'angle-rules'),
+          card('🛤️', 'Parallel lines', 'Where a line crosses parallel lines: alternate angles (Z shape) are equal, corresponding angles (F shape) are equal, and co-interior angles (C shape) add to 180°.', ['alternate', 'corresponding', 'co-interior'], 'parallel-angles'),
           card('⬡', 'Polygons', 'Sum of interior angles = (n − 2) × 180°. A pentagon (5 sides): 3 × 180 = 540°. The exterior angles of any polygon add to 360°, so each exterior angle of a regular hexagon is 360 ÷ 6 = 60°.', ['interior angle', 'exterior angle']),
         ],
         questions: [
@@ -320,8 +320,8 @@ export const maths: Unit[] = [
         title: 'Area & perimeter',
         emoji: '🟦',
         learn: [
-          card('▭', 'Rectangles and triangles', 'Perimeter is the distance around the outside. Area of a rectangle = length × width. Area of a triangle = ½ × base × perpendicular height. Area is in square units, like cm².', ['perimeter', 'area']),
-          card('▱', 'Parallelograms and trapeziums', 'Parallelogram: area = base × perpendicular height. Trapezium: area = ½ × (a + b) × h, where a and b are the parallel sides.', ['parallelogram', 'trapezium']),
+          card('▭', 'Rectangles and triangles', 'Perimeter is the distance around the outside. Area of a rectangle = length × width. Area of a triangle = ½ × base × perpendicular height. Area is in square units, like cm².', ['perimeter', 'area'], 'area-rect-tri'),
+          card('▱', 'Parallelograms and trapeziums', 'Parallelogram: area = base × perpendicular height. Trapezium: area = ½ × (a + b) × h, where a and b are the parallel sides.', ['parallelogram', 'trapezium'], 'area-para-trap'),
         ],
         questions: [
           gap('q1', 'Area of a rectangle 8 cm by 5 cm = ___ cm²', ['40']),
@@ -338,7 +338,7 @@ export const maths: Unit[] = [
         title: 'Circles',
         emoji: '⭕',
         learn: [
-          card('🔵', 'Parts of a circle', 'The radius goes from the centre to the edge. The diameter goes all the way across through the centre: diameter = 2 × radius. The circumference is the distance around the outside.', ['radius', 'diameter', 'circumference']),
+          card('🔵', 'Parts of a circle', 'The radius goes from the centre to the edge. The diameter goes all the way across through the centre: diameter = 2 × radius. The circumference is the distance around the outside.', ['radius', 'diameter', 'circumference'], 'circle-parts'),
           card('π', 'Formulas', 'Circumference = π × diameter. Area = π × radius². π ≈ 3.14. A circle of radius 5 has area 25π (≈ 78.5) and circumference 10π (≈ 31.4).', ['π']),
         ],
         questions: [
@@ -355,7 +355,7 @@ export const maths: Unit[] = [
         title: 'Pythagoras’ theorem',
         emoji: '📏',
         learn: [
-          card('📐', 'a² + b² = c²', 'In a right-angled triangle, the longest side (the hypotenuse, c) is opposite the right angle. a² + b² = c². With sides 3 and 4: 9 + 16 = 25, so c = √25 = 5.', ['hypotenuse', 'Pythagoras']),
+          card('📐', 'a² + b² = c²', 'In a right-angled triangle, the longest side (the hypotenuse, c) is opposite the right angle. a² + b² = c². With sides 3 and 4: 9 + 16 = 25, so c = √25 = 5.', ['hypotenuse', 'Pythagoras'], 'pythagoras'),
           card('➖', 'Finding a shorter side', 'Subtract instead: hypotenuse 10 and one side 6 → 10² − 6² = 100 − 36 = 64, so the other side is √64 = 8.'),
         ],
         questions: [
@@ -373,8 +373,8 @@ export const maths: Unit[] = [
         title: 'Volume & units',
         emoji: '📦',
         learn: [
-          card('🧊', 'Volume', 'Volume of a cuboid = length × width × height, in cubic units (cm³). Volume of any prism = area of the cross-section × length.', ['volume', 'prism']),
-          card('📏', 'Converting units', '1 cm = 10 mm, 1 m = 100 cm, 1 km = 1,000 m, 1 kg = 1,000 g, 1 litre = 1,000 ml = 1,000 cm³. Careful with area: 1 m² = 100 × 100 = 10,000 cm².', ['units']),
+          card('🧊', 'Volume', 'Volume of a cuboid = length × width × height, in cubic units (cm³). Volume of any prism = area of the cross-section × length.', ['volume', 'prism'], 'cuboid'),
+          card('📏', 'Converting units', '1 cm = 10 mm, 1 m = 100 cm, 1 km = 1,000 m, 1 kg = 1,000 g, 1 litre = 1,000 ml = 1,000 cm³. Careful with area: 1 m² = 100 × 100 = 10,000 cm².', ['units'], 'unit-ladder'),
         ],
         questions: [
           gap('q1', 'Volume of a cuboid 2 cm × 3 cm × 4 cm = ___ cm³', ['24']),
@@ -400,7 +400,7 @@ export const maths: Unit[] = [
         title: 'Averages & range',
         emoji: '📊',
         learn: [
-          card('🔢', 'Three averages', 'Mean: add them all up and divide by how many there are. Median: the middle value when in order (if there are two middle values, take halfway between them). Mode: the most common value. Range: biggest − smallest, which shows how spread out the data is.', ['mean', 'median', 'mode', 'range']),
+          card('🔢', 'Three averages', 'Mean: add them all up and divide by how many there are. Median: the middle value when in order (if there are two middle values, take halfway between them). Mode: the most common value. Range: biggest − smallest, which shows how spread out the data is.', ['mean', 'median', 'mode', 'range'], 'averages'),
           card('⚠️', 'Outliers', 'An extreme value (an outlier) affects the mean a lot, but barely affects the median.', ['outlier']),
         ],
         questions: [
@@ -418,7 +418,7 @@ export const maths: Unit[] = [
         title: 'Probability',
         emoji: '🎲',
         learn: [
-          card('🎯', 'The scale', 'Probability goes from 0 (impossible) to 1 (certain). Probability = number of ways it can happen ÷ total number of outcomes. P(rolling a 6) = 1/6.', ['probability']),
+          card('🎯', 'The scale', 'Probability goes from 0 (impossible) to 1 (certain). Probability = number of ways it can happen ÷ total number of outcomes. P(rolling a 6) = 1/6.', ['probability'], 'probability-scale'),
           card('🔄', 'Not happening', 'P(not A) = 1 − P(A). If P(rain) = 0.3, then P(no rain) = 0.7. Expected number = probability × number of trials: flip a coin 100 times and you’d expect about 50 heads.', ['expected outcomes']),
           card('🎲', 'Experiments', 'Relative frequency = how many times it happened ÷ number of trials. The more trials, the closer it gets to the true probability.', ['relative frequency']),
         ],

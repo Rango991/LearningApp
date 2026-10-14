@@ -67,6 +67,16 @@ value, so `0.5`, `.5` and `1/2` all count. `npm test` checks every question is
 well-formed. Never change an existing lesson or question `id`: her progress is
 stored against it.
 
+## Diagrams
+
+Every lesson has at least one diagram. They're hand-drawn SVGs in `src/diagrams/`
+(one file per subject, built from the helpers in `kit.tsx`), attached to a learn card with
+`diagram: 'id'` (or the fifth argument of `card(...)`). Open the app with `?diagrams`
+to see them all on one page. `npm test` checks every lesson has one and every id exists.
+
+Learn-card text is laid out automatically: one sentence per line, a leading
+"Label:" in bold, and the card's keywords highlighted on first use.
+
 ## Icons
 
 Icons are Microsoft's [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) (3D style, MIT licence),

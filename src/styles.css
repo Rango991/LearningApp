@@ -468,3 +468,29 @@ h3 .emoji, h1 .emoji { margin-right: 4px; vertical-align: -6px; }
 .preview-banner { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: calc(8px + env(safe-area-inset-top)) 16px 8px; background: var(--ink); color: #fff; font-weight: 800; font-size: 0.85rem; }
 .preview-banner .btn { --b: #fff; --s: #bdb6d0; color: var(--ink); }
 .view-her { max-width: 960px; margin: 0 auto; padding: 16px 16px 0; }
+
+/* ---------- lesson diagrams ---------- */
+.diagram { display: block; width: 100%; height: auto; max-width: 520px; margin: 0 auto; }
+.diagram text { paint-order: stroke; stroke: transparent; }
+.diagram-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; padding: 16px; background: var(--bg); }
+.diagram-frame { margin: 0; background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 12px; }
+.diagram-frame figcaption { text-align: center; font-weight: 800; color: var(--muted); font-size: 0.8rem; margin-top: 6px; }
+
+/* ---------- richer learn cards ---------- */
+.learn-card { text-align: left; }
+.learn-card h2 { text-align: center; }
+.learn-card.with-diagram { padding-top: 16px; }
+.learn-diagram { background: #fbfaff; border: 2px solid var(--line); border-radius: 14px; padding: 10px; margin-bottom: 14px; }
+.rich p { font-size: 1.12rem; line-height: 1.5; margin: 0 0 10px; padding-left: 16px; position: relative; }
+.rich p::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 7px; height: 7px; border-radius: 50%; background: var(--unit); opacity: 0.8; }
+.rich p:last-child { margin-bottom: 0; }
+.rich b { font-weight: 900; color: var(--ink); }
+mark.kw { background: color-mix(in srgb, var(--unit) 18%, white); color: inherit; border-radius: 4px; padding: 0 3px; font-weight: 800; }
+
+/* particle animations in diagrams */
+@keyframes p-vibrate { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(1.5px, -1px); } 50% { transform: translate(-1px, 1.5px); } 75% { transform: translate(1px, 1px); } }
+@keyframes p-slide { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(5px, -3px); } 66% { transform: translate(-4px, 2px); } }
+@keyframes p-fly { 0% { transform: translate(0, 0); } 25% { transform: translate(12px, 14px); } 50% { transform: translate(-10px, 12px); } 75% { transform: translate(-12px, -10px); } 100% { transform: translate(0, 0); } }
+.diagram .p-vibrate { animation: p-vibrate 0.35s linear infinite; }
+.diagram .p-slide { animation: p-slide 2.4s ease-in-out infinite; }
+.diagram .p-fly { animation: p-fly 3s linear infinite; }

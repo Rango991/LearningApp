@@ -20,8 +20,8 @@ export const physics: Unit[] = [
         title: 'Forces, mass & weight',
         emoji: '🏋️',
         learn: [
-          card('👉', 'What forces are', 'A force is a push or a pull, measured in newtons (N) with a newtonmeter. Contact forces need touching: friction, air resistance, upthrust, tension. Non-contact forces act at a distance: gravity, magnetism, electrostatic.', ['newton', 'contact', 'non-contact']),
-          card('🌍', 'Mass vs weight', 'Mass is the amount of stuff in something, in kilograms (kg). It’s the same everywhere. Weight is the force of gravity on it, in newtons. Weight = mass × gravitational field strength. On Earth g = 10 N/kg, so a 50 kg person weighs 500 N. On the Moon g is about 1.6 N/kg.', ['mass', 'weight', 'gravitational field strength']),
+          card('👉', 'What forces are', 'A force is a push or a pull, measured in newtons (N) with a newtonmeter. Contact forces need touching: friction, air resistance, upthrust, tension. Non-contact forces act at a distance: gravity, magnetism, electrostatic.', ['newton', 'contact', 'non-contact'], 'force-types'),
+          card('🌍', 'Mass vs weight', 'Mass is the amount of stuff in something, in kilograms (kg). It’s the same everywhere. Weight is the force of gravity on it, in newtons. Weight = mass × gravitational field strength. On Earth g = 10 N/kg, so a 50 kg person weighs 500 N. On the Moon g is about 1.6 N/kg.', ['mass', 'weight', 'gravitational field strength'], 'mass-weight'),
         ],
         questions: [
           mcq('q1', 'What unit are forces measured in?', ['Kilograms', 'Newtons', 'Joules', 'Metres'], 1),
@@ -41,8 +41,8 @@ export const physics: Unit[] = [
         title: 'Balanced & unbalanced forces',
         emoji: '🪂',
         learn: [
-          card('⚖️', 'Resultant force', 'Add forces in the same direction; subtract opposite ones. The answer is the resultant force. If forces are balanced (resultant = 0), an object stays still or keeps moving at a steady speed. If they’re unbalanced, it speeds up, slows down or changes direction.', ['resultant force', 'balanced']),
-          card('🛝', 'Friction and drag', 'Friction acts between surfaces and opposes motion. Air resistance and water resistance (drag) increase as you go faster. A skydiver speeds up until drag equals weight, then falls at a steady terminal velocity. Opening the parachute increases drag, slowing them down.', ['friction', 'drag', 'terminal velocity']),
+          card('⚖️', 'Resultant force', 'Add forces in the same direction; subtract opposite ones. The answer is the resultant force. If forces are balanced (resultant = 0), an object stays still or keeps moving at a steady speed. If they’re unbalanced, it speeds up, slows down or changes direction.', ['resultant force', 'balanced'], 'resultant'),
+          card('🛝', 'Friction and drag', 'Friction acts between surfaces and opposes motion. Air resistance and water resistance (drag) increase as you go faster. A skydiver speeds up until drag equals weight, then falls at a steady terminal velocity. Opening the parachute increases drag, slowing them down.', ['friction', 'drag', 'terminal velocity'], 'skydiver'),
         ],
         questions: [
           gap('q1', 'A 20 N push right and a 5 N push left. Resultant force = ___ N to the right.', ['15']),
@@ -59,8 +59,8 @@ export const physics: Unit[] = [
         title: 'Speed & graphs',
         emoji: '🏎️',
         learn: [
-          card('📐', 'Speed', 'Speed = distance ÷ time. In metres and seconds, speed is in metres per second (m/s). Walk 100 m in 50 s and your speed is 2 m/s. Rearranged: distance = speed × time.', ['speed', 'm/s']),
-          card('📈', 'Distance–time graphs', 'On a distance–time graph, a flat line means stationary. A straight sloping line means a steady speed. A steeper line means faster. The gradient (slope) is the speed.', ['distance–time graph', 'gradient']),
+          card('📐', 'Speed', 'Speed = distance ÷ time. In metres and seconds, speed is in metres per second (m/s). Walk 100 m in 50 s and your speed is 2 m/s. Rearranged: distance = speed × time.', ['speed', 'm/s'], 'speed-triangle'),
+          card('📈', 'Distance–time graphs', 'On a distance–time graph, a flat line means stationary. A straight sloping line means a steady speed. A steeper line means faster. The gradient (slope) is the speed.', ['distance–time graph', 'gradient'], 'dt-graph'),
           card('🚆', 'Relative motion', 'Relative motion is how fast something moves compared to something else. Two cars going 60 mph in opposite directions approach each other at 120 mph.', ['relative motion']),
         ],
         questions: [
@@ -79,8 +79,8 @@ export const physics: Unit[] = [
         emoji: '🔧',
         learn: [
           card('🪡', 'Pressure', 'Pressure = force ÷ area, in N/m² (also called pascals, Pa). A small area gives a big pressure (a sharp knife cuts well); a big area spreads the force out (snowshoes stop you sinking). Pressure in liquids increases with depth.', ['pressure', 'pascal']),
-          card('🌀', 'Hooke’s law', 'For a spring, the extension is proportional to the force: double the force, double the stretch, until the elastic limit. Past that, it won’t go back to its original shape.', ['extension', 'Hooke’s law', 'elastic limit']),
-          card('🔩', 'Moments', 'A moment is the turning effect of a force: moment = force × distance from the pivot (N m). Long spanners make turning easier. A seesaw balances when the clockwise and anticlockwise moments are equal.', ['moment', 'pivot']),
+          card('🌀', 'Hooke’s law', 'For a spring, the extension is proportional to the force: double the force, double the stretch, until the elastic limit. Past that, it won’t go back to its original shape.', ['extension', 'Hooke’s law', 'elastic limit'], 'springs'),
+          card('🔩', 'Moments', 'A moment is the turning effect of a force: moment = force × distance from the pivot (N m). Long spanners make turning easier. A seesaw balances when the clockwise and anticlockwise moments are equal.', ['moment', 'pivot'], 'moments'),
         ],
         questions: [
           gap('q1', 'A 100 N force on 2 m². Pressure = ___ N/m²', ['50']),
@@ -106,7 +106,7 @@ export const physics: Unit[] = [
         title: 'Energy stores & transfers',
         emoji: '🔋',
         learn: [
-          card('📦', 'Energy stores', 'Energy is measured in joules (J). It is stored in different ways: kinetic (moving), gravitational potential (raised up), elastic (stretched or squashed), thermal (hot), chemical (food, fuels, batteries), nuclear, magnetic and electrostatic.', ['joule', 'kinetic', 'gravitational potential']),
+          card('📦', 'Energy stores', 'Energy is measured in joules (J). It is stored in different ways: kinetic (moving), gravitational potential (raised up), elastic (stretched or squashed), thermal (hot), chemical (food, fuels, batteries), nuclear, magnetic and electrostatic.', ['joule', 'kinetic', 'gravitational potential'], 'energy-stores'),
           card('🔀', 'Transfers', 'Energy is transferred between stores by heating, by forces (mechanical work), by electricity, or by radiation (light and sound). A falling ball transfers energy from its gravitational potential store to its kinetic store.', ['transfer']),
         ],
         questions: [
@@ -129,7 +129,7 @@ export const physics: Unit[] = [
         emoji: '💡',
         learn: [
           card('♾️', 'Conservation of energy', 'Energy can’t be created or destroyed, only transferred. The total stays the same. But some energy is always wasted, usually spreading out (dissipating) as heat to the surroundings.', ['conservation of energy', 'dissipated']),
-          card('📊', 'Efficiency', 'Efficiency = useful energy out ÷ total energy in. A bulb that turns 100 J into 20 J of light is 0.2, or 20%, efficient. Nothing can be more than 100% efficient.', ['efficiency']),
+          card('📊', 'Efficiency', 'Efficiency = useful energy out ÷ total energy in. A bulb that turns 100 J into 20 J of light is 0.2, or 20%, efficient. Nothing can be more than 100% efficient.', ['efficiency'], 'sankey'),
         ],
         questions: [
           tf('q1', 'Energy can be destroyed.', false),
@@ -147,7 +147,7 @@ export const physics: Unit[] = [
         emoji: '🧾',
         learn: [
           card('⚡', 'Power', 'Power is how fast energy is transferred. Power = energy ÷ time, measured in watts (W). 1 W = 1 joule per second. A 2,000 W kettle transfers 2,000 J every second. 1 kilowatt (kW) = 1,000 W.', ['power', 'watt', 'kilowatt']),
-          card('💷', 'Paying for energy', 'Energy companies charge per kilowatt-hour (kWh). Energy in kWh = power in kW × time in hours. Cost = kWh × price per kWh. A 2 kW heater on for 3 hours uses 6 kWh. At 30p per kWh that costs £1.80.', ['kWh']),
+          card('💷', 'Paying for energy', 'Energy companies charge per kilowatt-hour (kWh). Energy in kWh = power in kW × time in hours. Cost = kWh × price per kWh. A 2 kW heater on for 3 hours uses 6 kWh. At 30p per kWh that costs £1.80.', ['kWh'], 'energy-bill'),
         ],
         questions: [
           gap('q1', '1 kW = ___ W', ['1000']),
@@ -164,9 +164,9 @@ export const physics: Unit[] = [
         title: 'Energy resources & heating',
         emoji: '🌬️',
         learn: [
-          card('🌞', 'Renewable', 'Renewable resources won’t run out: solar, wind, hydroelectric, tidal, wave, geothermal and biomass. They don’t release much carbon dioxide, but some depend on the weather.', ['renewable']),
+          card('🌞', 'Renewable', 'Renewable resources won’t run out: solar, wind, hydroelectric, tidal, wave, geothermal and biomass. They don’t release much carbon dioxide, but some depend on the weather.', ['renewable'], 'resources'),
           card('🛢️', 'Non-renewable', 'Fossil fuels (coal, oil and gas) and nuclear fuel will run out. Burning fossil fuels releases carbon dioxide, which adds to climate change.', ['non-renewable', 'fossil fuels']),
-          card('🔥', 'Heat transfer', 'Conduction: through solids, as particles vibrate and pass energy on (metals are good conductors). Convection: in liquids and gases, warm fluid rises and cool fluid sinks. Radiation: infrared waves, which can travel through a vacuum. Insulators like trapped air reduce heat loss.', ['conduction', 'convection', 'radiation', 'insulator']),
+          card('🔥', 'Heat transfer', 'Conduction: through solids, as particles vibrate and pass energy on (metals are good conductors). Convection: in liquids and gases, warm fluid rises and cool fluid sinks. Radiation: infrared waves, which can travel through a vacuum. Insulators like trapped air reduce heat loss.', ['conduction', 'convection', 'radiation', 'insulator'], 'heat-transfer'),
         ],
         questions: [
           match('q1', 'Renewable or non-renewable?', [
@@ -199,8 +199,8 @@ export const physics: Unit[] = [
         title: 'Circuits & current',
         emoji: '💡',
         learn: [
-          card('🔌', 'Circuits', 'Current only flows around a complete circuit. Current is the flow of charge, measured in amps (A) with an ammeter, which is connected in series. Voltage (potential difference) is the “push”, measured in volts (V) with a voltmeter, which is connected in parallel across a component.', ['current', 'amps', 'voltage', 'ammeter', 'voltmeter']),
-          card('✏️', 'Symbols', 'Circuit diagrams use symbols: a cell (a long and a short line), a battery (two or more cells), a lamp (a circle with a cross), a switch (a break with a lever), a resistor (a rectangle), and ammeter and voltmeter (circles with A and V).', ['circuit symbol']),
+          card('🔌', 'Circuits', 'Current only flows around a complete circuit. Current is the flow of charge, measured in amps (A) with an ammeter, which is connected in series. Voltage (potential difference) is the “push”, measured in volts (V) with a voltmeter, which is connected in parallel across a component.', ['current', 'amps', 'voltage', 'ammeter', 'voltmeter'], 'meter-circuit'),
+          card('✏️', 'Symbols', 'Circuit diagrams use symbols: a cell (a long and a short line), a battery (two or more cells), a lamp (a circle with a cross), a switch (a break with a lever), a resistor (a rectangle), and ammeter and voltmeter (circles with A and V).', ['circuit symbol'], 'circuit-symbols'),
         ],
         questions: [
           match('q1', 'Match the quantity to its unit', [
@@ -220,8 +220,8 @@ export const physics: Unit[] = [
         title: 'Series & parallel',
         emoji: '🔀',
         learn: [
-          card('➡️', 'Series circuits', 'In a series circuit, everything is on one loop. The current is the same everywhere. The voltage from the battery is shared between the components. If one bulb breaks, they all go out. Adding more bulbs makes each one dimmer.', ['series']),
-          card('🔱', 'Parallel circuits', 'A parallel circuit has branches. The current splits between them and adds back up where they rejoin. Each branch gets the full battery voltage. If one bulb breaks, the others stay on, which is why houses are wired in parallel.', ['parallel']),
+          card('➡️', 'Series circuits', 'In a series circuit, everything is on one loop. The current is the same everywhere. The voltage from the battery is shared between the components. If one bulb breaks, they all go out. Adding more bulbs makes each one dimmer.', ['series'], 'series-circuit'),
+          card('🔱', 'Parallel circuits', 'A parallel circuit has branches. The current splits between them and adds back up where they rejoin. Each branch gets the full battery voltage. If one bulb breaks, the others stay on, which is why houses are wired in parallel.', ['parallel'], 'parallel-circuit'),
         ],
         questions: [
           match('q1', 'Series or parallel?', [
@@ -242,7 +242,7 @@ export const physics: Unit[] = [
         emoji: '🧮',
         learn: [
           card('🚧', 'Resistance', 'Resistance is how much a component opposes the current, measured in ohms (Ω). For the same voltage, more resistance means less current. Long, thin wires have more resistance than short, thick ones.', ['resistance', 'ohm']),
-          card('📐', 'V = I × R', 'Voltage = current × resistance. Rearranged: R = V ÷ I, and I = V ÷ R. With 12 V across a 4 Ω resistor, the current is 12 ÷ 4 = 3 A.', ['V = IR']),
+          card('📐', 'V = I × R', 'Voltage = current × resistance. Rearranged: R = V ÷ I, and I = V ÷ R. With 12 V across a 4 Ω resistor, the current is 12 ÷ 4 = 3 A.', ['V = IR'], 'vir-triangle'),
         ],
         questions: [
           gap('q1', '12 V across a 4 Ω resistor. Current = ___ A', ['3']),
@@ -258,7 +258,7 @@ export const physics: Unit[] = [
         title: 'Magnets & electromagnets',
         emoji: '🧲',
         learn: [
-          card('🧲', 'Magnets', 'Magnets have a north and a south pole. Like poles repel; opposite poles attract. Iron, nickel and cobalt (and steel) are magnetic materials. Field lines go from north to south, and are closest together where the field is strongest. A compass points along the field lines.', ['poles', 'repel', 'attract', 'magnetic field']),
+          card('🧲', 'Magnets', 'Magnets have a north and a south pole. Like poles repel; opposite poles attract. Iron, nickel and cobalt (and steel) are magnetic materials. Field lines go from north to south, and are closest together where the field is strongest. A compass points along the field lines.', ['poles', 'repel', 'attract', 'magnetic field'], 'magnet-field'),
           card('🔁', 'Electromagnets', 'A current in a wire makes a magnetic field. A coil of wire around an iron core makes an electromagnet, which can be switched on and off. Make it stronger with more turns on the coil, more current, or an iron core. Used in scrapyard cranes, door locks and speakers.', ['electromagnet', 'coil', 'core']),
         ],
         questions: [
@@ -286,7 +286,7 @@ export const physics: Unit[] = [
         emoji: '🔊',
         learn: [
           card('〰️', 'Vibrations', 'Sound is made by vibrations. It travels as a longitudinal wave: particles vibrate back and forth in the same direction the wave travels. Sound needs a medium (solid, liquid or gas), so it can’t travel through a vacuum like space. It travels about 340 m/s in air, and faster in liquids and solids.', ['longitudinal', 'medium', 'vacuum']),
-          card('🎵', 'Loudness and pitch', 'A bigger amplitude means a louder sound. A higher frequency means a higher pitch. Frequency is measured in hertz (Hz). Humans hear roughly 20 Hz to 20,000 Hz. Sound above that is ultrasound, used for scanning babies and by bats.', ['amplitude', 'frequency', 'hertz', 'ultrasound']),
+          card('🎵', 'Loudness and pitch', 'A bigger amplitude means a louder sound. A higher frequency means a higher pitch. Frequency is measured in hertz (Hz). Humans hear roughly 20 Hz to 20,000 Hz. Sound above that is ultrasound, used for scanning babies and by bats.', ['amplitude', 'frequency', 'hertz', 'ultrasound'], 'sound-waves'),
         ],
         questions: [
           match('q1', 'Match the wave property to what you hear', [
@@ -307,7 +307,7 @@ export const physics: Unit[] = [
         emoji: '🪞',
         learn: [
           card('⚡', 'Light', 'Light travels in straight lines at 300,000 km/s, the fastest anything can go. It doesn’t need a medium, so it travels through space. It’s a transverse wave. We see objects when light from them enters our eyes. Luminous objects (like the Sun) give out their own light.', ['luminous', 'transverse']),
-          card('🪞', 'Reflection', 'The law of reflection: the angle of incidence equals the angle of reflection. Both are measured from the normal, a line at 90° to the mirror. Smooth surfaces give clear reflections; rough surfaces scatter light (diffuse reflection).', ['angle of incidence', 'normal']),
+          card('🪞', 'Reflection', 'The law of reflection: the angle of incidence equals the angle of reflection. Both are measured from the normal, a line at 90° to the mirror. Smooth surfaces give clear reflections; rough surfaces scatter light (diffuse reflection).', ['angle of incidence', 'normal'], 'reflection'),
         ],
         questions: [
           gap('q1', 'Light hits a mirror at 30° to the normal. Angle of reflection = ___°', ['30']),
@@ -324,7 +324,7 @@ export const physics: Unit[] = [
         emoji: '🌈',
         learn: [
           card('🥤', 'Refraction', 'Light changes speed when it goes into a different material, which makes it bend: refraction. Going into a denser material (air → glass) it slows down and bends towards the normal. That’s why a straw looks bent in water. Lenses use refraction to focus light.', ['refraction']),
-          card('🌈', 'Colour', 'A prism splits white light into a spectrum: red, orange, yellow, green, blue, indigo, violet. This is dispersion. A red object reflects red light and absorbs the others. A red filter lets only red light through.', ['spectrum', 'dispersion', 'filter']),
+          card('🌈', 'Colour', 'A prism splits white light into a spectrum: red, orange, yellow, green, blue, indigo, violet. This is dispersion. A red object reflects red light and absorbs the others. A red filter lets only red light through.', ['spectrum', 'dispersion', 'filter'], 'prism'),
         ],
         questions: [
           mcq('q1', 'Light goes from air into glass. It bends…', ['Towards the normal', 'Away from the normal', 'It doesn’t bend', 'Backwards'], 0),
@@ -351,7 +351,7 @@ export const physics: Unit[] = [
         emoji: '🌍',
         learn: [
           card('🔄', 'Day and year', 'Earth spins on its axis once every 24 hours, giving day and night. It orbits the Sun once every 365¼ days: one year. The extra quarter day is why we have leap years.', ['axis', 'orbit']),
-          card('☀️', 'Seasons', 'Seasons happen because Earth’s axis is tilted. In UK summer, the northern hemisphere is tilted towards the Sun: the Sun is higher in the sky, days are longer, and sunlight is more concentrated. Seasons are NOT caused by how close Earth is to the Sun.', ['tilt', 'seasons']),
+          card('☀️', 'Seasons', 'Seasons happen because Earth’s axis is tilted. In UK summer, the northern hemisphere is tilted towards the Sun: the Sun is higher in the sky, days are longer, and sunlight is more concentrated. Seasons are NOT caused by how close Earth is to the Sun.', ['tilt', 'seasons'], 'seasons'),
         ],
         questions: [
           mcq('q1', 'What causes day and night?', ['Earth spinning on its axis', 'Earth orbiting the Sun', 'The Moon blocking the Sun', 'The Sun moving round Earth'], 0),
@@ -367,8 +367,8 @@ export const physics: Unit[] = [
         title: 'The Solar System & beyond',
         emoji: '🪐',
         learn: [
-          card('🪐', 'The planets', 'In order from the Sun: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune (“My Very Easy Method Just Speeds Up Naming”). The inner four are rocky; the outer four are gas giants. Gravity keeps the planets in orbit around the Sun.', ['planets', 'orbit']),
-          card('🌙', 'The Moon', 'The Moon orbits Earth about once a month. We see phases (new moon, crescent, half, gibbous, full) because we see different amounts of its sunlit half. Gravity on the Moon is about 1.6 N/kg, much weaker than Earth’s 10 N/kg.', ['phases']),
+          card('🪐', 'The planets', 'In order from the Sun: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune (“My Very Easy Method Just Speeds Up Naming”). The inner four are rocky; the outer four are gas giants. Gravity keeps the planets in orbit around the Sun.', ['planets', 'orbit'], 'solar-system'),
+          card('🌙', 'The Moon', 'The Moon orbits Earth about once a month. We see phases (new moon, crescent, half, gibbous, full) because we see different amounts of its sunlit half. Gravity on the Moon is about 1.6 N/kg, much weaker than Earth’s 10 N/kg.', ['phases'], 'moon-phases'),
           card('🌌', 'Beyond', 'The Sun is a star. Our Solar System is in the Milky Way galaxy, which has billions of stars. A light year is the distance light travels in a year, used for huge distances in space.', ['star', 'galaxy', 'light year']),
         ],
         questions: [

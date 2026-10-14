@@ -19,7 +19,7 @@ export const chemistry: Unit[] = [
         title: 'Solids, liquids & gases',
         emoji: '🧊',
         learn: [
-          card('🧱', 'Particle model', 'Solid: particles packed tightly in a regular pattern, vibrating on the spot, so it has a fixed shape. Liquid: particles close together but randomly arranged, sliding past each other, so it flows and takes the shape of its container. Gas: particles far apart, moving quickly in all directions, so it fills any container.', ['particle model']),
+          card('🧱', 'Particle model', 'Solid: particles packed tightly in a regular pattern, vibrating on the spot, so it has a fixed shape. Liquid: particles close together but randomly arranged, sliding past each other, so it flows and takes the shape of its container. Gas: particles far apart, moving quickly in all directions, so it fills any container.', ['particle model'], 'particles'),
           card('🗜️', 'Squashing', 'Gases can be compressed because there’s lots of space between the particles. Solids and liquids can’t really be compressed. Gas pressure is caused by particles hitting the walls of their container.', ['compress', 'gas pressure']),
         ],
         questions: [
@@ -41,7 +41,7 @@ export const chemistry: Unit[] = [
         title: 'Changes of state',
         emoji: '🫧',
         learn: [
-          card('🔁', 'Names of changes', 'Melting: solid → liquid. Freezing: liquid → solid. Evaporating/boiling: liquid → gas. Condensing: gas → liquid. Sublimation: solid → gas directly (like dry ice).', ['melting', 'condensing', 'sublimation']),
+          card('🔁', 'Names of changes', 'Melting: solid → liquid. Freezing: liquid → solid. Evaporating/boiling: liquid → gas. Condensing: gas → liquid. Sublimation: solid → gas directly (like dry ice).', ['melting', 'condensing', 'sublimation'], 'state-changes'),
           card('🌡️', 'Melting and boiling points', 'Pure water melts at 0 °C and boils at 100 °C. A pure substance melts and boils at one exact temperature, while a mixture changes state over a range of temperatures. Changes of state are physical changes: no new substance is made, and mass is conserved.', ['melting point', 'boiling point']),
         ],
         questions: [
@@ -65,7 +65,7 @@ export const chemistry: Unit[] = [
         emoji: '☕',
         learn: [
           card('💨', 'Diffusion', 'Diffusion is the spreading out of particles from high concentration to low concentration, caused by their random movement. It happens in gases and liquids, and is faster when it’s hotter.', ['diffusion']),
-          card('🧂', 'Dissolving', 'When salt dissolves in water, the salt is the solute, the water is the solvent, and together they make a solution. A substance that dissolves is soluble; one that doesn’t is insoluble. When no more solute will dissolve, the solution is saturated. Mass is conserved: 100 g of water + 10 g of salt = 110 g of solution.', ['solute', 'solvent', 'solution', 'saturated']),
+          card('🧂', 'Dissolving', 'When salt dissolves in water, the salt is the solute, the water is the solvent, and together they make a solution. A substance that dissolves is soluble; one that doesn’t is insoluble. When no more solute will dissolve, the solution is saturated. Mass is conserved: 100 g of water + 10 g of salt = 110 g of solution.', ['solute', 'solvent', 'solution', 'saturated'], 'dissolving'),
         ],
         questions: [
           match('q1', 'Sugar dissolves in tea. Match the words', [
@@ -86,7 +86,7 @@ export const chemistry: Unit[] = [
         title: 'Separating mixtures',
         emoji: '⚗️',
         learn: [
-          card('🧹', 'Which method?', 'Filtration separates an insoluble solid from a liquid (sand from water). Evaporation or crystallisation gets a dissolved solid back out of a solution (salt from salt water). Distillation separates a liquid from a solution by boiling and condensing (pure water from sea water).', ['filtration', 'crystallisation', 'distillation']),
+          card('🧹', 'Which method?', 'Filtration separates an insoluble solid from a liquid (sand from water). Evaporation or crystallisation gets a dissolved solid back out of a solution (salt from salt water). Distillation separates a liquid from a solution by boiling and condensing (pure water from sea water).', ['filtration', 'crystallisation', 'distillation'], 'filtration'),
           card('🌈', 'Chromatography', 'Chromatography separates dissolved substances, like the dyes in ink. Spots move up the paper with the solvent. Pure substances make one spot; mixtures make several. The start line is drawn in pencil because pencil doesn’t dissolve.', ['chromatography']),
         ],
         questions: [
@@ -119,7 +119,7 @@ export const chemistry: Unit[] = [
         emoji: '⚛️',
         learn: [
           card('⚛️', 'Atoms', 'Everything is made of tiny particles called atoms. An element is a substance made of only one type of atom. There are about 118 elements, all listed in the periodic table.', ['atom', 'element']),
-          card('🔤', 'Symbols', 'Each element has a symbol of one or two letters. The first is a capital, the second is lower case. Some come from Latin names: Na (sodium), Fe (iron), Cu (copper), Ag (silver), Au (gold), Pb (lead), K (potassium).', ['symbol']),
+          card('🔤', 'Symbols', 'Each element has a symbol of one or two letters. The first is a capital, the second is lower case. Some come from Latin names: Na (sodium), Fe (iron), Cu (copper), Ag (silver), Au (gold), Pb (lead), K (potassium).', ['symbol'], 'element-tiles'),
         ],
         questions: [
           match('q1', 'Match the element to its symbol', [
@@ -146,8 +146,8 @@ export const chemistry: Unit[] = [
         title: 'Compounds & formulae',
         emoji: '💧',
         learn: [
-          card('🔗', 'Compounds', 'A compound is two or more different elements chemically joined. A compound has different properties from the elements in it: sodium is an explosive metal and chlorine is a toxic gas, but together they make sodium chloride (table salt).', ['compound']),
-          card('🧮', 'Formulae', 'A formula shows which atoms are in a compound and how many. H₂O: 2 hydrogen and 1 oxygen. CO₂: 1 carbon and 2 oxygen. NaCl: 1 sodium and 1 chlorine. CH₄ (methane): 1 carbon and 4 hydrogen. A molecule is a group of atoms joined together.', ['formula', 'molecule']),
+          card('🔗', 'Compounds', 'A compound is two or more different elements chemically joined. A compound has different properties from the elements in it: sodium is an explosive metal and chlorine is a toxic gas, but together they make sodium chloride (table salt).', ['compound'], 'particle-boxes'),
+          card('🧮', 'Formulae', 'A formula shows which atoms are in a compound and how many. H₂O: 2 hydrogen and 1 oxygen. CO₂: 1 carbon and 2 oxygen. NaCl: 1 sodium and 1 chlorine. CH₄ (methane): 1 carbon and 4 hydrogen. A molecule is a group of atoms joined together.', ['formula', 'molecule'], 'molecules'),
           card('🏷️', 'Naming', 'Compounds of a metal and one non-metal end in -ide (sodium chloride, magnesium oxide). If oxygen is also there, they usually end in -ate (copper sulfate, calcium carbonate).', ['-ide', '-ate']),
         ],
         questions: [
@@ -171,7 +171,7 @@ export const chemistry: Unit[] = [
         title: 'The periodic table',
         emoji: '📋',
         learn: [
-          card('🗺️', 'Layout', 'Columns are called groups; rows are called periods. Elements in the same group have similar properties. Metals are on the left and in the middle; non-metals are on the right. Dmitri Mendeleev arranged the first version and left gaps for elements not yet discovered.', ['group', 'period', 'Mendeleev']),
+          card('🗺️', 'Layout', 'Columns are called groups; rows are called periods. Elements in the same group have similar properties. Metals are on the left and in the middle; non-metals are on the right. Dmitri Mendeleev arranged the first version and left gaps for elements not yet discovered.', ['group', 'period', 'Mendeleev'], 'periodic-table'),
           card('💥', 'Groups to know', 'Group 1, the alkali metals (lithium, sodium, potassium): soft, react with water to make hydrogen, more reactive further down. Group 7, the halogens (fluorine, chlorine, bromine, iodine): reactive non-metals, less reactive further down. Group 0, the noble gases (helium, neon, argon): very unreactive.', ['alkali metals', 'halogens', 'noble gases']),
         ],
         questions: [
@@ -194,7 +194,7 @@ export const chemistry: Unit[] = [
         title: 'Metals & non-metals',
         emoji: '🔩',
         learn: [
-          card('✨', 'Metals', 'Metals are usually shiny, strong, malleable (can be hammered into shape) and ductile (can be pulled into wires). They are good conductors of heat and electricity, and most have high melting points. Mercury is a liquid metal. Iron, nickel and cobalt are magnetic.', ['malleable', 'ductile', 'conductor']),
+          card('✨', 'Metals', 'Metals are usually shiny, strong, malleable (can be hammered into shape) and ductile (can be pulled into wires). They are good conductors of heat and electricity, and most have high melting points. Mercury is a liquid metal. Iron, nickel and cobalt are magnetic.', ['malleable', 'ductile', 'conductor'], 'metal-props'),
           card('🪨', 'Non-metals', 'Non-metals are usually dull, brittle when solid, and poor conductors (insulators). Many are gases at room temperature. Graphite, a form of carbon, is an unusual non-metal that conducts electricity.', ['brittle', 'insulator']),
         ],
         questions: [
@@ -225,7 +225,7 @@ export const chemistry: Unit[] = [
         emoji: '🔥',
         learn: [
           card('🔄', 'Physical changes', 'In a physical change no new substance is made and it’s usually easy to reverse: melting, dissolving, boiling.', ['physical change']),
-          card('🧪', 'Chemical changes', 'In a chemical reaction new substances are made, and it’s usually hard to reverse: burning, rusting, cooking an egg. Signs of a reaction: a colour change, fizzing (a gas given off), a temperature change, or a precipitate (a solid appearing).', ['chemical reaction', 'precipitate']),
+          card('🧪', 'Chemical changes', 'In a chemical reaction new substances are made, and it’s usually hard to reverse: burning, rusting, cooking an egg. Signs of a reaction: a colour change, fizzing (a gas given off), a temperature change, or a precipitate (a solid appearing).', ['chemical reaction', 'precipitate'], 'reaction-signs'),
         ],
         questions: [
           match('q1', 'Physical or chemical change?', [
@@ -246,7 +246,7 @@ export const chemistry: Unit[] = [
         emoji: '⚖️',
         learn: [
           card('➡️', 'Reactants and products', 'Reactants are the substances you start with; products are the new substances made. A word equation shows them: magnesium + oxygen → magnesium oxide. The arrow means “reacts to make”.', ['reactant', 'product']),
-          card('⚖️', 'Conservation of mass', 'Atoms are not created or destroyed in a reaction, only rearranged. So the total mass of the products equals the total mass of the reactants. If mass seems to go down, a gas has probably escaped.', ['conservation of mass']),
+          card('⚖️', 'Conservation of mass', 'Atoms are not created or destroyed in a reaction, only rearranged. So the total mass of the products equals the total mass of the reactants. If mass seems to go down, a gas has probably escaped.', ['conservation of mass'], 'conservation'),
         ],
         questions: [
           match('q1', 'iron + sulfur → iron sulfide. Sort the substances', [
@@ -266,7 +266,7 @@ export const chemistry: Unit[] = [
         title: 'Combustion & oxidation',
         emoji: '🕯️',
         learn: [
-          card('🔥', 'Combustion', 'Combustion is burning: a reaction with oxygen that releases energy. Burning a fuel like methane: methane + oxygen → carbon dioxide + water. A fire needs fuel, heat and oxygen: the fire triangle. Remove one and the fire goes out.', ['combustion', 'fire triangle']),
+          card('🔥', 'Combustion', 'Combustion is burning: a reaction with oxygen that releases energy. Burning a fuel like methane: methane + oxygen → carbon dioxide + water. A fire needs fuel, heat and oxygen: the fire triangle. Remove one and the fire goes out.', ['combustion', 'fire triangle'], 'fire-triangle'),
           card('🟫', 'Oxidation', 'Oxidation is any reaction with oxygen. Metals react with oxygen to make metal oxides: iron + oxygen → iron oxide. Rusting is oxidation of iron, and it needs both oxygen and water.', ['oxidation', 'rusting']),
           card('🌡️', 'Thermal decomposition', 'Thermal decomposition is breaking a compound down with heat. Copper carbonate → copper oxide + carbon dioxide (it turns from green to black).', ['thermal decomposition']),
         ],
@@ -285,7 +285,7 @@ export const chemistry: Unit[] = [
         title: 'Exothermic & endothermic',
         emoji: '🌡️',
         learn: [
-          card('🔥', 'Exothermic', 'Exothermic reactions give out energy to the surroundings, so the temperature goes up. Examples: burning, respiration, neutralisation, hand warmers.', ['exothermic']),
+          card('🔥', 'Exothermic', 'Exothermic reactions give out energy to the surroundings, so the temperature goes up. Examples: burning, respiration, neutralisation, hand warmers.', ['exothermic'], 'exo-endo'),
           card('❄️', 'Endothermic', 'Endothermic reactions take in energy from the surroundings, so the temperature goes down. Examples: thermal decomposition, photosynthesis, sports ice packs.', ['endothermic']),
         ],
         questions: [
@@ -315,7 +315,7 @@ export const chemistry: Unit[] = [
         title: 'The pH scale',
         emoji: '🌈',
         learn: [
-          card('📏', 'pH scale', 'The pH scale runs from 0 to 14. Below 7 is acidic, 7 is neutral (pure water), above 7 is alkaline. The further from 7, the stronger the acid or alkali.', ['pH', 'neutral']),
+          card('📏', 'pH scale', 'The pH scale runs from 0 to 14. Below 7 is acidic, 7 is neutral (pure water), above 7 is alkaline. The further from 7, the stronger the acid or alkali.', ['pH', 'neutral'], 'ph-scale'),
           card('🎨', 'Indicators', 'Indicators change colour to show pH. Universal indicator: red for strong acid, orange or yellow for weak acid, green for neutral, blue for weak alkali, purple for strong alkali. Litmus turns red in acid and blue in alkali.', ['indicator', 'universal indicator', 'litmus']),
           card('🍋', 'Everyday examples', 'Acids: lemon juice, vinegar, stomach acid (hydrochloric acid). Alkalis: soap, bleach, oven cleaner, toothpaste. Strong acids and alkalis are corrosive, so wear eye protection.', ['corrosive']),
         ],
@@ -338,7 +338,7 @@ export const chemistry: Unit[] = [
         title: 'Neutralisation',
         emoji: '🤝',
         learn: [
-          card('⚖️', 'Acid + alkali', 'An acid and an alkali cancel each other out in neutralisation: acid + alkali → salt + water. Indigestion tablets neutralise extra stomach acid; farmers add lime to neutralise acidic soil.', ['neutralisation', 'salt']),
+          card('⚖️', 'Acid + alkali', 'An acid and an alkali cancel each other out in neutralisation: acid + alkali → salt + water. Indigestion tablets neutralise extra stomach acid; farmers add lime to neutralise acidic soil.', ['neutralisation', 'salt'], 'neutralisation'),
           card('🏷️', 'Naming salts', 'The first part of the salt’s name comes from the metal in the alkali. The second part comes from the acid: hydrochloric acid → chloride, sulfuric acid → sulfate, nitric acid → nitrate. Example: sodium hydroxide + hydrochloric acid → sodium chloride + water.', ['chloride', 'sulfate', 'nitrate']),
         ],
         questions: [
@@ -360,9 +360,9 @@ export const chemistry: Unit[] = [
         title: 'Metals, acids & reactivity',
         emoji: '🫧',
         learn: [
-          card('🎈', 'Metals + acids', 'metal + acid → salt + hydrogen. Test for hydrogen: a lit splint gives a squeaky pop. Example: magnesium + hydrochloric acid → magnesium chloride + hydrogen.', ['hydrogen', 'squeaky pop']),
+          card('🎈', 'Metals + acids', 'metal + acid → salt + hydrogen. Test for hydrogen: a lit splint gives a squeaky pop. Example: magnesium + hydrochloric acid → magnesium chloride + hydrogen.', ['hydrogen', 'squeaky pop'], 'gas-tests'),
           card('🫧', 'Carbonates + acids', 'carbonate + acid → salt + water + carbon dioxide. Test for carbon dioxide: it turns limewater cloudy (milky).', ['carbonate', 'limewater']),
-          card('🏁', 'Reactivity series', 'Potassium, sodium, calcium, magnesium, aluminium, (carbon), zinc, iron, lead, (hydrogen), copper, silver, gold, from most to least reactive. A more reactive metal will displace a less reactive one from its compound: iron + copper sulfate → iron sulfate + copper.', ['reactivity series', 'displacement']),
+          card('🏁', 'Reactivity series', 'Potassium, sodium, calcium, magnesium, aluminium, (carbon), zinc, iron, lead, (hydrogen), copper, silver, gold, from most to least reactive. A more reactive metal will displace a less reactive one from its compound: iron + copper sulfate → iron sulfate + copper.', ['reactivity series', 'displacement'], 'reactivity'),
         ],
         questions: [
           gap('q1', 'metal + acid → salt + ___', ['hydrogen']),
@@ -391,7 +391,7 @@ export const chemistry: Unit[] = [
         learn: [
           card('🌋', 'Igneous', 'Igneous rocks form when molten rock (magma or lava) cools and crystallises. Slow cooling underground makes big crystals (granite); fast cooling at the surface makes small crystals (basalt).', ['igneous', 'magma']),
           card('🏖️', 'Sedimentary', 'Sedimentary rocks form from layers of sediment that are compacted and cemented over millions of years. They can contain fossils. Examples: sandstone, limestone, chalk.', ['sedimentary', 'fossils']),
-          card('🔥', 'Metamorphic', 'Metamorphic rocks form when existing rock is changed by heat and pressure, without melting. Limestone → marble; mudstone → slate. Weathering, erosion, deposition, melting and uplift link all three types in the rock cycle.', ['metamorphic', 'rock cycle']),
+          card('🔥', 'Metamorphic', 'Metamorphic rocks form when existing rock is changed by heat and pressure, without melting. Limestone → marble; mudstone → slate. Weathering, erosion, deposition, melting and uplift link all three types in the rock cycle.', ['metamorphic', 'rock cycle'], 'rock-cycle'),
         ],
         questions: [
           match('q1', 'Match the rock to its type', [
@@ -412,8 +412,8 @@ export const chemistry: Unit[] = [
         title: 'The atmosphere & climate',
         emoji: '🌍',
         learn: [
-          card('🌬️', 'What’s in air', 'Air is about 78% nitrogen, 21% oxygen, about 1% argon, and a tiny 0.04% carbon dioxide, plus water vapour.', ['nitrogen', 'oxygen']),
-          card('🏭', 'Greenhouse effect', 'Greenhouse gases (like carbon dioxide and methane) trap heat in the atmosphere. Burning fossil fuels and cutting down forests increase carbon dioxide, causing global warming and climate change: melting ice, rising sea levels and more extreme weather.', ['greenhouse effect', 'climate change']),
+          card('🌬️', 'What’s in air', 'Air is about 78% nitrogen, 21% oxygen, about 1% argon, and a tiny 0.04% carbon dioxide, plus water vapour.', ['nitrogen', 'oxygen'], 'atmosphere'),
+          card('🏭', 'Greenhouse effect', 'Greenhouse gases (like carbon dioxide and methane) trap heat in the atmosphere. Burning fossil fuels and cutting down forests increase carbon dioxide, causing global warming and climate change: melting ice, rising sea levels and more extreme weather.', ['greenhouse effect', 'climate change'], 'greenhouse'),
           card('♻️', 'The carbon cycle', 'Carbon moves around: photosynthesis takes CO₂ out of the air; respiration, combustion and decomposition put it back.', ['carbon cycle']),
         ],
         questions: [
@@ -434,7 +434,7 @@ export const chemistry: Unit[] = [
         title: 'Earth’s resources & recycling',
         emoji: '♻️',
         learn: [
-          card('⛏️', 'Ores', 'An ore is a rock containing enough metal to be worth extracting. Metals less reactive than carbon (like iron and zinc) can be extracted by heating the oxide with carbon: iron oxide + carbon → iron + carbon dioxide. More reactive metals (like aluminium) need electrolysis, which uses lots of energy.', ['ore', 'extraction', 'electrolysis']),
+          card('⛏️', 'Ores', 'An ore is a rock containing enough metal to be worth extracting. Metals less reactive than carbon (like iron and zinc) can be extracted by heating the oxide with carbon: iron oxide + carbon → iron + carbon dioxide. More reactive metals (like aluminium) need electrolysis, which uses lots of energy.', ['ore', 'extraction', 'electrolysis'], 'extraction'),
           card('♻️', 'Recycling', 'Recycling metals, glass and plastics saves raw materials and energy, and reduces waste going to landfill. Earth’s resources are finite: they will run out.', ['recycling', 'finite']),
         ],
         questions: [

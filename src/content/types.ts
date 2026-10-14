@@ -53,6 +53,8 @@ export interface LearnCard {
   title: string;
   body: string;
   keywords?: string[];
+  /** Id of a diagram in src/diagrams, shown above the text. */
+  diagram?: string;
 }
 
 export interface Lesson {

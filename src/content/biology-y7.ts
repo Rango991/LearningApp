@@ -20,6 +20,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🧠',
               title: 'MRS GREN',
+              diagram: 'mrs-gren',
               body: 'Every living thing does all 7 life processes. Remember them with MRS GREN: Movement, Respiration, Sensitivity, Growth, Reproduction, Excretion, Nutrition.',
               keywords: ['MRS GREN', 'life processes'],
             },
@@ -83,12 +84,14 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🐾',
               title: 'Animal cells',
+              diagram: 'animal-cell',
               body: 'Nucleus: controls the cell and holds the genetic information (DNA). Cytoplasm: jelly where chemical reactions happen. Cell membrane: controls what goes in and out. Mitochondria: where respiration happens, releasing energy.',
               keywords: ['nucleus', 'cytoplasm', 'cell membrane', 'mitochondria'],
             },
             {
               emoji: '🌱',
               title: 'Plant cells have 3 extras',
+              diagram: 'plant-cell',
               body: 'Cell wall: made of cellulose, strengthens and supports the cell. Chloroplasts: contain green chlorophyll and are where photosynthesis happens. Permanent vacuole: filled with cell sap, keeps the cell firm.',
               keywords: ['cell wall', 'chloroplast', 'vacuole'],
             },
@@ -149,18 +152,21 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🔬',
               title: 'Microscope parts',
+              diagram: 'microscope',
               body: 'Eyepiece lens: the one you look through. Objective lenses: the ones close to the slide. Stage: where the slide sits. Light source or mirror: lights up the sample. Coarse and fine focus knobs: make the image sharp.',
               keywords: ['eyepiece', 'objective lens', 'stage', 'focus'],
             },
             {
               emoji: '✖️',
               title: 'Magnification',
+              diagram: 'magnification',
               body: 'Total magnification = eyepiece magnification × objective magnification. A ×10 eyepiece with a ×40 objective gives ×400.',
               keywords: ['magnification'],
             },
             {
               emoji: '🧪',
               title: 'Making a slide',
+              diagram: 'slide-prep',
               body: 'Put a thin sample on the slide and add a stain so you can see the cells: iodine for onion (plant) cells, methylene blue for cheek (animal) cells. Lower the cover slip at an angle to stop air bubbles. Always start with the lowest-power objective lens.',
               keywords: ['stain', 'cover slip'],
             },
@@ -217,6 +223,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🩸',
               title: 'Animal specialists',
+              diagram: 'specialised-cells',
               body: 'Red blood cell: no nucleus, so there’s more room for haemoglobin to carry oxygen. Nerve cell: long with branched ends, carries electrical impulses. Sperm cell: tail to swim and lots of mitochondria for energy. Egg cell: large, with food stored in its cytoplasm.',
               keywords: ['red blood cell', 'nerve cell', 'sperm', 'egg'],
             },
@@ -279,6 +286,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '💨',
               title: 'Diffusion',
+              diagram: 'diffusion',
               body: 'Diffusion is the movement of particles from an area of high concentration to an area of low concentration. It’s how oxygen gets into cells and carbon dioxide gets out. Diffusion is faster when it’s warmer.',
               keywords: ['diffusion', 'concentration'],
             },
@@ -343,6 +351,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🪜',
               title: 'Small to big',
+              diagram: 'organisation',
               body: 'Cell → tissue → organ → organ system → organism. A tissue is a group of similar cells working together. An organ is made of different tissues. An organ system is a group of organs working together.',
               keywords: ['tissue', 'organ', 'organ system'],
             },
@@ -394,6 +403,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🦴',
               title: '4 jobs of the skeleton',
+              diagram: 'skeleton-jobs',
               body: 'Support (holds you up), Protection (of organs), Movement (with muscles), and Making blood cells (in the bone marrow). An adult has 206 bones.',
               keywords: ['support', 'protection', 'movement', 'bone marrow'],
             },
@@ -446,6 +456,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🚪',
               title: 'Joints',
+              diagram: 'joints',
               body: 'Hinge joints (elbow, knee) move in one direction, like a door. Ball and socket joints (hip, shoulder) move in lots of directions. Fixed joints (skull) don’t move. Cartilage covers the ends of bones to stop them rubbing.',
               keywords: ['hinge joint', 'ball and socket', 'cartilage'],
             },
@@ -458,6 +469,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '↔️',
               title: 'Antagonistic pairs',
+              diagram: 'antagonistic',
               body: 'Muscles can only pull (contract), they can’t push. So they work in pairs. To bend your arm the biceps contracts and the triceps relaxes. To straighten it, the triceps contracts and the biceps relaxes.',
               keywords: ['antagonistic', 'biceps', 'triceps'],
             },
@@ -506,6 +518,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🌬️',
               title: 'Air’s journey',
+              diagram: 'airways',
               body: 'Nose/mouth → trachea (windpipe) → bronchi → bronchioles → alveoli. Alveoli are tiny air sacs where gas exchange happens.',
               keywords: ['trachea', 'bronchi', 'bronchioles', 'alveoli'],
             },
@@ -518,6 +531,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🎈',
               title: 'Breathing in',
+              diagram: 'breathing',
               body: 'The diaphragm contracts and flattens, the ribs move up and out, the chest gets bigger, the pressure inside drops, and air rushes in. Breathing out is the reverse.',
               keywords: ['diaphragm', 'inhale', 'exhale'],
             },
@@ -572,6 +586,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '♂️',
               title: 'Male system',
+              diagram: 'repro-organs',
               body: 'Testes: make sperm and the hormone testosterone. Scrotum: bag of skin holding the testes. Sperm duct: carries sperm to the urethra. Glands: add fluid to make semen. Urethra: tube that carries semen (or urine) out through the penis.',
               keywords: ['testes', 'sperm duct', 'urethra'],
             },
@@ -634,6 +649,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '📅',
               title: 'Menstrual cycle',
+              diagram: 'menstrual-cycle',
               body: 'The cycle takes about 28 days. The uterus lining thickens, and an egg is released around day 14 (ovulation). If the egg isn’t fertilised, the lining breaks down and leaves the body. This is a period (menstruation), which lasts about 3 to 7 days.',
               keywords: ['menstrual cycle', 'ovulation', 'menstruation'],
             },
@@ -688,6 +704,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🔗',
               title: 'Life support',
+              diagram: 'pregnancy',
               body: 'Placenta: passes oxygen and nutrients from the mother’s blood to the fetus, and takes away waste like carbon dioxide. Umbilical cord: connects the fetus to the placenta. Amniotic fluid: cushions and protects the fetus.',
               keywords: ['placenta', 'umbilical cord', 'amniotic fluid'],
             },
@@ -739,6 +756,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🌼',
               title: 'Parts of a flower',
+              diagram: 'flower',
               body: 'Male part = stamen: the anther (makes pollen) on a filament. Female part = carpel: the stigma (sticky, catches pollen), the style, and the ovary (contains ovules). Petals attract insects. Sepals protect the flower when it’s a bud.',
               keywords: ['stamen', 'anther', 'carpel', 'stigma', 'ovary'],
             },
@@ -751,6 +769,7 @@ export const biologyY7: Unit[] = [
             {
               emoji: '🌰',
               title: 'Fertilisation & seeds',
+              diagram: 'seed-dispersal',
               body: 'A pollen tube grows down the style to an ovule, and fertilisation happens. The ovule becomes a seed and the ovary becomes the fruit. Seeds are dispersed (spread) by wind, animals, water or by exploding pods, which reduces competition with the parent plant.',
               keywords: ['pollen tube', 'seed dispersal'],
             },

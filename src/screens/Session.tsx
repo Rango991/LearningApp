@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Emoji } from '../components/Emoji';
+import { RichText } from '../components/RichText';
+import { Diagram } from '../diagrams';
 import { correctAnswerText, findQuestion } from '../content';
 import type { LearnCard } from '../content/types';
 import { Mascot } from '../components/Mascot';
@@ -124,15 +126,19 @@ export function Session({ plan, accessory, onQuit, onFinish }: Props) {
       {phase === 'learn' && plan.learn && (
         <main className="session-body learn">
           <p className="eyebrow">Learn · {card + 1} of {plan.learn.length}</p>
-          <div className="learn-card pop-in" key={card}>
-            <Emoji e={plan.learn[card].emoji} size={88} className="learn-emoji" />
-            <h2>{plan.learn[card].title}</h2>
-            <p>{plan.learn[card].body}</p>
-            {plan.learn[card].keywords && (
-              <div className="keywords">
-                {plan.learn[card].keywords!.map((k) => <span key={k} className="chip">{k}</span>)}
-              </div>
+          <div className={`learn-card pop-in ${plan.learn[card].diagram ? 'with-diagram' : ''}`} key={card}>
+            {plan.learn[card].diagram ? (
+              <>
+                <div className="learn-diagram"><Diagram id={plan.learn[card].diagram!} /></div>
+                <h2><Emoji e={plan.learn[card].emoji} size={32} /> {plan.learn[card].title}</h2>
+              </>
+            ) : (
+              <>
+                <Emoji e={plan.learn[card].emoji} size={80} className="learn-emoji" />
+                <h2>{plan.learn[card].title}</h2>
+              </>
             )}
+            <RichText text={plan.learn[card].body} keywords={plan.learn[card].keywords} />
           </div>
           <div className="session-actions">
             {card > 0 && <button className="btn ghost" onClick={() => setCard(card - 1)}>Back</button>}

@@ -18,5 +18,5 @@ export const match = (id: string, prompt: string, pairs: [string, string][], exp
 export const order = (id: string, prompt: string, items: string[], explain?: string): OrderQuestion =>
   ({ type: 'order', id, prompt, items, explain });
 
-export const card = (emoji: string, title: string, body: string, keywords?: string[]): LearnCard =>
-  ({ emoji, title, body, keywords });
+export const card = (emoji: string, title: string, body: string, keywords?: string[], diagram?: string): LearnCard =>
+  ({ emoji, title, body, keywords, diagram });

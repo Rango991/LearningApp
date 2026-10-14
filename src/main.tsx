@@ -5,14 +5,17 @@ import '@fontsource/nunito/600.css';
 import '@fontsource/nunito/800.css';
 import '@fontsource/nunito/900.css';
 import { App } from './App';
+import { DiagramGallery } from './diagrams';
 import { StoreProvider } from './store';
 import './styles.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <StoreProvider>
-      <App />
-    </StoreProvider>
+    {location.search.includes('diagrams') ? <DiagramGallery /> : (
+      <StoreProvider>
+        <App />
+      </StoreProvider>
+    )}
   </StrictMode>,
 );
 

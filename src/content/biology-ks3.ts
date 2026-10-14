@@ -19,7 +19,7 @@ export const biologyKs3: Unit[] = [
         title: 'A balanced diet',
         emoji: '🥗',
         learn: [
-          card('🍞', 'The 7 nutrients', 'Carbohydrates: main energy source. Lipids (fats and oils): store energy and insulate. Proteins: growth and repair. Vitamins and minerals: keep you healthy in small amounts. Fibre: keeps food moving through the gut. Water: needed by every cell.', ['carbohydrate', 'lipid', 'protein', 'fibre']),
+          card('🍞', 'The 7 nutrients', 'Carbohydrates: main energy source. Lipids (fats and oils): store energy and insulate. Proteins: growth and repair. Vitamins and minerals: keep you healthy in small amounts. Fibre: keeps food moving through the gut. Water: needed by every cell.', ['carbohydrate', 'lipid', 'protein', 'fibre'], 'nutrients'),
           card('🍊', 'Deficiency diseases', 'Not enough of a vitamin or mineral causes a deficiency disease. Too little vitamin C causes scurvy (bleeding gums). Too little vitamin D or calcium causes weak bones (rickets). Too little iron causes anaemia (tiredness).', ['deficiency', 'scurvy', 'anaemia']),
           card('⚖️', 'Energy balance', 'If you take in more energy than you use, the extra is stored as fat, and over time this can lead to obesity. Taking in too little energy leads to starvation. Active people need more energy.'),
         ],
@@ -44,7 +44,7 @@ export const biologyKs3: Unit[] = [
         title: 'Food tests',
         emoji: '🧪',
         learn: [
-          card('🔵', 'Starch and sugar', 'Starch: add iodine solution. It turns from orange-brown to blue-black if starch is there. Sugar (glucose): add Benedict’s solution and heat in a water bath. It turns from blue to green, yellow or brick red if sugar is there.', ['iodine', 'Benedict’s']),
+          card('🔵', 'Starch and sugar', 'Starch: add iodine solution. It turns from orange-brown to blue-black if starch is there. Sugar (glucose): add Benedict’s solution and heat in a water bath. It turns from blue to green, yellow or brick red if sugar is there.', ['iodine', 'Benedict’s'], 'food-tests'),
           card('🟣', 'Protein and fat', 'Protein: add biuret solution. It turns from blue to purple if protein is there. Fat (lipid): shake with ethanol, then add water. A cloudy white layer (an emulsion) means fat is there.', ['biuret', 'emulsion test']),
         ],
         questions: [
@@ -65,10 +65,10 @@ export const biologyKs3: Unit[] = [
       {
         id: 'bn-digestion',
         title: 'The digestive system',
-        emoji: '🫃',
+        emoji: '🍽️',
         learn: [
-          card('🛤️', 'The journey', 'Mouth (teeth chew, saliva starts digesting starch) → oesophagus → stomach (acid kills bacteria, churns food) → small intestine (digestion finishes, nutrients absorbed into blood) → large intestine (water absorbed) → rectum → anus.', ['oesophagus', 'small intestine', 'large intestine']),
-          card('✂️', 'Enzymes', 'Enzymes are biological catalysts that break big molecules into small ones. Carbohydrases (like amylase) break starch into sugars. Proteases break proteins into amino acids. Lipases break fats into fatty acids and glycerol.', ['enzyme', 'amylase', 'protease', 'lipase']),
+          card('🛤️', 'The journey', 'Mouth (teeth chew, saliva starts digesting starch) → oesophagus → stomach (acid kills bacteria, churns food) → small intestine (digestion finishes, nutrients absorbed into blood) → large intestine (water absorbed) → rectum → anus.', ['oesophagus', 'small intestine', 'large intestine'], 'digestive'),
+          card('✂️', 'Enzymes', 'Enzymes are biological catalysts that break big molecules into small ones. Carbohydrases (like amylase) break starch into sugars. Proteases break proteins into amino acids. Lipases break fats into fatty acids and glycerol.', ['enzyme', 'amylase', 'protease', 'lipase'], 'enzymes'),
           card('🌾', 'Villi', 'The small intestine is lined with millions of tiny finger-like villi. They give a huge surface area, have thin walls and a good blood supply, so nutrients are absorbed quickly. The liver makes bile, which breaks fat into small droplets.', ['villi', 'bile']),
         ],
         questions: [
@@ -93,7 +93,7 @@ export const biologyKs3: Unit[] = [
         learn: [
           card('💊', 'Drugs', 'A drug is a chemical that changes how your body works. Medicinal drugs (like paracetamol or antibiotics) help the body. Recreational drugs are taken for enjoyment and can be harmful and addictive.', ['drug', 'addiction']),
           card('🍺', 'Alcohol', 'Alcohol is a depressant: it slows down the nervous system and reactions. Drinking too much over a long time damages the liver and brain. Drinking in pregnancy can harm the baby.', ['depressant']),
-          card('🚬', 'Smoking', 'Nicotine is the addictive drug in cigarettes. Tar coats the lungs and causes cancer. Carbon monoxide takes the place of oxygen in red blood cells, so less oxygen reaches the body. Smoke also damages the cilia in the airways.', ['nicotine', 'tar', 'carbon monoxide']),
+          card('🚬', 'Smoking', 'Nicotine is the addictive drug in cigarettes. Tar coats the lungs and causes cancer. Carbon monoxide takes the place of oxygen in red blood cells, so less oxygen reaches the body. Smoke also damages the cilia in the airways.', ['nicotine', 'tar', 'carbon monoxide'], 'smoking'),
         ],
         questions: [
           match('q1', 'Match the chemical in cigarette smoke to its effect', [
@@ -124,7 +124,7 @@ export const biologyKs3: Unit[] = [
         emoji: '🏃',
         learn: [
           card('⚡', 'Releasing energy', 'Respiration is a chemical reaction in every living cell that releases energy from glucose. Aerobic respiration uses oxygen and happens in the mitochondria.', ['respiration', 'mitochondria']),
-          card('📝', 'The word equation', 'glucose + oxygen → carbon dioxide + water. Energy is released (it isn’t a product you write in the equation, but it’s the point of the reaction!). The energy is used for movement, keeping warm, growth and more.', ['word equation']),
+          card('📝', 'The word equation', 'glucose + oxygen → carbon dioxide + water. Energy is released (it isn’t a product you write in the equation, but it’s the point of the reaction!). The energy is used for movement, keeping warm, growth and more.', ['word equation'], 'aerobic-eq'),
         ],
         questions: [
           gap('q1', 'glucose + ___ → carbon dioxide + water', ['oxygen']),
@@ -144,7 +144,7 @@ export const biologyKs3: Unit[] = [
         title: 'Anaerobic respiration',
         emoji: '🍞',
         learn: [
-          card('🥵', 'In muscles', 'During hard exercise muscles can’t get enough oxygen, so they respire anaerobically: glucose → lactic acid. It releases much less energy, and lactic acid causes cramp. Afterwards you breathe hard to pay back the oxygen debt.', ['anaerobic', 'lactic acid', 'oxygen debt']),
+          card('🥵', 'In muscles', 'During hard exercise muscles can’t get enough oxygen, so they respire anaerobically: glucose → lactic acid. It releases much less energy, and lactic acid causes cramp. Afterwards you breathe hard to pay back the oxygen debt.', ['anaerobic', 'lactic acid', 'oxygen debt'], 'anaerobic-eq'),
           card('🍺', 'In yeast: fermentation', 'Yeast respires anaerobically too: glucose → ethanol + carbon dioxide. This is fermentation. The carbon dioxide makes bread rise, and the ethanol is the alcohol in beer and wine.', ['fermentation', 'ethanol']),
         ],
         questions: [
@@ -166,8 +166,8 @@ export const biologyKs3: Unit[] = [
         title: 'Photosynthesis',
         emoji: '🌿',
         learn: [
-          card('☀️', 'Making food', 'Plants make their own food by photosynthesis, in the chloroplasts. The green pigment chlorophyll absorbs light energy. The word equation is: carbon dioxide + water → glucose + oxygen.', ['photosynthesis', 'chlorophyll']),
-          card('🍃', 'Leaves are adapted', 'Leaves are broad and flat to catch light, and thin so gases diffuse in quickly. Palisade cells near the top are packed with chloroplasts. Tiny pores called stomata on the underside let carbon dioxide in and oxygen out, opened and closed by guard cells.', ['stomata', 'guard cells']),
+          card('☀️', 'Making food', 'Plants make their own food by photosynthesis, in the chloroplasts. The green pigment chlorophyll absorbs light energy. The word equation is: carbon dioxide + water → glucose + oxygen.', ['photosynthesis', 'chlorophyll'], 'photosynthesis-eq'),
+          card('🍃', 'Leaves are adapted', 'Leaves are broad and flat to catch light, and thin so gases diffuse in quickly. Palisade cells near the top are packed with chloroplasts. Tiny pores called stomata on the underside let carbon dioxide in and oxygen out, opened and closed by guard cells.', ['stomata', 'guard cells'], 'leaf'),
           card('🧪', 'Minerals', 'Plants also need minerals from the soil, taken in by root hair cells. Nitrates are needed to make proteins for growth. Magnesium is needed to make chlorophyll. Plants turn glucose into starch to store it.', ['nitrates', 'magnesium']),
         ],
         questions: [
@@ -200,7 +200,7 @@ export const biologyKs3: Unit[] = [
         emoji: '👪',
         learn: [
           card('🧬', 'Causes of variation', 'Differences between living things are called variation. Inherited variation comes from your parents’ genes (like eye colour or blood group). Environmental variation comes from your surroundings (like scars, accent or a tan). Many features, like height and weight, are a mix of both.', ['inherited', 'environmental']),
-          card('📊', 'Two kinds of data', 'Continuous variation can be any value in a range, like height or mass, and is shown in a histogram. Discontinuous variation falls into distinct groups, like blood group or tongue rolling, and is shown in a bar chart.', ['continuous', 'discontinuous']),
+          card('📊', 'Two kinds of data', 'Continuous variation can be any value in a range, like height or mass, and is shown in a histogram. Discontinuous variation falls into distinct groups, like blood group or tongue rolling, and is shown in a bar chart.', ['continuous', 'discontinuous'], 'variation-graphs'),
         ],
         questions: [
           match('q1', 'Is each feature inherited or environmental?', [
@@ -220,7 +220,7 @@ export const biologyKs3: Unit[] = [
         title: 'DNA, genes & chromosomes',
         emoji: '🧬',
         learn: [
-          card('📦', 'Packed in the nucleus', 'The nucleus contains chromosomes. Each chromosome is one very long molecule of DNA. A gene is a short section of DNA that carries the instructions for one characteristic.', ['chromosome', 'DNA', 'gene']),
+          card('📦', 'Packed in the nucleus', 'The nucleus contains chromosomes. Each chromosome is one very long molecule of DNA. A gene is a short section of DNA that carries the instructions for one characteristic.', ['chromosome', 'DNA', 'gene'], 'dna-zoom'),
           card('🔢', 'Numbers', 'Human body cells have 46 chromosomes in 23 pairs: one of each pair from each parent. Sex cells (eggs and sperm) have just 23, so when they join at fertilisation the baby has 46 again.', ['23 pairs']),
           card('🔬', 'Discovering DNA', 'In 1953 James Watson and Francis Crick worked out that DNA is a double helix. They used X-ray images taken by Rosalind Franklin and Maurice Wilkins.', ['double helix', 'Rosalind Franklin']),
         ],
@@ -239,7 +239,7 @@ export const biologyKs3: Unit[] = [
         title: 'Natural selection',
         emoji: '🦒',
         learn: [
-          card('🧠', 'Darwin’s idea', 'Charles Darwin explained evolution by natural selection: 1) members of a species vary; 2) they compete for food, mates and space; 3) those best adapted survive and reproduce; 4) they pass on their genes; 5) over many generations the species changes.', ['natural selection', 'Darwin']),
+          card('🧠', 'Darwin’s idea', 'Charles Darwin explained evolution by natural selection: 1) members of a species vary; 2) they compete for food, mates and space; 3) those best adapted survive and reproduce; 4) they pass on their genes; 5) over many generations the species changes.', ['natural selection', 'Darwin'], 'natural-selection'),
           card('🦤', 'Extinction', 'A species becomes extinct when there are no individuals left. Causes include changes to the environment, new diseases, new predators, competition and habitat destruction. Gene banks and seed banks store genetic material to protect species.', ['extinct', 'gene bank']),
         ],
         questions: [
@@ -271,7 +271,7 @@ export const biologyKs3: Unit[] = [
         title: 'Food chains & webs',
         emoji: '🦊',
         learn: [
-          card('🌱', 'Food chains', 'A food chain starts with a producer (a plant, which makes its own food). Then come the primary consumer (eats the producer), the secondary consumer and the tertiary consumer. The arrows show the direction energy is transferred: from the thing eaten to the eater.', ['producer', 'consumer']),
+          card('🌱', 'Food chains', 'A food chain starts with a producer (a plant, which makes its own food). Then come the primary consumer (eats the producer), the secondary consumer and the tertiary consumer. The arrows show the direction energy is transferred: from the thing eaten to the eater.', ['producer', 'consumer'], 'food-chain'),
           card('🕸️', 'Food webs', 'A food web shows lots of linked food chains. Herbivores eat plants, carnivores eat animals, omnivores eat both. Predators hunt prey.', ['herbivore', 'carnivore', 'omnivore', 'predator', 'prey']),
           card('☠️', 'Bioaccumulation', 'Some toxic chemicals, like pesticides, build up along a food chain. The top predators end up with the highest dose.', ['bioaccumulation']),
         ],
@@ -296,7 +296,7 @@ export const biologyKs3: Unit[] = [
         emoji: '🐻‍❄️',
         learn: [
           card('🔗', 'Depending on each other', 'Living things in an ecosystem depend on each other: this is interdependence. If one population changes, others in the food web change too. Fewer rabbits means less food for foxes, but more grass.', ['interdependence', 'population']),
-          card('🐫', 'Adaptations', 'Adaptations help organisms survive where they live. Polar bears: thick fur, fat layer and small ears to keep heat in. Camels: wide feet for sand, can go a long time without drinking. Cacti: spines instead of leaves to reduce water loss, and deep or wide roots.', ['adaptation']),
+          card('🐫', 'Adaptations', 'Adaptations help organisms survive where they live. Polar bears: thick fur, fat layer and small ears to keep heat in. Camels: wide feet for sand, can go a long time without drinking. Cacti: spines instead of leaves to reduce water loss, and deep or wide roots.', ['adaptation'], 'adaptations'),
           card('🥊', 'Competition', 'Animals compete for food, water, space and mates. Plants compete for light, water, space and minerals.', ['competition']),
         ],
         questions: [
@@ -318,7 +318,7 @@ export const biologyKs3: Unit[] = [
         title: 'Decomposers, pollinators & sampling',
         emoji: '🐝',
         learn: [
-          card('🍄', 'Decomposers', 'Decomposers such as bacteria and fungi break down dead plants and animals. This recycles nutrients back into the soil for plants to use.', ['decomposer']),
+          card('🍄', 'Decomposers', 'Decomposers such as bacteria and fungi break down dead plants and animals. This recycles nutrients back into the soil for plants to use.', ['decomposer'], 'decomposers'),
           card('🐝', 'Pollinators', 'Insects like bees carry pollen between flowers so plants can make seeds. Many of our crops depend on them, so a fall in bee numbers can affect our food.', ['pollinator']),
           card('🟩', 'Quadrats', 'To estimate how many plants are in a field, place a quadrat (a square frame) at random positions many times and count what’s inside. Random placement avoids bias. Then scale up: average per quadrat × number of quadrats that would fit in the field.', ['quadrat', 'random sampling']),
         ],
