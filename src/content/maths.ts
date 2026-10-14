@@ -1,18 +1,19 @@
 import { card, gap, match, mcq, order, tf } from './helpers';
 import type { Unit } from './types';
 
-// KS3 Maths (Years 7-9, National Curriculum), pitched to lead into AQA GCSE.
+// KS3 Maths (Year 7, then Years 8-9, National Curriculum), pitched to lead into AQA GCSE.
 // Number answers are marked by value, so 0.5, .5 and 1/2 all count.
 // Question ids are stored in progress data, so never change an existing id.
 
-const STAGE = 'KS3';
+const Y7 = 'Year 7';
+const Y89 = 'Years 8–9';
 
 export const maths: Unit[] = [
   {
     id: 'maths-number',
     title: 'Number',
-    stage: STAGE,
-    description: 'Negative numbers, order of operations, primes and factors, powers and standard form.',
+    stage: Y7,
+    description: 'Negative numbers, order of operations, and factors, multiples and primes.',
     colour: '#ff8a3d',
     lessons: [
       {
@@ -73,32 +74,13 @@ export const maths: Unit[] = [
           mcq('q8', 'Which of these is prime?', ['21', '27', '29', '33'], 2),
         ],
       },
-      {
-        id: 'mn-powers',
-        title: 'Powers, roots & standard form',
-        emoji: '🚀',
-        learn: [
-          card('🔼', 'Powers and roots', '2⁵ means 2 × 2 × 2 × 2 × 2 = 32. A square root undoes squaring: √81 = 9. A cube root undoes cubing: ∛64 = 4. Index laws: multiply means add powers (5² × 5³ = 5⁵), divide means subtract powers (7⁶ ÷ 7² = 7⁴).', ['index', 'square root', 'cube root'], 'powers'),
-          card('🔭', 'Standard form', 'Standard form writes big and small numbers as A × 10ⁿ, where A is between 1 and 10. 4,500 = 4.5 × 10³. 0.0062 = 6.2 × 10⁻³. A positive power means a big number; a negative power means a small number.', ['standard form'], 'standard-form'),
-        ],
-        questions: [
-          gap('q1', '2⁵ = ___', ['32']),
-          gap('q2', '√81 = ___', ['9']),
-          gap('q3', '∛64 = ___', ['4']),
-          gap('q4', '3 × 10⁴ = ___', ['30000']),
-          mcq('q5', '4,500 in standard form is…', ['4.5 × 10³', '45 × 10²', '4.5 × 10²', '0.45 × 10⁴'], 0),
-          mcq('q6', '0.0062 in standard form is…', ['6.2 × 10⁻³', '6.2 × 10³', '62 × 10⁻⁴', '6.2 × 10⁻²'], 0),
-          mcq('q7', '5² × 5³ = ?', ['5⁵', '5⁶', '25⁵', '10⁵'], 0, 'When multiplying, add the powers.'),
-          tf('q8', '2³ = 6', false, '2³ = 2 × 2 × 2 = 8.'),
-        ],
-      },
     ],
   },
   {
     id: 'maths-fdp',
-    title: 'Fractions, percentages & ratio',
-    stage: STAGE,
-    description: 'Fraction sums, converting between fractions, decimals and percentages, and sharing in a ratio.',
+    title: 'Fractions, decimals & percentages',
+    stage: Y7,
+    description: 'Fraction sums, converting between fractions, decimals and percentages, and percentages of amounts.',
     colour: '#ef5b5b',
     lessons: [
       {
@@ -163,31 +145,13 @@ export const maths: Unit[] = [
           tf('q8', 'Increasing by 10% then decreasing by 10% gets you back to where you started.', false, '100 → 110 → 99. The 10% decrease is of a bigger number.'),
         ],
       },
-      {
-        id: 'mf-ratio',
-        title: 'Ratio & proportion',
-        emoji: '⚖️',
-        learn: [
-          card('🍰', 'Sharing in a ratio', 'Share £30 in the ratio 2 : 3. Add the parts: 2 + 3 = 5. One part = £30 ÷ 5 = £6. So the shares are 2 × £6 = £12 and 3 × £6 = £18.', ['ratio'], 'ratio-bar'),
-          card('🛒', 'Proportion and best buys', 'If 4 eggs make enough for 6 people, 1 person needs 4 ÷ 6 eggs, so 9 people need 6 eggs. For best buys, work out the cost per gram (or grams per penny) and compare.', ['proportion', 'unit price']),
-        ],
-        questions: [
-          mcq('q1', 'Simplify 12 : 8', ['3 : 2', '6 : 4', '2 : 3', '4 : 3'], 0),
-          gap('q2', 'Share £30 in the ratio 2 : 3. The smaller share is £___', ['12']),
-          gap('q3', 'Boys to girls is 2 : 3 in a class of 30. Number of girls = ___', ['18']),
-          gap('q4', '4 eggs serve 6 people. Eggs for 9 people = ___', ['6']),
-          mcq('q5', 'Which is the better buy?', ['500 g for £2.00', '750 g for £2.70'], 1, '£2.00 ÷ 5 = 40p per 100 g; £2.70 ÷ 7.5 = 36p per 100 g.'),
-          gap('q6', 'Share 56 sweets in the ratio 3 : 5. The bigger share is ___', ['35']),
-          mcq('q7', 'A map scale is 1 : 50,000. 2 cm on the map is…', ['1 km', '100 m', '10 km', '50 km'], 0, '2 × 50,000 = 100,000 cm = 1,000 m = 1 km.'),
-        ],
-      },
     ],
   },
   {
     id: 'maths-algebra',
     title: 'Algebra',
-    stage: STAGE,
-    description: 'Simplifying, expanding brackets, solving equations, sequences and straight-line graphs.',
+    stage: Y7,
+    description: 'Simplifying and substituting, solving equations, and sequences.',
     colour: '#4f7cf7',
     lessons: [
       {
@@ -207,24 +171,6 @@ export const maths: Unit[] = [
           gap('q6', 'If x = −2, then x² = ___', ['4']),
           tf('q7', '2x + 3y = 5xy', false, 'They’re unlike terms, so they can’t be combined.'),
           gap('q8', 'If n = 4, then n² − n = ___', ['12']),
-        ],
-      },
-      {
-        id: 'ma-expand',
-        title: 'Expanding & factorising',
-        emoji: '📦',
-        learn: [
-          card('💥', 'Expanding', 'Multiply everything inside the bracket by the term outside: 3(x + 4) = 3x + 12. Watch signs: −2(x − 5) = −2x + 10. Double brackets: (x + 2)(x + 3) = x² + 3x + 2x + 6 = x² + 5x + 6.', ['expand'], 'expand-grid'),
-          card('📥', 'Factorising', 'Factorising is the reverse: take out the highest common factor. 6x + 9 = 3(2x + 3). x² + 5x = x(x + 5).', ['factorise']),
-        ],
-        questions: [
-          mcq('q1', 'Expand 3(x + 4)', ['3x + 12', '3x + 4', 'x + 12', '3x + 7'], 0),
-          mcq('q2', 'Expand −2(x − 5)', ['−2x + 10', '−2x − 10', '2x − 10', '−2x − 5'], 0),
-          mcq('q3', 'Factorise 6x + 9', ['3(2x + 3)', '6(x + 9)', '3(2x + 9)', '2(3x + 9)'], 0),
-          mcq('q4', 'Expand x(x + 3)', ['x² + 3x', '2x + 3', 'x² + 3', 'x + 3x'], 0),
-          mcq('q5', 'Expand (x + 2)(x + 3)', ['x² + 5x + 6', 'x² + 6', 'x² + 6x + 5', '2x + 5'], 0),
-          mcq('q6', 'Factorise x² + 5x', ['x(x + 5)', 'x(5x)', '5(x² + x)', 'x² (1 + 5)'], 0),
-          mcq('q7', 'Factorise 10a − 15', ['5(2a − 3)', '5(2a − 15)', '10(a − 15)', '5(a − 3)'], 0),
         ],
       },
       {
@@ -265,31 +211,13 @@ export const maths: Unit[] = [
           gap('q8', 'The first term of 2n + 5 is ___', ['7']),
         ],
       },
-      {
-        id: 'ma-graphs',
-        title: 'Straight-line graphs',
-        emoji: '📈',
-        learn: [
-          card('📏', 'y = mx + c', 'Every straight line can be written y = mx + c. m is the gradient (steepness): how far up for each 1 across. c is the y-intercept: where the line crosses the y-axis. y = 2x + 3 has gradient 2 and crosses at (0, 3).', ['gradient', 'y-intercept'], 'line-graph'),
-          card('📍', 'Points on a line', 'A point is on a line if its coordinates fit the equation. Is (2, 7) on y = 3x + 1? 3 × 2 + 1 = 7 ✓. Gradient between two points = change in y ÷ change in x. Lines like y = 4 are horizontal.', ['coordinates']),
-        ],
-        questions: [
-          gap('q1', 'The gradient of y = 2x + 3 is ___', ['2']),
-          gap('q2', 'y = 2x + 3 crosses the y-axis at y = ___', ['3']),
-          gap('q3', 'On y = 2x + 3, when x = 4, y = ___', ['11']),
-          tf('q4', 'The point (2, 7) lies on y = 3x + 1.', true),
-          mcq('q5', 'Which line is steepest?', ['y = x + 5', 'y = 3x + 1', 'y = 2x − 4', 'y = 0.5x'], 1),
-          mcq('q6', 'What does the line y = 4 look like?', ['Horizontal', 'Vertical', 'Diagonal', 'Curved'], 0),
-          gap('q7', 'Gradient of the line through (0, 1) and (2, 7) = ___', ['3']),
-        ],
-      },
     ],
   },
   {
     id: 'maths-geometry',
-    title: 'Geometry & measures',
-    stage: STAGE,
-    description: 'Angle rules, area and perimeter, circles, Pythagoras and volume.',
+    title: 'Angles & area',
+    stage: Y7,
+    description: 'Angle rules, and the area and perimeter of 2D shapes.',
     colour: '#16a6a0',
     lessons: [
       {
@@ -333,6 +261,153 @@ export const maths: Unit[] = [
           gap('q7', 'A square has an area of 49 cm². Its perimeter is ___ cm', ['28']),
         ],
       },
+    ],
+  },
+  {
+    id: 'maths-stats',
+    title: 'Statistics & probability',
+    stage: Y7,
+    description: 'Mean, median, mode and range, and probability.',
+    colour: '#a259d9',
+    lessons: [
+      {
+        id: 'ms-averages',
+        title: 'Averages & range',
+        emoji: '📊',
+        learn: [
+          card('🔢', 'Three averages', 'Mean: add them all up and divide by how many there are. Median: the middle value when in order (if there are two middle values, take halfway between them). Mode: the most common value. Range: biggest − smallest, which shows how spread out the data is.', ['mean', 'median', 'mode', 'range'], 'averages'),
+          card('⚠️', 'Outliers', 'An extreme value (an outlier) affects the mean a lot, but barely affects the median.', ['outlier']),
+        ],
+        questions: [
+          gap('q1', 'Data: 3, 5, 5, 7, 10. Mean = ___', ['6']),
+          gap('q2', 'Data: 3, 5, 5, 7, 10. Median = ___', ['5']),
+          gap('q3', 'Data: 3, 5, 5, 7, 10. Mode = ___', ['5']),
+          gap('q4', 'Data: 3, 5, 5, 7, 10. Range = ___', ['7']),
+          gap('q5', 'Data: 2, 8, 4, 6. Median = ___', ['5']),
+          mcq('q6', 'Which average is most affected by an outlier?', ['Mean', 'Median', 'Mode', 'None of them'], 0),
+          gap('q7', 'The mean of four numbers is 10. Their total is ___', ['40']),
+        ],
+      },
+      {
+        id: 'ms-probability',
+        title: 'Probability',
+        emoji: '🎲',
+        learn: [
+          card('🎯', 'The scale', 'Probability goes from 0 (impossible) to 1 (certain). Probability = number of ways it can happen ÷ total number of outcomes. P(rolling a 6) = 1/6.', ['probability'], 'probability-scale'),
+          card('🔄', 'Not happening', 'P(not A) = 1 − P(A). If P(rain) = 0.3, then P(no rain) = 0.7. Expected number = probability × number of trials: flip a coin 100 times and you’d expect about 50 heads.', ['expected outcomes']),
+          card('🎲', 'Experiments', 'Relative frequency = how many times it happened ÷ number of trials. The more trials, the closer it gets to the true probability.', ['relative frequency']),
+        ],
+        questions: [
+          gap('q1', 'P(rolling a 6 on a fair dice) = ___', ['1/6'], undefined, 'Write it as a fraction'),
+          gap('q2', 'P(not rolling a 6) = ___', ['5/6'], undefined, 'Write it as a fraction'),
+          gap('q3', 'P(rolling an even number) = ___', ['1/2']),
+          gap('q4', 'A bag has 3 red and 5 blue counters. P(red) = ___', ['3/8']),
+          gap('q5', 'P(A) = 0.3. P(not A) = ___', ['0.7']),
+          gap('q6', 'Flip a fair coin 100 times. Expected number of heads = ___', ['50']),
+          tf('q7', 'A probability can be 1.2.', false, 'Probabilities are always between 0 and 1.'),
+          gap('q8', 'A dice lands on 6 twenty times in 60 rolls. Relative frequency = ___', ['1/3'], undefined, 'Write it as a fraction'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'maths-y8-number',
+    title: 'Powers & ratio',
+    stage: Y89,
+    description: 'Powers, roots and standard form, and ratio and proportion.',
+    colour: '#f2994a',
+    lessons: [
+      {
+        id: 'mn-powers',
+        title: 'Powers, roots & standard form',
+        emoji: '🚀',
+        learn: [
+          card('🔼', 'Powers and roots', '2⁵ means 2 × 2 × 2 × 2 × 2 = 32. A square root undoes squaring: √81 = 9. A cube root undoes cubing: ∛64 = 4. Index laws: multiply means add powers (5² × 5³ = 5⁵), divide means subtract powers (7⁶ ÷ 7² = 7⁴).', ['index', 'square root', 'cube root'], 'powers'),
+          card('🔭', 'Standard form', 'Standard form writes big and small numbers as A × 10ⁿ, where A is between 1 and 10. 4,500 = 4.5 × 10³. 0.0062 = 6.2 × 10⁻³. A positive power means a big number; a negative power means a small number.', ['standard form'], 'standard-form'),
+        ],
+        questions: [
+          gap('q1', '2⁵ = ___', ['32']),
+          gap('q2', '√81 = ___', ['9']),
+          gap('q3', '∛64 = ___', ['4']),
+          gap('q4', '3 × 10⁴ = ___', ['30000']),
+          mcq('q5', '4,500 in standard form is…', ['4.5 × 10³', '45 × 10²', '4.5 × 10²', '0.45 × 10⁴'], 0),
+          mcq('q6', '0.0062 in standard form is…', ['6.2 × 10⁻³', '6.2 × 10³', '62 × 10⁻⁴', '6.2 × 10⁻²'], 0),
+          mcq('q7', '5² × 5³ = ?', ['5⁵', '5⁶', '25⁵', '10⁵'], 0, 'When multiplying, add the powers.'),
+          tf('q8', '2³ = 6', false, '2³ = 2 × 2 × 2 = 8.'),
+        ],
+      },
+      {
+        id: 'mf-ratio',
+        title: 'Ratio & proportion',
+        emoji: '⚖️',
+        learn: [
+          card('🍰', 'Sharing in a ratio', 'Share £30 in the ratio 2 : 3. Add the parts: 2 + 3 = 5. One part = £30 ÷ 5 = £6. So the shares are 2 × £6 = £12 and 3 × £6 = £18.', ['ratio'], 'ratio-bar'),
+          card('🛒', 'Proportion and best buys', 'If 4 eggs make enough for 6 people, 1 person needs 4 ÷ 6 eggs, so 9 people need 6 eggs. For best buys, work out the cost per gram (or grams per penny) and compare.', ['proportion', 'unit price']),
+        ],
+        questions: [
+          mcq('q1', 'Simplify 12 : 8', ['3 : 2', '6 : 4', '2 : 3', '4 : 3'], 0),
+          gap('q2', 'Share £30 in the ratio 2 : 3. The smaller share is £___', ['12']),
+          gap('q3', 'Boys to girls is 2 : 3 in a class of 30. Number of girls = ___', ['18']),
+          gap('q4', '4 eggs serve 6 people. Eggs for 9 people = ___', ['6']),
+          mcq('q5', 'Which is the better buy?', ['500 g for £2.00', '750 g for £2.70'], 1, '£2.00 ÷ 5 = 40p per 100 g; £2.70 ÷ 7.5 = 36p per 100 g.'),
+          gap('q6', 'Share 56 sweets in the ratio 3 : 5. The bigger share is ___', ['35']),
+          mcq('q7', 'A map scale is 1 : 50,000. 2 cm on the map is…', ['1 km', '100 m', '10 km', '50 km'], 0, '2 × 50,000 = 100,000 cm = 1,000 m = 1 km.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'maths-y8-algebra',
+    title: 'Expanding & graphs',
+    stage: Y89,
+    description: 'Expanding brackets, factorising, and straight-line graphs.',
+    colour: '#3f6ad8',
+    lessons: [
+      {
+        id: 'ma-expand',
+        title: 'Expanding & factorising',
+        emoji: '📦',
+        learn: [
+          card('💥', 'Expanding', 'Multiply everything inside the bracket by the term outside: 3(x + 4) = 3x + 12. Watch signs: −2(x − 5) = −2x + 10. Double brackets: (x + 2)(x + 3) = x² + 3x + 2x + 6 = x² + 5x + 6.', ['expand'], 'expand-grid'),
+          card('📥', 'Factorising', 'Factorising is the reverse: take out the highest common factor. 6x + 9 = 3(2x + 3). x² + 5x = x(x + 5).', ['factorise']),
+        ],
+        questions: [
+          mcq('q1', 'Expand 3(x + 4)', ['3x + 12', '3x + 4', 'x + 12', '3x + 7'], 0),
+          mcq('q2', 'Expand −2(x − 5)', ['−2x + 10', '−2x − 10', '2x − 10', '−2x − 5'], 0),
+          mcq('q3', 'Factorise 6x + 9', ['3(2x + 3)', '6(x + 9)', '3(2x + 9)', '2(3x + 9)'], 0),
+          mcq('q4', 'Expand x(x + 3)', ['x² + 3x', '2x + 3', 'x² + 3', 'x + 3x'], 0),
+          mcq('q5', 'Expand (x + 2)(x + 3)', ['x² + 5x + 6', 'x² + 6', 'x² + 6x + 5', '2x + 5'], 0),
+          mcq('q6', 'Factorise x² + 5x', ['x(x + 5)', 'x(5x)', '5(x² + x)', 'x² (1 + 5)'], 0),
+          mcq('q7', 'Factorise 10a − 15', ['5(2a − 3)', '5(2a − 15)', '10(a − 15)', '5(a − 3)'], 0),
+        ],
+      },
+      {
+        id: 'ma-graphs',
+        title: 'Straight-line graphs',
+        emoji: '📈',
+        learn: [
+          card('📏', 'y = mx + c', 'Every straight line can be written y = mx + c. m is the gradient (steepness): how far up for each 1 across. c is the y-intercept: where the line crosses the y-axis. y = 2x + 3 has gradient 2 and crosses at (0, 3).', ['gradient', 'y-intercept'], 'line-graph'),
+          card('📍', 'Points on a line', 'A point is on a line if its coordinates fit the equation. Is (2, 7) on y = 3x + 1? 3 × 2 + 1 = 7 ✓. Gradient between two points = change in y ÷ change in x. Lines like y = 4 are horizontal.', ['coordinates']),
+        ],
+        questions: [
+          gap('q1', 'The gradient of y = 2x + 3 is ___', ['2']),
+          gap('q2', 'y = 2x + 3 crosses the y-axis at y = ___', ['3']),
+          gap('q3', 'On y = 2x + 3, when x = 4, y = ___', ['11']),
+          tf('q4', 'The point (2, 7) lies on y = 3x + 1.', true),
+          mcq('q5', 'Which line is steepest?', ['y = x + 5', 'y = 3x + 1', 'y = 2x − 4', 'y = 0.5x'], 1),
+          mcq('q6', 'What does the line y = 4 look like?', ['Horizontal', 'Vertical', 'Diagonal', 'Curved'], 0),
+          gap('q7', 'Gradient of the line through (0, 1) and (2, 7) = ___', ['3']),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'maths-y8-geometry',
+    title: 'Circles, Pythagoras & volume',
+    stage: Y89,
+    description: 'Circles, Pythagoras’ theorem, volume and converting units.',
+    colour: '#12908b',
+    lessons: [
       {
         id: 'mg-circles',
         title: 'Circles',
@@ -384,53 +459,6 @@ export const maths: Unit[] = [
           gap('q5', '3.2 kg = ___ g', ['3200']),
           mcq('q6', '1 m² = how many cm²?', ['100', '1,000', '10,000', '1,000,000'], 2),
           gap('q7', '1 litre = ___ cm³', ['1000']),
-        ],
-      },
-    ],
-  },
-  {
-    id: 'maths-stats',
-    title: 'Statistics & probability',
-    stage: STAGE,
-    description: 'Mean, median, mode and range, and working out probabilities.',
-    colour: '#a259d9',
-    lessons: [
-      {
-        id: 'ms-averages',
-        title: 'Averages & range',
-        emoji: '📊',
-        learn: [
-          card('🔢', 'Three averages', 'Mean: add them all up and divide by how many there are. Median: the middle value when in order (if there are two middle values, take halfway between them). Mode: the most common value. Range: biggest − smallest, which shows how spread out the data is.', ['mean', 'median', 'mode', 'range'], 'averages'),
-          card('⚠️', 'Outliers', 'An extreme value (an outlier) affects the mean a lot, but barely affects the median.', ['outlier']),
-        ],
-        questions: [
-          gap('q1', 'Data: 3, 5, 5, 7, 10. Mean = ___', ['6']),
-          gap('q2', 'Data: 3, 5, 5, 7, 10. Median = ___', ['5']),
-          gap('q3', 'Data: 3, 5, 5, 7, 10. Mode = ___', ['5']),
-          gap('q4', 'Data: 3, 5, 5, 7, 10. Range = ___', ['7']),
-          gap('q5', 'Data: 2, 8, 4, 6. Median = ___', ['5']),
-          mcq('q6', 'Which average is most affected by an outlier?', ['Mean', 'Median', 'Mode', 'None of them'], 0),
-          gap('q7', 'The mean of four numbers is 10. Their total is ___', ['40']),
-        ],
-      },
-      {
-        id: 'ms-probability',
-        title: 'Probability',
-        emoji: '🎲',
-        learn: [
-          card('🎯', 'The scale', 'Probability goes from 0 (impossible) to 1 (certain). Probability = number of ways it can happen ÷ total number of outcomes. P(rolling a 6) = 1/6.', ['probability'], 'probability-scale'),
-          card('🔄', 'Not happening', 'P(not A) = 1 − P(A). If P(rain) = 0.3, then P(no rain) = 0.7. Expected number = probability × number of trials: flip a coin 100 times and you’d expect about 50 heads.', ['expected outcomes']),
-          card('🎲', 'Experiments', 'Relative frequency = how many times it happened ÷ number of trials. The more trials, the closer it gets to the true probability.', ['relative frequency']),
-        ],
-        questions: [
-          gap('q1', 'P(rolling a 6 on a fair dice) = ___', ['1/6'], undefined, 'Write it as a fraction'),
-          gap('q2', 'P(not rolling a 6) = ___', ['5/6'], undefined, 'Write it as a fraction'),
-          gap('q3', 'P(rolling an even number) = ___', ['1/2']),
-          gap('q4', 'A bag has 3 red and 5 blue counters. P(red) = ___', ['3/8']),
-          gap('q5', 'P(A) = 0.3. P(not A) = ___', ['0.7']),
-          gap('q6', 'Flip a fair coin 100 times. Expected number of heads = ___', ['50']),
-          tf('q7', 'A probability can be 1.2.', false, 'Probabilities are always between 0 and 1.'),
-          gap('q8', 'A dice lands on 6 twenty times in 60 rolls. Relative frequency = ___', ['1/3'], undefined, 'Write it as a fraction'),
         ],
       },
     ],

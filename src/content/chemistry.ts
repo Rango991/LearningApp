@@ -1,17 +1,18 @@
 import { card, gap, match, mcq, order, tf } from './helpers';
 import type { Unit } from './types';
 
-// KS3 Chemistry (Years 7-9, National Curriculum), pitched to lead into AQA GCSE.
+// KS3 Chemistry (Year 7, then Years 8-9, National Curriculum), pitched to lead into AQA GCSE.
 // Question ids are stored in progress data, so never change an existing id.
 
-const STAGE = 'KS3';
+const Y7 = 'Year 7';
+const Y89 = 'Years 8–9';
 
 export const chemistry: Unit[] = [
   {
     id: 'chem-particles',
     title: 'Particles & mixtures',
-    stage: STAGE,
-    description: 'Solids, liquids and gases, changes of state, and separating mixtures.',
+    stage: Y7,
+    description: 'Solids, liquids and gases, changes of state, diffusion, and separating mixtures.',
     colour: '#8e5cf7',
     lessons: [
       {
@@ -107,11 +108,11 @@ export const chemistry: Unit[] = [
     ],
   },
   {
-    id: 'chem-atoms',
-    title: 'Atoms, elements & the periodic table',
-    stage: STAGE,
-    description: 'What everything is made of, chemical symbols and formulae, and the periodic table.',
-    colour: '#5b6cf0',
+    id: 'chem-acids',
+    title: 'Elements, reactions & acids',
+    stage: Y7,
+    description: 'Atoms and elements, physical and chemical changes, the pH scale and neutralisation.',
+    colour: '#20a37c',
     lessons: [
       {
         id: 'ca-elements',
@@ -141,6 +142,81 @@ export const chemistry: Unit[] = [
           gap('q7', 'The symbol for hydrogen is ___.', ['H']),
         ],
       },
+      {
+        id: 'cr-changes',
+        title: 'Physical & chemical changes',
+        emoji: '🔥',
+        learn: [
+          card('🔄', 'Physical changes', 'In a physical change no new substance is made and it’s usually easy to reverse: melting, dissolving, boiling.', ['physical change']),
+          card('🧪', 'Chemical changes', 'In a chemical reaction new substances are made, and it’s usually hard to reverse: burning, rusting, cooking an egg. Signs of a reaction: a colour change, fizzing (a gas given off), a temperature change, or a precipitate (a solid appearing).', ['chemical reaction', 'precipitate'], 'reaction-signs'),
+        ],
+        questions: [
+          match('q1', 'Physical or chemical change?', [
+            ['Ice melting', 'Physical'],
+            ['Wood burning', 'Chemical'],
+          ]),
+          mcq('q2', 'Which of these is a sign of a chemical reaction?', ['Fizzing', 'Changing shape', 'Melting', 'Being stirred'], 0),
+          tf('q3', 'Dissolving sugar is a chemical change.', false),
+          mcq('q4', 'Which is a chemical change?', ['Iron rusting', 'Water boiling', 'Butter melting', 'Salt dissolving'], 0),
+          gap('q5', 'A solid that forms when two solutions are mixed is a ___.', ['precipitate']),
+          tf('q6', 'Cooking an egg is a chemical change.', true, 'New substances are made, and you can’t uncook it!'),
+          mcq('q7', 'Which is usually true of chemical changes?', ['They are hard to reverse', 'No new substance is made', 'They only happen in liquids', 'They are always slow'], 0),
+        ],
+      },
+      {
+        id: 'cac-ph',
+        title: 'The pH scale',
+        emoji: '🌈',
+        learn: [
+          card('📏', 'pH scale', 'The pH scale runs from 0 to 14. Below 7 is acidic, 7 is neutral (pure water), above 7 is alkaline. The further from 7, the stronger the acid or alkali.', ['pH', 'neutral'], 'ph-scale'),
+          card('🎨', 'Indicators', 'Indicators change colour to show pH. Universal indicator: red for strong acid, orange or yellow for weak acid, green for neutral, blue for weak alkali, purple for strong alkali. Litmus turns red in acid and blue in alkali.', ['indicator', 'universal indicator', 'litmus']),
+          card('🍋', 'Everyday examples', 'Acids: lemon juice, vinegar, stomach acid (hydrochloric acid). Alkalis: soap, bleach, oven cleaner, toothpaste. Strong acids and alkalis are corrosive, so wear eye protection.', ['corrosive']),
+        ],
+        questions: [
+          gap('q1', 'A neutral solution has a pH of ___.', ['7']),
+          mcq('q2', 'Which pH is the strongest acid?', ['pH 1', 'pH 5', 'pH 7', 'pH 13'], 0),
+          match('q3', 'Universal indicator colour', [
+            ['Strong acid', 'Red'],
+            ['Neutral', 'Green'],
+            ['Strong alkali', 'Purple'],
+          ]),
+          mcq('q4', 'What colour does litmus go in an alkali?', ['Red', 'Blue', 'Green', 'Purple'], 1),
+          tf('q5', 'Vinegar is an alkali.', false, 'Vinegar is a weak acid (about pH 3).'),
+          mcq('q6', 'Which of these is alkaline?', ['Lemon juice', 'Soap', 'Vinegar', 'Cola'], 1),
+          gap('q7', 'A substance that can burn skin is ___.', ['corrosive']),
+        ],
+      },
+      {
+        id: 'cac-neutral',
+        title: 'Neutralisation',
+        emoji: '🤝',
+        learn: [
+          card('⚖️', 'Acid + alkali', 'An acid and an alkali cancel each other out in neutralisation: acid + alkali → salt + water. Indigestion tablets neutralise extra stomach acid; farmers add lime to neutralise acidic soil.', ['neutralisation', 'salt'], 'neutralisation'),
+          card('🏷️', 'Naming salts', 'The first part of the salt’s name comes from the metal in the alkali. The second part comes from the acid: hydrochloric acid → chloride, sulfuric acid → sulfate, nitric acid → nitrate. Example: sodium hydroxide + hydrochloric acid → sodium chloride + water.', ['chloride', 'sulfate', 'nitrate']),
+        ],
+        questions: [
+          gap('q1', 'acid + alkali → salt + ___', ['water']),
+          match('q2', 'Which salt does each acid make?', [
+            ['Hydrochloric acid', 'Chloride'],
+            ['Sulfuric acid', 'Sulfate'],
+            ['Nitric acid', 'Nitrate'],
+          ]),
+          mcq('q3', 'Potassium hydroxide + nitric acid → ?', ['Potassium nitrate + water', 'Potassium chloride + water', 'Potassium sulfate + hydrogen', 'Nitric oxide'], 0),
+          mcq('q4', 'Why do people take indigestion tablets?', ['To neutralise extra stomach acid', 'To add acid', 'To make salt', 'To dissolve food'], 0),
+          tf('q5', 'Neutralisation is exothermic.', true),
+          gap('q6', 'Sodium hydroxide + sulfuric acid makes sodium ___ and water.', ['sulfate', 'sulphate']),
+          mcq('q7', 'A farmer’s soil is too acidic. What could they add?', ['Lime (an alkali)', 'Vinegar', 'More acid', 'Salt'], 0),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'chem-atoms',
+    title: 'Compounds & the periodic table',
+    stage: Y89,
+    description: 'Compounds and formulae, the periodic table, and metals and non-metals.',
+    colour: '#5b6cf0',
+    lessons: [
       {
         id: 'ca-compounds',
         title: 'Compounds & formulae',
@@ -215,31 +291,10 @@ export const chemistry: Unit[] = [
   {
     id: 'chem-reactions',
     title: 'Chemical reactions',
-    stage: STAGE,
-    description: 'Physical vs chemical changes, word equations, combustion and energy changes.',
+    stage: Y89,
+    description: 'Word equations, conservation of mass, combustion, energy changes and the reactivity series.',
     colour: '#e2559b',
     lessons: [
-      {
-        id: 'cr-changes',
-        title: 'Physical & chemical changes',
-        emoji: '🔥',
-        learn: [
-          card('🔄', 'Physical changes', 'In a physical change no new substance is made and it’s usually easy to reverse: melting, dissolving, boiling.', ['physical change']),
-          card('🧪', 'Chemical changes', 'In a chemical reaction new substances are made, and it’s usually hard to reverse: burning, rusting, cooking an egg. Signs of a reaction: a colour change, fizzing (a gas given off), a temperature change, or a precipitate (a solid appearing).', ['chemical reaction', 'precipitate'], 'reaction-signs'),
-        ],
-        questions: [
-          match('q1', 'Physical or chemical change?', [
-            ['Ice melting', 'Physical'],
-            ['Wood burning', 'Chemical'],
-          ]),
-          mcq('q2', 'Which of these is a sign of a chemical reaction?', ['Fizzing', 'Changing shape', 'Melting', 'Being stirred'], 0),
-          tf('q3', 'Dissolving sugar is a chemical change.', false),
-          mcq('q4', 'Which is a chemical change?', ['Iron rusting', 'Water boiling', 'Butter melting', 'Salt dissolving'], 0),
-          gap('q5', 'A solid that forms when two solutions are mixed is a ___.', ['precipitate']),
-          tf('q6', 'Cooking an egg is a chemical change.', true, 'New substances are made, and you can’t uncook it!'),
-          mcq('q7', 'Which is usually true of chemical changes?', ['They are hard to reverse', 'No new substance is made', 'They only happen in liquids', 'They are always slow'], 0),
-        ],
-      },
       {
         id: 'cr-equations',
         title: 'Word equations & conservation of mass',
@@ -301,60 +356,6 @@ export const chemistry: Unit[] = [
           mcq('q7', 'Photosynthesis is endothermic because…', ['It takes in light energy', 'It gives out heat', 'It makes oxygen', 'It happens in leaves'], 0),
         ],
       },
-    ],
-  },
-  {
-    id: 'chem-acids',
-    title: 'Acids, alkalis & metals',
-    stage: STAGE,
-    description: 'The pH scale, neutralisation, and how metals react with acids.',
-    colour: '#20a37c',
-    lessons: [
-      {
-        id: 'cac-ph',
-        title: 'The pH scale',
-        emoji: '🌈',
-        learn: [
-          card('📏', 'pH scale', 'The pH scale runs from 0 to 14. Below 7 is acidic, 7 is neutral (pure water), above 7 is alkaline. The further from 7, the stronger the acid or alkali.', ['pH', 'neutral'], 'ph-scale'),
-          card('🎨', 'Indicators', 'Indicators change colour to show pH. Universal indicator: red for strong acid, orange or yellow for weak acid, green for neutral, blue for weak alkali, purple for strong alkali. Litmus turns red in acid and blue in alkali.', ['indicator', 'universal indicator', 'litmus']),
-          card('🍋', 'Everyday examples', 'Acids: lemon juice, vinegar, stomach acid (hydrochloric acid). Alkalis: soap, bleach, oven cleaner, toothpaste. Strong acids and alkalis are corrosive, so wear eye protection.', ['corrosive']),
-        ],
-        questions: [
-          gap('q1', 'A neutral solution has a pH of ___.', ['7']),
-          mcq('q2', 'Which pH is the strongest acid?', ['pH 1', 'pH 5', 'pH 7', 'pH 13'], 0),
-          match('q3', 'Universal indicator colour', [
-            ['Strong acid', 'Red'],
-            ['Neutral', 'Green'],
-            ['Strong alkali', 'Purple'],
-          ]),
-          mcq('q4', 'What colour does litmus go in an alkali?', ['Red', 'Blue', 'Green', 'Purple'], 1),
-          tf('q5', 'Vinegar is an alkali.', false, 'Vinegar is a weak acid (about pH 3).'),
-          mcq('q6', 'Which of these is alkaline?', ['Lemon juice', 'Soap', 'Vinegar', 'Cola'], 1),
-          gap('q7', 'A substance that can burn skin is ___.', ['corrosive']),
-        ],
-      },
-      {
-        id: 'cac-neutral',
-        title: 'Neutralisation',
-        emoji: '🤝',
-        learn: [
-          card('⚖️', 'Acid + alkali', 'An acid and an alkali cancel each other out in neutralisation: acid + alkali → salt + water. Indigestion tablets neutralise extra stomach acid; farmers add lime to neutralise acidic soil.', ['neutralisation', 'salt'], 'neutralisation'),
-          card('🏷️', 'Naming salts', 'The first part of the salt’s name comes from the metal in the alkali. The second part comes from the acid: hydrochloric acid → chloride, sulfuric acid → sulfate, nitric acid → nitrate. Example: sodium hydroxide + hydrochloric acid → sodium chloride + water.', ['chloride', 'sulfate', 'nitrate']),
-        ],
-        questions: [
-          gap('q1', 'acid + alkali → salt + ___', ['water']),
-          match('q2', 'Which salt does each acid make?', [
-            ['Hydrochloric acid', 'Chloride'],
-            ['Sulfuric acid', 'Sulfate'],
-            ['Nitric acid', 'Nitrate'],
-          ]),
-          mcq('q3', 'Potassium hydroxide + nitric acid → ?', ['Potassium nitrate + water', 'Potassium chloride + water', 'Potassium sulfate + hydrogen', 'Nitric oxide'], 0),
-          mcq('q4', 'Why do people take indigestion tablets?', ['To neutralise extra stomach acid', 'To add acid', 'To make salt', 'To dissolve food'], 0),
-          tf('q5', 'Neutralisation is exothermic.', true),
-          gap('q6', 'Sodium hydroxide + sulfuric acid makes sodium ___ and water.', ['sulfate', 'sulphate']),
-          mcq('q7', 'A farmer’s soil is too acidic. What could they add?', ['Lime (an alkali)', 'Vinegar', 'More acid', 'Salt'], 0),
-        ],
-      },
       {
         id: 'cac-metals',
         title: 'Metals, acids & reactivity',
@@ -380,8 +381,8 @@ export const chemistry: Unit[] = [
   {
     id: 'chem-earth',
     title: 'Earth & atmosphere',
-    stage: STAGE,
-    description: 'The rock cycle, the air around us, climate change and Earth’s resources.',
+    stage: Y89,
+    description: 'The rock cycle, the atmosphere and climate, and Earth’s resources.',
     colour: '#c17a3a',
     lessons: [
       {
