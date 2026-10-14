@@ -182,8 +182,13 @@ export function reviewAvailable(p: Progress, today = dayKey()): number {
 /** Lessons within a unit unlock in order. All units are open, so she can
  *  follow whatever order her school teaches them in. */
 export function isLessonUnlocked(p: Progress, unit: Unit, lessonIndex: number): boolean {
-  if (lessonIndex === 0) return true;
+  if (lessonIndex === 0 || testedOut(p, unit)) return true;
   return Boolean(p.lessons[unit.lessons[lessonIndex - 1].id]);
+}
+
+/** Passing the unit test unlocks every lesson in it, so she can skip what she already knows. */
+export function testedOut(p: Progress, unit: Unit): boolean {
+  return (p.checkpoints[unit.id] ?? 0) >= 0.8;
 }
 
 export function isUnitComplete(p: Progress, unit: Unit): boolean {

@@ -1,0 +1,451 @@
+import { card, gap, match, mcq, order, tf } from './helpers';
+import type { Unit } from './types';
+
+// KS3 Chemistry (Years 7-9, National Curriculum), pitched to lead into AQA GCSE.
+// Question ids are stored in progress data, so never change an existing id.
+
+const STAGE = 'KS3';
+
+export const chemistry: Unit[] = [
+  {
+    id: 'chem-particles',
+    title: 'Particles & mixtures',
+    stage: STAGE,
+    description: 'Solids, liquids and gases, changes of state, and separating mixtures.',
+    colour: '#8e5cf7',
+    lessons: [
+      {
+        id: 'cp-states',
+        title: 'Solids, liquids & gases',
+        emoji: '🧊',
+        learn: [
+          card('🧱', 'Particle model', 'Solid: particles packed tightly in a regular pattern, vibrating on the spot, so it has a fixed shape. Liquid: particles close together but randomly arranged, sliding past each other, so it flows and takes the shape of its container. Gas: particles far apart, moving quickly in all directions, so it fills any container.', ['particle model']),
+          card('🗜️', 'Squashing', 'Gases can be compressed because there’s lots of space between the particles. Solids and liquids can’t really be compressed. Gas pressure is caused by particles hitting the walls of their container.', ['compress', 'gas pressure']),
+        ],
+        questions: [
+          match('q1', 'Match the state to its particles', [
+            ['Solid', 'Tightly packed, vibrating on the spot'],
+            ['Liquid', 'Close together, sliding past each other'],
+            ['Gas', 'Far apart, moving quickly'],
+          ]),
+          mcq('q2', 'Which state can be easily compressed?', ['Solid', 'Liquid', 'Gas', 'None of them'], 2),
+          tf('q3', 'A liquid has a fixed shape.', false, 'It takes the shape of its container, but it does have a fixed volume.'),
+          mcq('q4', 'What causes gas pressure?', ['Particles hitting the container walls', 'Particles getting bigger', 'Particles stopping', 'Heat rising'], 0),
+          tf('q5', 'Particles in a solid don’t move at all.', false, 'They vibrate on the spot.'),
+          mcq('q6', 'Why does a gas fill its whole container?', ['Its particles move freely in all directions', 'Its particles are bigger', 'It is heavier than air', 'Its particles stick together'], 0),
+          tf('q7', 'When a gas is heated, its particles move faster.', true),
+        ],
+      },
+      {
+        id: 'cp-changes',
+        title: 'Changes of state',
+        emoji: '🫧',
+        learn: [
+          card('🔁', 'Names of changes', 'Melting: solid → liquid. Freezing: liquid → solid. Evaporating/boiling: liquid → gas. Condensing: gas → liquid. Sublimation: solid → gas directly (like dry ice).', ['melting', 'condensing', 'sublimation']),
+          card('🌡️', 'Melting and boiling points', 'Pure water melts at 0 °C and boils at 100 °C. A pure substance melts and boils at one exact temperature, while a mixture changes state over a range of temperatures. Changes of state are physical changes: no new substance is made, and mass is conserved.', ['melting point', 'boiling point']),
+        ],
+        questions: [
+          match('q1', 'Match the change of state', [
+            ['Melting', 'Solid to liquid'],
+            ['Condensing', 'Gas to liquid'],
+            ['Freezing', 'Liquid to solid'],
+            ['Sublimation', 'Solid straight to gas'],
+          ]),
+          gap('q2', 'Pure water boils at ___ °C.', ['100']),
+          gap('q3', 'Pure water melts at ___ °C.', ['0']),
+          tf('q4', 'Melting ice is a chemical change.', false, 'It’s a physical change: it’s still water, just in a different state.'),
+          mcq('q5', 'Steam on a cold window turns to droplets. What is this called?', ['Evaporation', 'Condensation', 'Melting', 'Sublimation'], 1),
+          mcq('q6', 'How can you tell if a substance is pure?', ['It melts at one exact temperature', 'It is colourless', 'It dissolves', 'It is a liquid'], 0),
+          tf('q7', 'When 10 g of ice melts, you get 10 g of water.', true, 'Mass is conserved in changes of state.'),
+        ],
+      },
+      {
+        id: 'cp-diffusion',
+        title: 'Diffusion & dissolving',
+        emoji: '☕',
+        learn: [
+          card('💨', 'Diffusion', 'Diffusion is the spreading out of particles from high concentration to low concentration, caused by their random movement. It happens in gases and liquids, and is faster when it’s hotter.', ['diffusion']),
+          card('🧂', 'Dissolving', 'When salt dissolves in water, the salt is the solute, the water is the solvent, and together they make a solution. A substance that dissolves is soluble; one that doesn’t is insoluble. When no more solute will dissolve, the solution is saturated. Mass is conserved: 100 g of water + 10 g of salt = 110 g of solution.', ['solute', 'solvent', 'solution', 'saturated']),
+        ],
+        questions: [
+          match('q1', 'Sugar dissolves in tea. Match the words', [
+            ['Sugar', 'Solute'],
+            ['Tea (water)', 'Solvent'],
+            ['Sweet tea', 'Solution'],
+          ]),
+          gap('q2', '200 g of water + 20 g of sugar makes ___ g of solution.', ['220']),
+          mcq('q3', 'A substance that does not dissolve is…', ['Soluble', 'Insoluble', 'Saturated', 'A solvent'], 1),
+          tf('q4', 'Diffusion is faster at higher temperatures.', true),
+          mcq('q5', 'Why can you smell perfume from across a room?', ['Perfume particles diffuse through the air', 'The air gets hotter', 'Perfume is a solid', 'Your nose gets bigger'], 0),
+          gap('q6', 'A solution that can’t dissolve any more solute is ___.', ['saturated']),
+          tf('q7', 'When salt dissolves, it disappears and its mass is lost.', false, 'The particles spread out between the water particles, and the mass stays the same.'),
+        ],
+      },
+      {
+        id: 'cp-separating',
+        title: 'Separating mixtures',
+        emoji: '⚗️',
+        learn: [
+          card('🧹', 'Which method?', 'Filtration separates an insoluble solid from a liquid (sand from water). Evaporation or crystallisation gets a dissolved solid back out of a solution (salt from salt water). Distillation separates a liquid from a solution by boiling and condensing (pure water from sea water).', ['filtration', 'crystallisation', 'distillation']),
+          card('🌈', 'Chromatography', 'Chromatography separates dissolved substances, like the dyes in ink. Spots move up the paper with the solvent. Pure substances make one spot; mixtures make several. The start line is drawn in pencil because pencil doesn’t dissolve.', ['chromatography']),
+        ],
+        questions: [
+          match('q1', 'Match the mixture to the best method', [
+            ['Sand and water', 'Filtration'],
+            ['Salt from salt water', 'Crystallisation'],
+            ['Pure water from sea water', 'Distillation'],
+            ['Dyes in ink', 'Chromatography'],
+          ]),
+          mcq('q2', 'Why is the start line in chromatography drawn in pencil?', ['Pencil doesn’t dissolve in the solvent', 'Pencil is cheaper', 'Pen is too dark', 'It’s easier to rub out'], 0),
+          tf('q3', 'A pure substance makes just one spot on a chromatogram.', true),
+          order('q4', 'Put the steps of getting salt from rock salt in order', ['Grind and add water', 'Stir to dissolve the salt', 'Filter out the sand', 'Evaporate the water']),
+          mcq('q5', 'In distillation, what happens in the condenser?', ['Gas cools to a liquid', 'Liquid boils', 'Solid melts', 'Solid dissolves'], 0),
+          tf('q6', 'Filtration can separate salt from salt water.', false, 'The salt is dissolved, so it goes straight through the filter paper.'),
+          gap('q7', 'Separating dyes in ink uses ___.', ['chromatography']),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'chem-atoms',
+    title: 'Atoms, elements & the periodic table',
+    stage: STAGE,
+    description: 'What everything is made of, chemical symbols and formulae, and the periodic table.',
+    colour: '#5b6cf0',
+    lessons: [
+      {
+        id: 'ca-elements',
+        title: 'Atoms & elements',
+        emoji: '⚛️',
+        learn: [
+          card('⚛️', 'Atoms', 'Everything is made of tiny particles called atoms. An element is a substance made of only one type of atom. There are about 118 elements, all listed in the periodic table.', ['atom', 'element']),
+          card('🔤', 'Symbols', 'Each element has a symbol of one or two letters. The first is a capital, the second is lower case. Some come from Latin names: Na (sodium), Fe (iron), Cu (copper), Ag (silver), Au (gold), Pb (lead), K (potassium).', ['symbol']),
+        ],
+        questions: [
+          match('q1', 'Match the element to its symbol', [
+            ['Oxygen', 'O'],
+            ['Sodium', 'Na'],
+            ['Iron', 'Fe'],
+            ['Gold', 'Au'],
+          ]),
+          match('q2', 'And these ones', [
+            ['Copper', 'Cu'],
+            ['Potassium', 'K'],
+            ['Silver', 'Ag'],
+            ['Chlorine', 'Cl'],
+          ]),
+          mcq('q3', 'What is an element?', ['A substance made of only one type of atom', 'A mixture of atoms', 'Two atoms joined', 'Any liquid'], 0),
+          gap('q4', 'The chemical symbol for carbon is ___.', ['C']),
+          tf('q5', 'The symbol "CO" is the element cobalt.', false, 'Cobalt is Co (lower case o). CO is a compound: carbon monoxide.'),
+          mcq('q6', 'Roughly how many elements are there?', ['About 20', 'About 118', 'About 1,000', 'Millions'], 1),
+          gap('q7', 'The symbol for hydrogen is ___.', ['H']),
+        ],
+      },
+      {
+        id: 'ca-compounds',
+        title: 'Compounds & formulae',
+        emoji: '💧',
+        learn: [
+          card('🔗', 'Compounds', 'A compound is two or more different elements chemically joined. A compound has different properties from the elements in it: sodium is an explosive metal and chlorine is a toxic gas, but together they make sodium chloride (table salt).', ['compound']),
+          card('🧮', 'Formulae', 'A formula shows which atoms are in a compound and how many. H₂O: 2 hydrogen and 1 oxygen. CO₂: 1 carbon and 2 oxygen. NaCl: 1 sodium and 1 chlorine. CH₄ (methane): 1 carbon and 4 hydrogen. A molecule is a group of atoms joined together.', ['formula', 'molecule']),
+          card('🏷️', 'Naming', 'Compounds of a metal and one non-metal end in -ide (sodium chloride, magnesium oxide). If oxygen is also there, they usually end in -ate (copper sulfate, calcium carbonate).', ['-ide', '-ate']),
+        ],
+        questions: [
+          gap('q1', 'How many hydrogen atoms are in H₂O? ___', ['2']),
+          gap('q2', 'How many atoms in total are in one CO₂ molecule? ___', ['3']),
+          mcq('q3', 'What is the chemical name for table salt?', ['Sodium chloride', 'Sodium carbonate', 'Calcium chloride', 'Sodium oxide'], 0),
+          tf('q4', 'A compound has the same properties as the elements it’s made from.', false),
+          match('q5', 'Match the formula to the compound', [
+            ['H₂O', 'Water'],
+            ['CO₂', 'Carbon dioxide'],
+            ['CH₄', 'Methane'],
+            ['NaCl', 'Sodium chloride'],
+          ]),
+          mcq('q6', 'Magnesium burns in oxygen. What is the product called?', ['Magnesium oxide', 'Magnesium oxygenate', 'Magnesium carbonate', 'Oxygen magneside'], 0),
+          mcq('q7', 'Which of these is an element, not a compound?', ['H₂O', 'O₂', 'CO₂', 'NaCl'], 1, 'O₂ is two oxygen atoms joined, but only one type of atom, so it’s still an element.'),
+          gap('q8', 'CaCO₃ is calcium ___.', ['carbonate']),
+        ],
+      },
+      {
+        id: 'ca-periodic',
+        title: 'The periodic table',
+        emoji: '📋',
+        learn: [
+          card('🗺️', 'Layout', 'Columns are called groups; rows are called periods. Elements in the same group have similar properties. Metals are on the left and in the middle; non-metals are on the right. Dmitri Mendeleev arranged the first version and left gaps for elements not yet discovered.', ['group', 'period', 'Mendeleev']),
+          card('💥', 'Groups to know', 'Group 1, the alkali metals (lithium, sodium, potassium): soft, react with water to make hydrogen, more reactive further down. Group 7, the halogens (fluorine, chlorine, bromine, iodine): reactive non-metals, less reactive further down. Group 0, the noble gases (helium, neon, argon): very unreactive.', ['alkali metals', 'halogens', 'noble gases']),
+        ],
+        questions: [
+          mcq('q1', 'What are the columns of the periodic table called?', ['Periods', 'Groups', 'Rows', 'Families of metals'], 1),
+          match('q2', 'Match the group to its name', [
+            ['Group 1', 'Alkali metals'],
+            ['Group 7', 'Halogens'],
+            ['Group 0', 'Noble gases'],
+          ]),
+          mcq('q3', 'Which is the most reactive?', ['Lithium', 'Sodium', 'Potassium'], 2, 'Group 1 metals get more reactive as you go down.'),
+          tf('q4', 'Noble gases react easily with other elements.', false),
+          mcq('q5', 'Where are the metals in the periodic table?', ['On the right', 'On the left and in the middle', 'Only at the top', 'Only at the bottom'], 1),
+          gap('q6', 'The scientist who made the first periodic table and left gaps was ___.', ['Mendeleev', 'Dmitri Mendeleev']),
+          mcq('q7', 'What gas is made when sodium reacts with water?', ['Oxygen', 'Hydrogen', 'Chlorine', 'Carbon dioxide'], 1),
+          tf('q8', 'Elements in the same group have similar properties.', true),
+        ],
+      },
+      {
+        id: 'ca-metals',
+        title: 'Metals & non-metals',
+        emoji: '🔩',
+        learn: [
+          card('✨', 'Metals', 'Metals are usually shiny, strong, malleable (can be hammered into shape) and ductile (can be pulled into wires). They are good conductors of heat and electricity, and most have high melting points. Mercury is a liquid metal. Iron, nickel and cobalt are magnetic.', ['malleable', 'ductile', 'conductor']),
+          card('🪨', 'Non-metals', 'Non-metals are usually dull, brittle when solid, and poor conductors (insulators). Many are gases at room temperature. Graphite, a form of carbon, is an unusual non-metal that conducts electricity.', ['brittle', 'insulator']),
+        ],
+        questions: [
+          mcq('q1', 'What does malleable mean?', ['Can be hammered into shape', 'Can be pulled into wires', 'Is magnetic', 'Is shiny'], 0),
+          tf('q2', 'All metals are magnetic.', false, 'Only a few are, like iron, nickel and cobalt.'),
+          mcq('q3', 'Which metal is a liquid at room temperature?', ['Iron', 'Mercury', 'Copper', 'Aluminium'], 1),
+          match('q4', 'Metal or non-metal?', [
+            ['Good conductor of electricity', 'Metal'],
+            ['Brittle and dull', 'Non-metal'],
+          ]),
+          mcq('q5', 'Which non-metal conducts electricity?', ['Sulfur', 'Graphite (carbon)', 'Oxygen', 'Iodine'], 1),
+          gap('q6', 'Copper is used for wires because it is ___ (can be drawn into wires) and a good conductor.', ['ductile']),
+          tf('q7', 'Most non-metals are poor conductors of heat.', true),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'chem-reactions',
+    title: 'Chemical reactions',
+    stage: STAGE,
+    description: 'Physical vs chemical changes, word equations, combustion and energy changes.',
+    colour: '#e2559b',
+    lessons: [
+      {
+        id: 'cr-changes',
+        title: 'Physical & chemical changes',
+        emoji: '🔥',
+        learn: [
+          card('🔄', 'Physical changes', 'In a physical change no new substance is made and it’s usually easy to reverse: melting, dissolving, boiling.', ['physical change']),
+          card('🧪', 'Chemical changes', 'In a chemical reaction new substances are made, and it’s usually hard to reverse: burning, rusting, cooking an egg. Signs of a reaction: a colour change, fizzing (a gas given off), a temperature change, or a precipitate (a solid appearing).', ['chemical reaction', 'precipitate']),
+        ],
+        questions: [
+          match('q1', 'Physical or chemical change?', [
+            ['Ice melting', 'Physical'],
+            ['Wood burning', 'Chemical'],
+          ]),
+          mcq('q2', 'Which of these is a sign of a chemical reaction?', ['Fizzing', 'Changing shape', 'Melting', 'Being stirred'], 0),
+          tf('q3', 'Dissolving sugar is a chemical change.', false),
+          mcq('q4', 'Which is a chemical change?', ['Iron rusting', 'Water boiling', 'Butter melting', 'Salt dissolving'], 0),
+          gap('q5', 'A solid that forms when two solutions are mixed is a ___.', ['precipitate']),
+          tf('q6', 'Cooking an egg is a chemical change.', true, 'New substances are made, and you can’t uncook it!'),
+          mcq('q7', 'Which is usually true of chemical changes?', ['They are hard to reverse', 'No new substance is made', 'They only happen in liquids', 'They are always slow'], 0),
+        ],
+      },
+      {
+        id: 'cr-equations',
+        title: 'Word equations & conservation of mass',
+        emoji: '⚖️',
+        learn: [
+          card('➡️', 'Reactants and products', 'Reactants are the substances you start with; products are the new substances made. A word equation shows them: magnesium + oxygen → magnesium oxide. The arrow means “reacts to make”.', ['reactant', 'product']),
+          card('⚖️', 'Conservation of mass', 'Atoms are not created or destroyed in a reaction, only rearranged. So the total mass of the products equals the total mass of the reactants. If mass seems to go down, a gas has probably escaped.', ['conservation of mass']),
+        ],
+        questions: [
+          match('q1', 'iron + sulfur → iron sulfide. Sort the substances', [
+            ['Iron', 'Reactant'],
+            ['Iron sulfide', 'Product'],
+          ]),
+          gap('q2', '24 g of magnesium reacts with 16 g of oxygen. Mass of magnesium oxide made = ___ g', ['40']),
+          tf('q3', 'Atoms are destroyed in chemical reactions.', false, 'They’re rearranged into new substances.'),
+          mcq('q4', 'Marble chips fizz in acid in an open flask and the mass goes down. Why?', ['Carbon dioxide gas escapes', 'Atoms are destroyed', 'The acid evaporates', 'The scales are broken'], 0),
+          gap('q5', 'copper + oxygen → copper ___', ['oxide']),
+          mcq('q6', 'In a word equation, what does the arrow mean?', ['Reacts to make', 'Equals', 'Plus', 'Is heavier than'], 0),
+          gap('q7', '50 g of reactants react completely. The total mass of products is ___ g', ['50']),
+        ],
+      },
+      {
+        id: 'cr-combustion',
+        title: 'Combustion & oxidation',
+        emoji: '🕯️',
+        learn: [
+          card('🔥', 'Combustion', 'Combustion is burning: a reaction with oxygen that releases energy. Burning a fuel like methane: methane + oxygen → carbon dioxide + water. A fire needs fuel, heat and oxygen: the fire triangle. Remove one and the fire goes out.', ['combustion', 'fire triangle']),
+          card('🟫', 'Oxidation', 'Oxidation is any reaction with oxygen. Metals react with oxygen to make metal oxides: iron + oxygen → iron oxide. Rusting is oxidation of iron, and it needs both oxygen and water.', ['oxidation', 'rusting']),
+          card('🌡️', 'Thermal decomposition', 'Thermal decomposition is breaking a compound down with heat. Copper carbonate → copper oxide + carbon dioxide (it turns from green to black).', ['thermal decomposition']),
+        ],
+        questions: [
+          mcq('q1', 'What are the three sides of the fire triangle?', ['Fuel, heat and oxygen', 'Wood, paper and coal', 'Heat, water and air', 'Fuel, smoke and carbon dioxide'], 0),
+          gap('q2', 'methane + oxygen → carbon dioxide + ___', ['water']),
+          tf('q3', 'Rusting needs both oxygen and water.', true),
+          mcq('q4', 'A fire blanket puts out a fire by…', ['Removing the oxygen', 'Removing the fuel', 'Adding water', 'Making it hotter'], 0),
+          gap('q5', 'Breaking down a compound using heat is thermal ___.', ['decomposition']),
+          mcq('q6', 'What is made when copper carbonate is heated?', ['Copper oxide and carbon dioxide', 'Copper and oxygen', 'Copper sulfate', 'Carbon and water'], 0),
+          tf('q7', 'Oxidation means a reaction with oxygen.', true),
+        ],
+      },
+      {
+        id: 'cr-energy',
+        title: 'Exothermic & endothermic',
+        emoji: '🌡️',
+        learn: [
+          card('🔥', 'Exothermic', 'Exothermic reactions give out energy to the surroundings, so the temperature goes up. Examples: burning, respiration, neutralisation, hand warmers.', ['exothermic']),
+          card('❄️', 'Endothermic', 'Endothermic reactions take in energy from the surroundings, so the temperature goes down. Examples: thermal decomposition, photosynthesis, sports ice packs.', ['endothermic']),
+        ],
+        questions: [
+          match('q1', 'Exo or endo?', [
+            ['Temperature goes up', 'Exothermic'],
+            ['Temperature goes down', 'Endothermic'],
+          ]),
+          mcq('q2', 'Which is exothermic?', ['Burning a candle', 'Photosynthesis', 'Thermal decomposition', 'A sports ice pack'], 0),
+          mcq('q3', 'A reaction mixture goes from 20 °C to 12 °C. The reaction is…', ['Exothermic', 'Endothermic', 'Neither', 'Both'], 1),
+          tf('q4', 'Respiration is an exothermic reaction.', true),
+          gap('q5', 'A reaction that takes in energy from the surroundings is ___.', ['endothermic']),
+          tf('q6', 'Hand warmers use an endothermic reaction.', false, 'They get warm, so they give out energy: exothermic.'),
+          mcq('q7', 'Photosynthesis is endothermic because…', ['It takes in light energy', 'It gives out heat', 'It makes oxygen', 'It happens in leaves'], 0),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'chem-acids',
+    title: 'Acids, alkalis & metals',
+    stage: STAGE,
+    description: 'The pH scale, neutralisation, and how metals react with acids.',
+    colour: '#20a37c',
+    lessons: [
+      {
+        id: 'cac-ph',
+        title: 'The pH scale',
+        emoji: '🌈',
+        learn: [
+          card('📏', 'pH scale', 'The pH scale runs from 0 to 14. Below 7 is acidic, 7 is neutral (pure water), above 7 is alkaline. The further from 7, the stronger the acid or alkali.', ['pH', 'neutral']),
+          card('🎨', 'Indicators', 'Indicators change colour to show pH. Universal indicator: red for strong acid, orange or yellow for weak acid, green for neutral, blue for weak alkali, purple for strong alkali. Litmus turns red in acid and blue in alkali.', ['indicator', 'universal indicator', 'litmus']),
+          card('🍋', 'Everyday examples', 'Acids: lemon juice, vinegar, stomach acid (hydrochloric acid). Alkalis: soap, bleach, oven cleaner, toothpaste. Strong acids and alkalis are corrosive, so wear eye protection.', ['corrosive']),
+        ],
+        questions: [
+          gap('q1', 'A neutral solution has a pH of ___.', ['7']),
+          mcq('q2', 'Which pH is the strongest acid?', ['pH 1', 'pH 5', 'pH 7', 'pH 13'], 0),
+          match('q3', 'Universal indicator colour', [
+            ['Strong acid', 'Red'],
+            ['Neutral', 'Green'],
+            ['Strong alkali', 'Purple'],
+          ]),
+          mcq('q4', 'What colour does litmus go in an alkali?', ['Red', 'Blue', 'Green', 'Purple'], 1),
+          tf('q5', 'Vinegar is an alkali.', false, 'Vinegar is a weak acid (about pH 3).'),
+          mcq('q6', 'Which of these is alkaline?', ['Lemon juice', 'Soap', 'Vinegar', 'Cola'], 1),
+          gap('q7', 'A substance that can burn skin is ___.', ['corrosive']),
+        ],
+      },
+      {
+        id: 'cac-neutral',
+        title: 'Neutralisation',
+        emoji: '🤝',
+        learn: [
+          card('⚖️', 'Acid + alkali', 'An acid and an alkali cancel each other out in neutralisation: acid + alkali → salt + water. Indigestion tablets neutralise extra stomach acid; farmers add lime to neutralise acidic soil.', ['neutralisation', 'salt']),
+          card('🏷️', 'Naming salts', 'The first part of the salt’s name comes from the metal in the alkali. The second part comes from the acid: hydrochloric acid → chloride, sulfuric acid → sulfate, nitric acid → nitrate. Example: sodium hydroxide + hydrochloric acid → sodium chloride + water.', ['chloride', 'sulfate', 'nitrate']),
+        ],
+        questions: [
+          gap('q1', 'acid + alkali → salt + ___', ['water']),
+          match('q2', 'Which salt does each acid make?', [
+            ['Hydrochloric acid', 'Chloride'],
+            ['Sulfuric acid', 'Sulfate'],
+            ['Nitric acid', 'Nitrate'],
+          ]),
+          mcq('q3', 'Potassium hydroxide + nitric acid → ?', ['Potassium nitrate + water', 'Potassium chloride + water', 'Potassium sulfate + hydrogen', 'Nitric oxide'], 0),
+          mcq('q4', 'Why do people take indigestion tablets?', ['To neutralise extra stomach acid', 'To add acid', 'To make salt', 'To dissolve food'], 0),
+          tf('q5', 'Neutralisation is exothermic.', true),
+          gap('q6', 'Sodium hydroxide + sulfuric acid makes sodium ___ and water.', ['sulfate', 'sulphate']),
+          mcq('q7', 'A farmer’s soil is too acidic. What could they add?', ['Lime (an alkali)', 'Vinegar', 'More acid', 'Salt'], 0),
+        ],
+      },
+      {
+        id: 'cac-metals',
+        title: 'Metals, acids & reactivity',
+        emoji: '🫧',
+        learn: [
+          card('🎈', 'Metals + acids', 'metal + acid → salt + hydrogen. Test for hydrogen: a lit splint gives a squeaky pop. Example: magnesium + hydrochloric acid → magnesium chloride + hydrogen.', ['hydrogen', 'squeaky pop']),
+          card('🫧', 'Carbonates + acids', 'carbonate + acid → salt + water + carbon dioxide. Test for carbon dioxide: it turns limewater cloudy (milky).', ['carbonate', 'limewater']),
+          card('🏁', 'Reactivity series', 'Potassium, sodium, calcium, magnesium, aluminium, (carbon), zinc, iron, lead, (hydrogen), copper, silver, gold, from most to least reactive. A more reactive metal will displace a less reactive one from its compound: iron + copper sulfate → iron sulfate + copper.', ['reactivity series', 'displacement']),
+        ],
+        questions: [
+          gap('q1', 'metal + acid → salt + ___', ['hydrogen']),
+          mcq('q2', 'What is the test for hydrogen?', ['A lit splint makes a squeaky pop', 'It turns limewater cloudy', 'It relights a glowing splint', 'It turns litmus blue'], 0),
+          mcq('q3', 'What turns limewater cloudy?', ['Oxygen', 'Hydrogen', 'Carbon dioxide', 'Nitrogen'], 2),
+          order('q4', 'Order from most to least reactive', ['Potassium', 'Magnesium', 'Iron', 'Copper', 'Gold']),
+          tf('q5', 'Copper will displace iron from iron sulfate.', false, 'Copper is less reactive than iron, so nothing happens.'),
+          mcq('q6', 'Calcium carbonate + hydrochloric acid → calcium chloride + water + ?', ['Hydrogen', 'Carbon dioxide', 'Oxygen', 'Chlorine'], 1),
+          mcq('q7', 'Why is gold found as the pure metal in the ground?', ['It is very unreactive', 'It is very reactive', 'It is magnetic', 'It is soft'], 0),
+          tf('q8', 'Zinc + copper sulfate → zinc sulfate + copper.', true, 'Zinc is more reactive than copper, so it displaces it.'),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'chem-earth',
+    title: 'Earth & atmosphere',
+    stage: STAGE,
+    description: 'The rock cycle, the air around us, climate change and Earth’s resources.',
+    colour: '#c17a3a',
+    lessons: [
+      {
+        id: 'ce-rocks',
+        title: 'Rocks & the rock cycle',
+        emoji: '🪨',
+        learn: [
+          card('🌋', 'Igneous', 'Igneous rocks form when molten rock (magma or lava) cools and crystallises. Slow cooling underground makes big crystals (granite); fast cooling at the surface makes small crystals (basalt).', ['igneous', 'magma']),
+          card('🏖️', 'Sedimentary', 'Sedimentary rocks form from layers of sediment that are compacted and cemented over millions of years. They can contain fossils. Examples: sandstone, limestone, chalk.', ['sedimentary', 'fossils']),
+          card('🔥', 'Metamorphic', 'Metamorphic rocks form when existing rock is changed by heat and pressure, without melting. Limestone → marble; mudstone → slate. Weathering, erosion, deposition, melting and uplift link all three types in the rock cycle.', ['metamorphic', 'rock cycle']),
+        ],
+        questions: [
+          match('q1', 'Match the rock to its type', [
+            ['Granite', 'Igneous'],
+            ['Sandstone', 'Sedimentary'],
+            ['Marble', 'Metamorphic'],
+          ]),
+          mcq('q2', 'Which type of rock can contain fossils?', ['Igneous', 'Sedimentary', 'Metamorphic', 'None'], 1),
+          mcq('q3', 'Why does granite have large crystals?', ['It cooled slowly underground', 'It cooled quickly', 'It was squashed', 'It was eroded'], 0),
+          gap('q4', 'Limestone changed by heat and pressure becomes ___.', ['marble']),
+          tf('q5', 'Metamorphic rocks form when rock completely melts.', false, 'They change because of heat and pressure without melting.'),
+          mcq('q6', 'How do sedimentary rocks form?', ['Layers of sediment are compacted and cemented', 'Lava cools', 'Rock is melted', 'Crystals grow in air'], 0),
+          gap('q7', 'Molten rock underground is called ___.', ['magma']),
+        ],
+      },
+      {
+        id: 'ce-atmosphere',
+        title: 'The atmosphere & climate',
+        emoji: '🌍',
+        learn: [
+          card('🌬️', 'What’s in air', 'Air is about 78% nitrogen, 21% oxygen, about 1% argon, and a tiny 0.04% carbon dioxide, plus water vapour.', ['nitrogen', 'oxygen']),
+          card('🏭', 'Greenhouse effect', 'Greenhouse gases (like carbon dioxide and methane) trap heat in the atmosphere. Burning fossil fuels and cutting down forests increase carbon dioxide, causing global warming and climate change: melting ice, rising sea levels and more extreme weather.', ['greenhouse effect', 'climate change']),
+          card('♻️', 'The carbon cycle', 'Carbon moves around: photosynthesis takes CO₂ out of the air; respiration, combustion and decomposition put it back.', ['carbon cycle']),
+        ],
+        questions: [
+          gap('q1', 'About ___% of the air is nitrogen.', ['78']),
+          mcq('q2', 'Roughly what percentage of air is oxygen?', ['78%', '21%', '1%', '50%'], 1),
+          mcq('q3', 'Which of these is a greenhouse gas?', ['Carbon dioxide', 'Nitrogen', 'Oxygen', 'Argon'], 0),
+          tf('q4', 'Cutting down forests increases carbon dioxide in the air.', true, 'Fewer trees are photosynthesising, and they’re often burned.'),
+          mcq('q5', 'Which process removes carbon dioxide from the air?', ['Photosynthesis', 'Combustion', 'Respiration', 'Decomposition'], 0),
+          match('q6', 'Match the cause to the effect', [
+            ['Burning fossil fuels', 'More carbon dioxide'],
+            ['Global warming', 'Rising sea levels'],
+          ]),
+          tf('q7', 'Carbon dioxide makes up about 20% of the air.', false, 'It’s only about 0.04%, but even small changes have big effects.'),
+        ],
+      },
+      {
+        id: 'ce-resources',
+        title: 'Earth’s resources & recycling',
+        emoji: '♻️',
+        learn: [
+          card('⛏️', 'Ores', 'An ore is a rock containing enough metal to be worth extracting. Metals less reactive than carbon (like iron and zinc) can be extracted by heating the oxide with carbon: iron oxide + carbon → iron + carbon dioxide. More reactive metals (like aluminium) need electrolysis, which uses lots of energy.', ['ore', 'extraction', 'electrolysis']),
+          card('♻️', 'Recycling', 'Recycling metals, glass and plastics saves raw materials and energy, and reduces waste going to landfill. Earth’s resources are finite: they will run out.', ['recycling', 'finite']),
+        ],
+        questions: [
+          mcq('q1', 'What is an ore?', ['A rock with enough metal to be worth extracting', 'A pure metal', 'A type of fuel', 'A metal oxide gas'], 0),
+          gap('q2', 'iron oxide + carbon → iron + carbon ___', ['dioxide']),
+          mcq('q3', 'Why can’t aluminium be extracted using carbon?', ['Aluminium is more reactive than carbon', 'Aluminium is too soft', 'Carbon is a metal', 'Aluminium is magnetic'], 0),
+          tf('q4', 'Recycling aluminium cans saves energy.', true),
+          mcq('q5', 'Which is NOT a benefit of recycling?', ['Saves raw materials', 'Saves energy', 'Uses more landfill', 'Reduces waste'], 2),
+          gap('q6', 'Resources that will eventually run out are ___.', ['finite', 'non-renewable']),
+        ],
+      },
+    ],
+  },
+];

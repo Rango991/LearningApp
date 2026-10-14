@@ -4,7 +4,13 @@ A Duolingo-style revision app for KS3 (and later GCSE) science and maths. It's
 built as an installable web app (PWA): it goes on an Android tablet like a
 normal app, works offline, and has a parent dashboard that works on any phone.
 
-**Right now:** Year 7 Biology, with 3 units, 13 lessons and about 100 questions.
+**Right now:** 81 lessons and about 590 questions across four subjects:
+- **Biology:** Year 7 (cells, body systems, reproduction) and Years 8–9 (nutrition and digestion, respiration and photosynthesis, genetics and evolution, ecosystems)
+- **Chemistry, KS3:** particles and mixtures, atoms and the periodic table, reactions, acids and metals, Earth and atmosphere
+- **Physics, KS3:** forces, energy, electricity and magnetism, waves, space
+- **Maths, KS3:** number, fractions/percentages/ratio, algebra, geometry, statistics and probability
+
+The content follows the National Curriculum and is pitched to lead into AQA GCSE. Any unit test can be taken at any time: passing it unlocks the whole unit, so she can skip what she already knows.
 
 ## What's in it
 
@@ -53,10 +59,20 @@ tablet, and turn on the parent dashboard for your phone.
 
 ## Adding content
 
-Content lives in `src/content/`. Each subject is a typed TypeScript file, so
-the editor catches mistakes. To add a subject, copy `biology-y7.ts`, then add
-it to the `subjects` list in `src/content/index.ts`. Never change an existing
-question `id`: her progress is stored against it.
+Content lives in `src/content/`, one file per subject or stage, written with the
+short-hand builders in `helpers.ts` (`mcq`, `tf`, `gap`, `match`, `order`, `card`).
+Units are listed per subject in `src/content/index.ts`, and each unit's `stage`
+(e.g. "Years 8–9") groups it on the path. Typed number answers are marked by
+value, so `0.5`, `.5` and `1/2` all count. `npm test` checks every question is
+well-formed. Never change an existing lesson or question `id`: her progress is
+stored against it.
+
+## Icons
+
+Icons are Microsoft's [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) (3D style, MIT licence),
+from the `@lobehub/fluent-emoji-3d` package. `npm run emoji` (run automatically
+before `dev` and `build`) copies only the ones the app uses into `public/emoji/`.
+Use `<Emoji e="🔥" />` to show one.
 
 ## Project layout
 

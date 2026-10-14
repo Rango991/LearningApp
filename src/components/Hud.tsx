@@ -1,4 +1,5 @@
 import { questLabel, streakAtRisk } from '../game/engine';
+import { Emoji } from './Emoji';
 import { dayKey } from '../game/dates';
 import { levelFor } from '../game/levels';
 import type { Progress } from '../game/types';
@@ -10,11 +11,11 @@ export function TopBar({ progress, onStreak, onBank }: { progress: Progress; onS
   return (
     <header className="topbar">
       <button className={`hud-item streak ${risk ? 'at-risk' : ''} ${progress.streak.current === 0 ? 'cold' : ''}`} onClick={onStreak} aria-label={`${progress.streak.current} day streak`}>
-        <span className="hud-icon">🔥</span>{progress.streak.current}
+        <Emoji e="🔥" size={24} className="hud-icon" />{progress.streak.current}
       </button>
       <ScreenPill progress={progress} onClick={onBank} />
       <div className="hud-item gems" aria-label={`${progress.gems} gems`}>
-        <span className="hud-icon">💎</span>{progress.gems}
+        <Emoji e="💎" size={24} className="hud-icon" />{progress.gems}
       </div>
       <div className="hud-item level" aria-label={`Level ${lvl.level}`}>
         <span className="level-chip">Lv {lvl.level}</span>
@@ -56,7 +57,7 @@ export function DailyCard({ progress }: { progress: Progress }) {
           <p className="muted">{xp >= progress.dailyGoal ? 'Done for today! Extra XP still counts.' : `${xp} / ${progress.dailyGoal} XP`}</p>
         </div>
       </div>
-      <h3 className="quests-title">Daily quests <span className={`chest ${allDone ? 'open' : ''}`}>{allDone ? '🎁' : '🧰'}</span></h3>
+      <h3 className="quests-title">Daily quests <Emoji e={allDone ? '🎁' : '🧰'} size={30} className={`chest ${allDone ? 'open' : ''}`} /></h3>
       <ul className="quest-list">
         {quests.map((q) => (
           <li key={q.kind} className={`quest ${q.done ? 'done' : ''}`}>

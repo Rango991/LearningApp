@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Emoji } from '../components/Emoji';
 import { correctAnswerText, findQuestion } from '../content';
 import type { LearnCard } from '../content/types';
 import { Mascot } from '../components/Mascot';
@@ -124,7 +125,7 @@ export function Session({ plan, accessory, onQuit, onFinish }: Props) {
         <main className="session-body learn">
           <p className="eyebrow">Learn · {card + 1} of {plan.learn.length}</p>
           <div className="learn-card pop-in" key={card}>
-            <div className="learn-emoji">{plan.learn[card].emoji}</div>
+            <Emoji e={plan.learn[card].emoji} size={88} className="learn-emoji" />
             <h2>{plan.learn[card].title}</h2>
             <p>{plan.learn[card].body}</p>
             {plan.learn[card].keywords && (

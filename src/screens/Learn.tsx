@@ -1,38 +1,56 @@
 import { useState } from 'react';
-import { comingSoon, qKey, subjects } from '../content';
+import { qKey, subjects, findSubject, unitsByStage } from '../content';
 import type { Lesson, Unit } from '../content/types';
+import { Emoji } from '../components/Emoji';
 import { DailyCard } from '../components/Hud';
 import { Mascot } from '../components/Mascot';
 import { ScreenCard } from '../components/ScreenTime';
-import { checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, reviewAvailable, streakAtRisk } from '../game/engine';
+import {
+  checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, reviewAvailable, streakAtRisk, testedOut,
+} from '../game/engine';
 import { dayKey } from '../game/dates';
 import type { Progress } from '../game/types';
 import { sfx } from '../sound';
 import type { SessionPlan } from './Session';
 
 const OFFSETS = [0, 52, 78, 52, 0, -52, -78, -52];
+const SUBJECT_KEY = 'brainboost:subject';
 
 type Selected = { unit: Unit; lesson: Lesson; index: number } | { unit: Unit; checkpoint: true };
+
+function loadSubject(): string {
+  try { return localStorage.getItem(SUBJECT_KEY) ?? subjects[0].id; } catch { return subjects[0].id; }
+}
 
 function greeting(p: Progress): string {
   const hour = new Date().getHours();
   const name = p.profile.name;
-  if (p.totals.lessons === 0) return `Hi ${name}! I’m Mito, the powerhouse of the cell. Tap the first lesson to start!`;
+  if (p.totals.lessons === 0) return `Hi ${name}! I’m Mito, the powerhouse of the cell. Pick a subject and tap a lesson to start!`;
   if (streakAtRisk(p)) return `Your ${p.streak.current}-day streak is waiting, ${name}! One lesson keeps it alive 🔥`;
   if ((p.daily[dayKey()]?.xp ?? 0) >= p.dailyGoal) return `Goal smashed today, ${name}! Anything extra is a bonus ⭐`;
   if (reviewAvailable(p) >= 3) return `You’ve got ${reviewAvailable(p)} questions ready to practise. Fixing mistakes is how brains grow 🧠`;
   return hour < 12 ? `Morning ${name}! Ready to learn something new?` : hour < 18 ? `Hey ${name}! Fancy a quick lesson?` : `Evening ${name}! A quick lesson before bed?`;
 }
 
+/** The unit's picture: the first lesson's emoji. */
+const unitEmoji = (u: Unit) => u.lessons[0]?.emoji ?? '📘';
+
 export function Learn({ progress, onStart }: { progress: Progress; onStart: (plan: SessionPlan) => void }) {
   const [selected, setSelected] = useState<Selected | null>(null);
-  const subject = subjects[0];
+  const [subjectId, setSubjectId] = useState(loadSubject);
+  const subject = findSubject(subjectId);
 
-  // The "current" lesson is the first one not yet done, so it gets the bouncing START bubble.
+  function pickSubject(id: string) {
+    sfx.tap();
+    setSubjectId(id);
+    try { localStorage.setItem(SUBJECT_KEY, id); } catch { /* not important */ }
+  }
+
+  // The "current" lesson is the first unlocked one not yet done, so it gets the START bubble.
   let current: string | null = null;
   for (const u of subject.units) {
-    const l = u.lessons.find((x) => !progress.lessons[x.id]);
-    if (l) { current = l.id; break; }
+    const i = u.lessons.findIndex((x, li) => !progress.lessons[x.id] && isLessonUnlocked(progress, u, li));
+    if (i >= 0) { current = u.lessons[i].id; break; }
   }
 
   function start(sel: Selected) {
@@ -52,6 +70,7 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
     }
   }
 
+  let unitNumber = 0;
   return (
     <div className="learn-layout">
       <div className="learn-main">
@@ -60,63 +79,78 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
           <p className="speech">{greeting(progress)}</p>
         </div>
 
-        <div className="subject-tabs">
-          <button className="subject-tab active">{subject.emoji} {subject.title} <span className="muted small">{subject.yearGroup}</span></button>
-          {comingSoon.map((s) => (
-            <button key={s.title} className="subject-tab soon" disabled title="Coming soon">{s.emoji} {s.title} <span className="small">soon</span></button>
+        <div className="subject-tabs" role="tablist">
+          {subjects.map((s) => (
+            <button
+              key={s.id}
+              role="tab"
+              aria-selected={s.id === subject.id}
+              className={`subject-tab ${s.id === subject.id ? 'active' : ''}`}
+              style={{ ['--subject' as string]: s.colour }}
+              onClick={() => pickSubject(s.id)}
+            >
+              <Emoji e={s.emoji} size={28} /> {s.title}
+            </button>
           ))}
         </div>
 
-        {subject.units.map((unit, ui) => {
-          const done = unit.lessons.filter((l) => progress.lessons[l.id]).length;
-          const testScore = progress.checkpoints[unit.id];
-          const testUnlocked = isUnitComplete(progress, unit);
-          return (
-            <section key={unit.id} className="unit" style={{ ['--unit' as string]: unit.colour }}>
-              <div className="unit-banner">
-                <div>
-                  <p className="unit-kicker">Unit {ui + 1} · {done}/{unit.lessons.length} lessons</p>
-                  <h2>{unit.title}</h2>
-                  <p className="unit-desc">{unit.description}</p>
-                </div>
-              </div>
-              <div className="path">
-                {unit.lessons.map((lesson, li) => {
-                  const unlocked = isLessonUnlocked(progress, unit, li);
-                  const { stars, gold } = lessonStars(progress, lesson.id);
-                  const isCurrent = lesson.id === current;
-                  return (
-                    <div key={lesson.id} className="path-row" style={{ transform: `translateX(${OFFSETS[li % OFFSETS.length]}px)` }}>
-                      {isCurrent && <span className="start-bubble">START</span>}
-                      <button
-                        className={`node ${stars ? 'complete' : ''} ${gold ? 'gold' : ''} ${unlocked ? '' : 'locked'} ${isCurrent ? 'current' : ''}`}
-                        onClick={() => { sfx.tap(); setSelected({ unit, lesson, index: li }); }}
-                        aria-label={`${lesson.title}${unlocked ? '' : ' (locked)'}`}
-                      >
-                        <span className="node-emoji">{unlocked ? lesson.emoji : '🔒'}</span>
-                      </button>
-                      <div className="node-stars" aria-label={`${stars} stars`}>
-                        {[0, 1, 2].map((s) => <span key={s} className={s < stars ? 'on' : ''}>★</span>)}
-                      </div>
+        {unitsByStage(subject).map(({ stage, units }) => (
+          <div key={stage} className="stage">
+            <h2 className="stage-title"><span>{stage}</span></h2>
+            {units.map((unit) => {
+              unitNumber++;
+              const done = unit.lessons.filter((l) => progress.lessons[l.id]).length;
+              const testScore = progress.checkpoints[unit.id];
+              const skipped = testedOut(progress, unit);
+              return (
+                <section key={unit.id} className="unit" style={{ ['--unit' as string]: unit.colour }}>
+                  <div className="unit-banner">
+                    <div className="unit-text">
+                      <p className="unit-kicker">Unit {unitNumber} · {done}/{unit.lessons.length} lessons{skipped ? ' · tested out ✓' : ''}</p>
+                      <h2>{unit.title}</h2>
+                      <p className="unit-desc">{unit.description}</p>
                     </div>
-                  );
-                })}
-                <div className="path-row">
-                  <button
-                    className={`node trophy ${testScore !== undefined && testScore >= 0.8 ? 'gold complete' : ''} ${testUnlocked ? '' : 'locked'}`}
-                    onClick={() => { sfx.tap(); setSelected({ unit, checkpoint: true }); }}
-                    aria-label="Unit test"
-                  >
-                    <span className="node-emoji">🏆</span>
-                  </button>
-                  <div className="node-caption">Unit test</div>
-                </div>
-              </div>
-            </section>
-          );
-        })}
+                    <Emoji e={unitEmoji(unit)} size={72} className="unit-art" />
+                  </div>
+                  <div className="path">
+                    {unit.lessons.map((lesson, li) => {
+                      const unlocked = isLessonUnlocked(progress, unit, li);
+                      const { stars, gold } = lessonStars(progress, lesson.id);
+                      const isCurrent = lesson.id === current;
+                      return (
+                        <div key={lesson.id} className="path-row" style={{ transform: `translateX(${OFFSETS[li % OFFSETS.length]}px)` }}>
+                          {isCurrent && <span className="start-bubble">START</span>}
+                          <button
+                            className={`node ${stars ? 'complete' : ''} ${gold ? 'gold' : ''} ${unlocked ? '' : 'locked'} ${isCurrent ? 'current' : ''}`}
+                            onClick={() => { sfx.tap(); setSelected({ unit, lesson, index: li }); }}
+                            aria-label={`${lesson.title}${unlocked ? '' : ' (locked)'}`}
+                          >
+                            <Emoji e={unlocked ? lesson.emoji : '🔒'} size={unlocked ? 44 : 34} className="node-emoji" />
+                          </button>
+                          <div className="node-stars" aria-label={`${stars} stars`}>
+                            {[0, 1, 2].map((s) => <span key={s} className={s < stars ? 'on' : ''}>★</span>)}
+                          </div>
+                        </div>
+                      );
+                    })}
+                    <div className="path-row">
+                      <button
+                        className={`node trophy ${testScore !== undefined && testScore >= 0.8 ? 'gold complete' : ''}`}
+                        onClick={() => { sfx.tap(); setSelected({ unit, checkpoint: true }); }}
+                        aria-label="Unit test"
+                      >
+                        <Emoji e="🏆" size={44} className="node-emoji" />
+                      </button>
+                      <div className="node-caption">Unit test</div>
+                    </div>
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+        ))}
 
-        <p className="muted center small">More units, subjects and GCSE content coming soon!</p>
+        <p className="muted center small">GCSE units (AQA) coming next!</p>
       </div>
 
       <aside className="learn-side">
@@ -129,20 +163,19 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
           <div className="sheet pop-up" onClick={(e) => e.stopPropagation()} style={{ ['--unit' as string]: selected.unit.colour }}>
             {'checkpoint' in selected ? (
               <>
-                <h3>🏆 {selected.unit.title}: unit test</h3>
-                <p className="muted">12 mixed questions from the whole unit, exam-style. Score 80% to win the trophy and 20 💎.</p>
+                <h3><Emoji e="🏆" size={30} /> {selected.unit.title}: unit test</h3>
+                <p className="muted">12 mixed questions from the whole unit. Score 80% to win the trophy, 20 💎 and 15 min of screen time.</p>
+                {!isUnitComplete(progress, selected.unit) && !testedOut(progress, selected.unit) && (
+                  <p className="test-out-note">⚡ Already know this? Pass the test to unlock every lesson in the unit and skip ahead.</p>
+                )}
                 {progress.checkpoints[selected.unit.id] !== undefined && (
                   <p>Best score: <b>{Math.round(progress.checkpoints[selected.unit.id] * 100)}%</b></p>
                 )}
-                {isUnitComplete(progress, selected.unit) ? (
-                  <button className="btn unit wide" onClick={() => start(selected)}>Start test</button>
-                ) : (
-                  <p className="locked-note">🔒 Finish every lesson in this unit to unlock the test.</p>
-                )}
+                <button className="btn unit wide" onClick={() => start(selected)}>Start test</button>
               </>
             ) : (
               <>
-                <h3>{selected.lesson.emoji} {selected.lesson.title}</h3>
+                <h3><Emoji e={selected.lesson.emoji} size={30} /> {selected.lesson.title}</h3>
                 <p className="muted">{selected.lesson.learn.length} quick cards, then {selected.lesson.questions.length} questions.</p>
                 {progress.lessons[selected.lesson.id] && (
                   <p>Best score: <b>{Math.round(progress.lessons[selected.lesson.id].bestAccuracy * 100)}%</b> · Completed {progress.lessons[selected.lesson.id].completions}×</p>
@@ -152,7 +185,7 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
                     {progress.lessons[selected.lesson.id] ? 'Practise again' : 'Start'} · up to +{selected.lesson.questions.length * 2 + 13} XP
                   </button>
                 ) : (
-                  <p className="locked-note">🔒 Finish “{selected.unit.lessons[selected.index - 1].title}” to unlock this.</p>
+                  <p className="locked-note">🔒 Finish “{selected.unit.lessons[selected.index - 1].title}” to unlock this, or pass the unit test to skip ahead.</p>
                 )}
               </>
             )}

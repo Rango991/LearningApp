@@ -1,4 +1,4 @@
-import { correctAnswerText, findLesson, findQuestion, subjects } from '../content';
+import { correctAnswerText, findLesson, findQuestion, findUnit, subjects } from '../content';
 import { lessonAccuracy, weakSpots } from '../game/engine';
 import { dayKey, lastNDays, parseDay } from '../game/dates';
 import { levelFor } from '../game/levels';
@@ -94,8 +94,15 @@ export function ParentDashboard({ progress }: { progress: Progress }) {
 
       <section className="panel">
         <h2>Topic mastery</h2>
-        <p className="muted small">Accuracy across every attempt at each lesson’s questions.</p>
-        {subjects[0].units.map((u) => (
+        <p className="muted small">Accuracy across every attempt at each lesson’s questions. Units she hasn’t started are hidden.</p>
+        {subjects.map((subject) => {
+          const started = subject.units.filter((u) => u.lessons.some((l) => lessonAccuracy(progress, l.id) !== null) || progress.checkpoints[u.id] !== undefined);
+          return (
+            <div key={subject.id} className="mastery-subject">
+              <h3 className="mastery-subject-title">{subject.emoji} {subject.title}
+                <span className="small muted"> · {started.length} of {subject.units.length} units started</span>
+              </h3>
+              {started.map((u) => (
           <div key={u.id} className="mastery-unit">
             <h3>{u.title}{progress.checkpoints[u.id] !== undefined && <span className="chip">Unit test best: {pct(progress.checkpoints[u.id])}</span>}</h3>
             {u.lessons.map((l) => {
@@ -112,7 +119,10 @@ export function ParentDashboard({ progress }: { progress: Progress }) {
               );
             })}
           </div>
-        ))}
+              ))}
+            </div>
+          );
+        })}
       </section>
 
       <section className="panel">
@@ -164,7 +174,7 @@ export function ParentDashboard({ progress }: { progress: Progress }) {
             <tbody>
               {recentSessions.map((s, i) => {
                 const lesson = s.lessonId ? findLesson(s.lessonId)?.lesson.title : undefined;
-                const unit = s.unitId ? subjects[0].units.find((u) => u.id === s.unitId)?.title : undefined;
+                const unit = s.unitId ? findUnit(s.unitId)?.unit.title : undefined;
                 const what = s.kind === 'review' ? 'Practice' : s.kind === 'checkpoint' ? `Unit test: ${unit}` : lesson;
                 return (
                   <tr key={i}>

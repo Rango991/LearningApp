@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Emoji } from '../components/Emoji';
 import { Mascot } from '../components/Mascot';
 import { buyItem, touch } from '../game/engine';
 import { MAX_FREEZES, shopItems } from '../game/shop';
@@ -42,7 +43,7 @@ export function Shop({ progress, setProgress }: { progress: Progress; setProgres
           const equipped = progress.equipped === item.id;
           return (
             <div key={item.id} className="card shop-item">
-              <div className="shop-emoji">{item.emoji}</div>
+              <Emoji e={item.emoji} size={64} className="shop-emoji" />
               <h4>{item.title}</h4>
               <p className="small muted">{item.description}</p>
               {item.kind === 'freeze' && <p className="small">You have {progress.streak.freezes}/{MAX_FREEZES}</p>}

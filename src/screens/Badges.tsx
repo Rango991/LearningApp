@@ -1,4 +1,5 @@
 import { achievements } from '../game/achievements';
+import { Emoji } from '../components/Emoji';
 import type { Progress } from '../game/types';
 
 export function Badges({ progress }: { progress: Progress }) {
@@ -13,7 +14,7 @@ export function Badges({ progress }: { progress: Progress }) {
           const { value, target } = a.progress(progress);
           return (
             <div key={a.id} className={`badge ${got ? 'got' : 'locked'}`}>
-              <div className="badge-emoji">{a.emoji}</div>
+              <div className="badge-emoji"><Emoji e={a.emoji} size={48} /></div>
               <h4>{a.title}</h4>
               <p className="small muted">{a.description}</p>
               {got ? (

@@ -1,19 +1,15 @@
-import type { Subject } from './types';
+import type { Unit } from './types';
 
 // Year 7 Biology, following the KS3 National Curriculum and the order most
 // schools teach it in: cells, then body systems, then reproduction.
 // Question ids are stored in progress data, so never change an existing id.
 
-export const biologyY7: Subject = {
-  id: 'bio7',
-  title: 'Biology',
-  emoji: '🧬',
-  yearGroup: 'Year 7',
-  units: [
+export const biologyY7: Unit[] = [
     {
       id: 'cells',
       title: 'Cells: life’s building blocks',
       description: 'What makes something alive, what’s inside cells, and how we see them.',
+      stage: 'Year 7',
       colour: '#22b07d',
       lessons: [
         {
@@ -336,6 +332,7 @@ export const biologyY7: Subject = {
       id: 'body',
       title: 'Body systems',
       description: 'From cells to organisms, plus your skeleton, muscles and lungs.',
+      stage: 'Year 7',
       colour: '#ff8a3d',
       lessons: [
         {
@@ -564,6 +561,7 @@ export const biologyY7: Subject = {
       id: 'repro',
       title: 'Reproduction',
       description: 'How humans and plants make new life.',
+      stage: 'Year 7',
       colour: '#e2559b',
       lessons: [
         {
@@ -801,5 +799,4 @@ export const biologyY7: Subject = {
         },
       ],
     },
-  ],
-};
+];

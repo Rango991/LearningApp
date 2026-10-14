@@ -66,6 +66,8 @@ export interface Lesson {
 export interface Unit {
   id: string;
   title: string;
+  /** Which stage of school it belongs to, e.g. "Year 7" or "Years 8–9". */
+  stage: string;
   description: string;
   colour: string;
   lessons: Lesson[];
@@ -75,6 +77,6 @@ export interface Subject {
   id: string;
   title: string;
   emoji: string;
-  yearGroup: string;
+  colour: string;
   units: Unit[];
 }

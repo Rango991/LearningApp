@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Emoji } from './Emoji';
 import { dayKey, parseDay } from '../game/dates';
 import { SCREEN_RULES, earnedHistory, earnedToday, isWeekend, nextBoostHint, studyMinutes } from '../game/screenTime';
 import type { Progress } from '../game/types';
@@ -16,7 +17,7 @@ export function ScreenPill({ progress, onClick }: { progress: Progress; onClick?
   const earned = earnedToday(progress);
   return (
     <button className="hud-item bank" onClick={onClick} aria-label={`${earned} minutes of screen time earned today`}>
-      <span className="hud-icon">🎮</span>{formatMinutes(earned)}
+      <Emoji e="🎮" size={24} className="hud-icon" />{formatMinutes(earned)}
     </button>
   );
 }
@@ -41,7 +42,7 @@ export function ScreenCard({ progress }: { progress: Progress }) {
   return (
     <section className="card bank-card">
       <div className="bank-head">
-        <span className="bank-icon">🎮</span>
+        <Emoji e="🎮" size={52} className="bank-icon" />
         <div>
           <p className="bank-label">Screen time earned today</p>
           <p className="bank-value">{formatMinutes(earnedToday(progress, today))}</p>

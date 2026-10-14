@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Emoji } from './components/Emoji';
 import { TopBar } from './components/Hud';
 import { Mascot } from './components/Mascot';
 import { applySession } from './game/engine';
@@ -19,10 +20,10 @@ type Tab = 'learn' | 'practice' | 'badges' | 'shop' | 'me';
 
 const TABS: { id: Tab; icon: string; label: string }[] = [
   { id: 'learn', icon: '🏠', label: 'Learn' },
-  { id: 'practice', icon: '🔁', label: 'Practice' },
+  { id: 'practice', icon: '🎯', label: 'Practice' },
   { id: 'badges', icon: '🏅', label: 'Badges' },
   { id: 'shop', icon: '💎', label: 'Shop' },
-  { id: 'me', icon: '😊', label: 'Me' },
+  { id: 'me', icon: '🙂', label: 'Me' },
 ];
 
 export function App() {
@@ -70,7 +71,7 @@ function StudentApp() {
       <nav className="tabbar">
         {TABS.map((t) => (
           <button key={t.id} className={`tab ${tab === t.id ? 'active' : ''}`} onClick={() => { sfx.tap(); setTab(t.id); window.scrollTo(0, 0); }}>
-            <span className="tab-icon">{t.icon}</span>
+            <Emoji e={t.icon} size={30} className="tab-icon" />
             <span className="tab-label">{t.label}</span>
           </button>
         ))}
@@ -81,7 +82,7 @@ function StudentApp() {
           <div className="modal pop-in" onClick={(e) => e.stopPropagation()}>
             {streakNotice.frozeDays > 0 ? (
               <>
-                <div className="big-emoji">🧊</div>
+                <Emoji e="🧊" size={96} className="big-emoji" />
                 <h3>Streak saved!</h3>
                 <p>A streak freeze covered {streakNotice.frozeDays === 1 ? 'the day' : `${streakNotice.frozeDays} days`} you missed. Your {progress.streak.current}-day streak is safe. Do a lesson today to keep it going!</p>
               </>

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Emoji } from '../components/Emoji';
 import { Confetti } from '../components/Confetti';
 import { Mascot } from '../components/Mascot';
 import { StreakWeek } from '../components/StreakWeek';
@@ -68,7 +69,7 @@ export function Results({ summary, progress, kind, onDone }: Props) {
 
         {step === 'screen' && (
           <>
-            <div className="big-emoji">🎮</div>
+            <Emoji e="🎮" size={110} className="big-emoji" />
             <h1 className="screen-earned">+{formatMinutes(summary.screenMinutes)}</h1>
             <h2>screen time earned!</h2>
             {summary.screenBonus > 0 && <p className="bonus-line">🏆 Includes a {summary.screenBonus} min unit test bonus!</p>}
@@ -79,7 +80,7 @@ export function Results({ summary, progress, kind, onDone }: Props) {
 
         {step === 'streak' && (
           <>
-            <div className="big-flame">🔥</div>
+            <Emoji e="🔥" size={130} className="big-flame" />
             <h1 className="streak-number">{summary.streak}</h1>
             <h2>day streak!</h2>
             <StreakWeek progress={progress} />
@@ -91,7 +92,7 @@ export function Results({ summary, progress, kind, onDone }: Props) {
 
         {step === 'goal' && (
           <>
-            <div className="big-emoji">🎯</div>
+            <Emoji e="🎯" size={110} className="big-emoji" />
             <h1>Daily goal hit!</h1>
             <p className="muted">You earned {progress.dailyGoal}+ XP today. Brilliant work.</p>
           </>
@@ -99,7 +100,7 @@ export function Results({ summary, progress, kind, onDone }: Props) {
 
         {step === 'quests' && (
           <>
-            <div className="big-emoji">{summary.allQuestsBonus ? '🎁' : '📜'}</div>
+            <Emoji e={summary.allQuestsBonus ? '🎁' : '📜'} size={110} className="big-emoji" />
             <h1>{summary.allQuestsBonus ? 'All quests done!' : 'Quest complete!'}</h1>
             <ul className="quest-list">
               {summary.questsCompleted.map((q) => (
@@ -125,7 +126,7 @@ export function Results({ summary, progress, kind, onDone }: Props) {
           return a && (
             <>
               <p className="eyebrow">New badge unlocked</p>
-              <div className="badge-big">{a.emoji}</div>
+              <div className="badge-big"><Emoji e={a.emoji} size={96} /></div>
               <h1>{a.title}</h1>
               <p className="muted">{a.description}</p>
               <p className="gem-reward">+{a.gems} 💎</p>

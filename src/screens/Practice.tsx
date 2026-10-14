@@ -8,7 +8,8 @@ export function Practice({ progress, onStart }: { progress: Progress; onStart: (
   const mistakes = mistakeKeys(progress);
   const due = dueKeys(progress);
   const review = buildReview(progress);
-  const units = subjects[0].units;
+  // Units she's started, plus any she has a test score for.
+  const units = subjects.flatMap((s) => s.units).filter((u) => u.lessons.some((l) => progress.lessons[l.id]) || progress.checkpoints[u.id] !== undefined);
 
   return (
     <div className="page">
@@ -51,20 +52,19 @@ export function Practice({ progress, onStart }: { progress: Progress; onStart: (
       )}
 
       <h2>Unit tests 🏆</h2>
+      {units.length === 0 && <p className="muted">Start a unit and its test appears here. You can also take any unit’s test from the 🏆 at the end of its path.</p>}
       <div className="test-grid">
         {units.map((u) => {
           const best = progress.checkpoints[u.id];
-          const open = isUnitComplete(progress, u);
           return (
             <section key={u.id} className="card test-card" style={{ ['--unit' as string]: u.colour }}>
               <h3>{u.title}</h3>
               <p className="muted small">{best === undefined ? 'Not tried yet' : `Best: ${Math.round(best * 100)}% ${best >= 0.8 ? '🏆' : ''}`}</p>
               <button
                 className="btn unit"
-                disabled={!open}
                 onClick={() => onStart({ kind: 'checkpoint', title: `${u.title}: unit test`, colour: u.colour, unitId: u.id, keys: checkpointQuestions(u) })}
               >
-                {open ? 'Take test' : '🔒 Finish the unit first'}
+                {isUnitComplete(progress, u) ? 'Take test' : 'Test out'}
               </button>
             </section>
           );

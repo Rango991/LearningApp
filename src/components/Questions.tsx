@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Emoji } from './Emoji';
 import { markGap } from '../game/answers';
 import { shuffle } from '../game/engine';
 import type { GapQuestion, MatchQuestion, McqQuestion, OrderQuestion, Question, TrueFalseQuestion } from '../content/types';
@@ -79,7 +80,7 @@ function TrueFalse({ q, locked, onReady }: Props<TrueFalseQuestion>) {
             onReady(() => ({ correct: v === q.answer, given: v ? 'True' : 'False' }));
           }}
         >
-          <span className="tf-emoji">{v ? '👍' : '👎'}</span>
+          <Emoji e={v ? '👍' : '👎'} size={48} className="tf-emoji" />
           {v ? 'True' : 'False'}
         </button>
       ))}

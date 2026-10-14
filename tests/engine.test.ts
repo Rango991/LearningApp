@@ -17,14 +17,43 @@ function play(p: Progress, day: string, correct: boolean[] = [true, true, true])
 }
 
 describe('content', () => {
-  it('has valid questions', () => {
-    for (const u of subjects[0].units) for (const l of u.lessons) {
-      expect(l.questions.length).toBeGreaterThanOrEqual(6);
+  const all = subjects.flatMap((s) => s.units.flatMap((u) => u.lessons.map((l) => ({ s, u, l }))));
+
+  it('has unique unit and lesson ids', () => {
+    const units = subjects.flatMap((s) => s.units.map((u) => u.id));
+    expect(new Set(units).size).toBe(units.length);
+    const lessons = all.map(({ l }) => l.id);
+    expect(new Set(lessons).size).toBe(lessons.length);
+  });
+
+  it('has well-formed lessons and questions', () => {
+    for (const { l } of all) {
+      expect(l.learn.length, l.id).toBeGreaterThan(0);
+      expect(l.questions.length, l.id).toBeGreaterThanOrEqual(6);
+      const ids = l.questions.map((q) => q.id);
+      expect(new Set(ids).size, l.id).toBe(ids.length);
       for (const q of l.questions) {
-        if (q.type === 'mcq') expect(q.answer).toBeLessThan(q.options.length);
-        if (q.type === 'match') expect(new Set(q.pairs.map((x) => x[1])).size).toBe(q.pairs.length);
+        const where = `${l.id}/${q.id}`;
+        if (q.type === 'mcq') {
+          expect(q.answer, where).toBeLessThan(q.options.length);
+          expect(new Set(q.options).size, where).toBe(q.options.length);
+        }
+        if (q.type === 'match') {
+          expect(new Set(q.pairs.map((x) => x[0])).size, where).toBe(q.pairs.length);
+          expect(new Set(q.pairs.map((x) => x[1])).size, where).toBe(q.pairs.length);
+        }
+        if (q.type === 'order') expect(new Set(q.items).size, where).toBe(q.items.length);
+        if (q.type === 'gap') {
+          expect(q.prompt, where).toContain('___');
+          // The first accepted answer must mark as correct.
+          expect(markGap(q.accept[0], q.accept), where).toBe('correct');
+        }
       }
     }
+  });
+
+  it('covers all four subjects', () => {
+    expect(subjects.map((s) => s.id)).toEqual(['biology', 'chemistry', 'physics', 'maths']);
   });
 });
 
@@ -123,5 +152,32 @@ describe('shop', () => {
     expect(f.ok).toBe(true);
     const f2 = f.ok ? buyItem(f.progress, 'freeze') : f;
     expect(f2.ok).toBe(false);
+  });
+});
+
+describe('number answers', () => {
+  it('compares numbers by value', () => {
+    expect(markGap('.75', ['0.75'])).toBe('correct');
+    expect(markGap('3/4', ['0.75'])).toBe('correct');
+    expect(markGap('-3', ['-3'])).toBe('correct');
+    expect(markGap('3', ['-3'])).toBe('wrong');
+    expect(markGap('1,200', ['1200'])).toBe('correct');
+    expect(markGap('£12.50', ['12.5'])).toBe('correct');
+    expect(markGap('1 1/2', ['1.5'])).toBe('correct');
+    expect(markGap('40%', ['40'])).toBe('correct');
+    expect(markGap('400', ['40'])).toBe('wrong');
+    expect(markGap('forty', ['40'])).toBe('wrong');
+  });
+  it('still marks word answers as words', () => {
+    expect(markGap('seven', ['7', 'seven'])).toBe('correct');
+  });
+});
+
+describe('fractions', () => {
+  it('reads improper and mixed fractions correctly', () => {
+    expect(markGap('12/4', ['3'])).toBe('correct');
+    expect(markGap('2 1/4', ['2.25'])).toBe('correct');
+    expect(markGap('-1/2', ['-0.5'])).toBe('correct');
+    expect(markGap('365 1/4', ['365.25'])).toBe('correct');
   });
 });
