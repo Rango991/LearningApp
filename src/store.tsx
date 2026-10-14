@@ -1,17 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ensureQuests, migrate, reconcileStreak } from './game/engine';
-import type { ScreenLogEntry } from './game/screenTime';
 import type { Progress } from './game/types';
 import { setSoundEnabled } from './sound';
-import { addScreenLog, cloudConfigured, currentEmail, deleteScreenLog, pullProgress, pullScreenLog, pushProgress } from './sync/cloud';
-import {
-  loadProgress, loadRole, loadScreenLog, requestPersistentStorage, saveProgress, saveRole, saveScreenLog, type Role,
-} from './sync/local';
+import { cloudConfigured, currentEmail, pullProgress, pushProgress } from './sync/cloud';
+import { loadProgress, loadRole, requestPersistentStorage, saveProgress, saveRole, type Role } from './sync/local';
 
 export type SyncState = 'off' | 'signed-out' | 'syncing' | 'synced' | 'error';
-
-/** 'missing' means the screen_time_log table hasn't been created in Supabase yet. */
-export type ScreenLogState = 'ok' | 'missing' | 'error';
 
 export interface StreakNotice {
   frozeDays: number;
@@ -33,11 +27,6 @@ interface Store {
   /** Re-check the cloud account and pull the latest data. Resolves to the progress now in use. */
   refresh: () => Promise<Progress | null>;
   resetDevice: () => void;
-  /** Screen time used or added by a parent (needs cloud sync). */
-  screenLog: ScreenLogEntry[];
-  screenLogState: ScreenLogState;
-  recordScreenTime: (minutes: number, note: string | null) => Promise<string | null>;
-  removeScreenTime: (id: ScreenLogEntry['id']) => Promise<string | null>;
 }
 
 const Ctx = createContext<Store | null>(null);
@@ -70,8 +59,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [sync, setSync] = useState<SyncState>(cloudConfigured ? 'signed-out' : 'off');
   const [lastSynced, setLastSynced] = useState<Date | null>(null);
   const [streakNotice, setStreakNotice] = useState<StreakNotice | null>(null);
-  const [screenLog, setScreenLog] = useState<ScreenLogEntry[]>(loadScreenLog);
-  const [screenLogState, setScreenLogState] = useState<ScreenLogState>('ok');
   const pushTimer = useRef<number | undefined>(undefined);
   const roleRef = useRef(role);
   roleRef.current = role;
@@ -98,18 +85,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     push(p);
   }, [push]);
 
-  const refreshScreenLog = useCallback(async () => {
-    try {
-      const log = await pullScreenLog();
-      setScreenLog(log);
-      saveScreenLog(log);
-      setScreenLogState('ok');
-    } catch (e) {
-      const code = (e as { code?: string }).code;
-      setScreenLogState(code === '42P01' || code === 'PGRST205' ? 'missing' : 'error');
-    }
-  }, []);
-
   const refresh = useCallback(async (): Promise<Progress | null> => {
     const email = await currentEmail();
     setCloudEmail(email);
@@ -118,7 +93,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       return loadProgress();
     }
     setSync('syncing');
-    void refreshScreenLog();
     try {
       const fetched = await pullProgress();
       const remote = fetched && migrate(fetched);
@@ -147,7 +121,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setSync('error');
       return loadProgress();
     }
-  }, [push, refreshScreenLog]);
+  }, [push]);
 
   // First load
   useEffect(() => {
@@ -200,26 +174,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     saveRole(r);
   }, []);
 
-  const recordScreenTime = useCallback(async (minutes: number, note: string | null) => {
-    try {
-      await addScreenLog(minutes, note);
-      await refreshScreenLog();
-      return null;
-    } catch (e) {
-      return (e as { message?: string }).message ?? 'Couldn’t save. Are you online?';
-    }
-  }, [refreshScreenLog]);
-
-  const removeScreenTime = useCallback(async (id: ScreenLogEntry['id']) => {
-    try {
-      await deleteScreenLog(id);
-      await refreshScreenLog();
-      return null;
-    } catch (e) {
-      return (e as { message?: string }).message ?? 'Couldn’t remove it. Are you online?';
-    }
-  }, [refreshScreenLog]);
-
   const resetDevice = useCallback(() => {
     saveProgress(null);
     saveRole(null);
@@ -233,7 +187,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         ready, role, progress, cloudEmail, sync, lastSynced, streakNotice,
         dismissStreakNotice: () => setStreakNotice(null),
         setRole, setProgress, refresh, resetDevice,
-        screenLog, screenLogState, recordScreenTime, removeScreenTime,
       }}
     >
       {children}

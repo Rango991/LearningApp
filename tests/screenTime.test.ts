@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { subjects } from '../src/content';
 import { ActiveClock } from '../src/game/activeClock';
 import { applySession, createProgress } from '../src/game/engine';
-import { balance, earnedFor, earnedOnDay, isWeekend, totalEarned } from '../src/game/screenTime';
+import { earnedFor, earnedOnDay, earnedToday, isWeekend } from '../src/game/screenTime';
 
 describe('screen-time rules', () => {
   it('weekday: first 20 min 1:1, then 1.5x (50 min study = 65 min)', () => {
@@ -44,8 +44,7 @@ describe('screen-time rules', () => {
     expect(first.summary.screenMinutes).toBe(10 + 15);
     const again = applySession(first.progress, { kind: 'checkpoint', unitId: unit.id, answers, maxCombo: 10, seconds: 0 }, day);
     expect(again.summary.screenBonus).toBe(0);
-    expect(totalEarned(again.progress)).toBe(25);
-    expect(balance(again.progress, [{ id: 1, minutes: -20, note: null, created_at: '' }])).toBe(5);
+    expect(earnedToday(again.progress, '2026-10-19')).toBe(25);
   });
 });
 

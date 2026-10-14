@@ -6,6 +6,7 @@ import type { Progress } from './types';
 //    after that earns 1.5 minutes.
 //  - Weekends: the same, then doubled.
 //  - Passing a unit test (80%+) for the first time earns a 15 minute bonus.
+// The app only shows what she's earned; the time itself is granted in Family Link.
 // Study time is "active" time only (see Session.tsx), and it adds up across
 // the whole day, so three 10-minute sessions count the same as one 30-minute one.
 
@@ -15,14 +16,6 @@ export const SCREEN_RULES = {
   weekendMultiplier: 2,
   unitTestBonus: 15,
 };
-
-/** A spend or a manual adjustment recorded by a parent. Negative = time used. */
-export interface ScreenLogEntry {
-  id: number | string;
-  minutes: number;
-  note: string | null;
-  created_at: string;
-}
 
 export function isWeekend(day: string): boolean {
   const d = parseDay(day).getDay();
@@ -49,14 +42,9 @@ export function bonusesOnDay(p: Progress, day: string): number {
   return (p.screenBonuses ?? []).filter((b) => dayKey(new Date(b.at)) === day).reduce((s, b) => s + b.minutes, 0);
 }
 
-export function totalEarned(p: Progress): number {
-  const fromStudy = Object.keys(p.daily).reduce((s, day) => s + earnedOnDay(p, day), 0);
-  const bonuses = (p.screenBonuses ?? []).reduce((s, b) => s + b.minutes, 0);
-  return fromStudy + bonuses;
-}
-
-export function balance(p: Progress, log: ScreenLogEntry[]): number {
-  return totalEarned(p) + log.reduce((s, e) => s + e.minutes, 0);
+/** Everything earned on a day: study time plus any unit test bonuses. */
+export function earnedToday(p: Progress, day = dayKey()): number {
+  return earnedOnDay(p, day) + bonusesOnDay(p, day);
 }
 
 /** A short, encouraging line about what the next few minutes of study are worth today. */

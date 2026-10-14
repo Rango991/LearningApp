@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Confetti } from '../components/Confetti';
 import { Mascot } from '../components/Mascot';
 import { StreakWeek } from '../components/StreakWeek';
-import { formatMinutes, useBalance } from '../components/ScreenTime';
-import { nextBoostHint } from '../game/screenTime';
+import { formatMinutes } from '../components/ScreenTime';
+import { earnedToday, nextBoostHint } from '../game/screenTime';
 import { achievementById } from '../game/achievements';
 import { questLabel } from '../game/engine';
 import type { Progress, RewardSummary, SessionKind } from '../game/types';
@@ -41,7 +41,6 @@ export function Results({ summary, progress, kind, onDone }: Props) {
 
   const next = () => (i + 1 < steps.length ? setI(i + 1) : onDone());
   const failedTest = kind === 'checkpoint' && !summary.passedCheckpoint;
-  const bank = useBalance(progress);
 
   return (
     <div className="results">
@@ -73,7 +72,7 @@ export function Results({ summary, progress, kind, onDone }: Props) {
             <h1 className="screen-earned">+{formatMinutes(summary.screenMinutes)}</h1>
             <h2>screen time earned!</h2>
             {summary.screenBonus > 0 && <p className="bonus-line">🏆 Includes a {summary.screenBonus} min unit test bonus!</p>}
-            <p className="bank-total">Bank: <b>{formatMinutes(bank)}</b></p>
+            <p className="bank-total">Today’s total: <b>{formatMinutes(earnedToday(progress))}</b></p>
             <p className="muted">⚡ {nextBoostHint(progress)}</p>
           </>
         )}

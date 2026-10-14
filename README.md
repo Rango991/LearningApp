@@ -20,7 +20,7 @@ normal app, works offline, and has a parent dashboard that works on any phone.
 **Screen-time bank**
 - Study time earns tablet time. Weekdays: the first 20 min of study earn 1:1, then 1.5×. Weekends: the same, doubled. Passing a unit test the first time earns +15 min.
 - Only *active* time counts: gaps of more than 2 minutes between taps are capped, and time while the app is in the background doesn't count.
-- Her balance shows in the top bar, on her home screen, and after each lesson. A parent records time used from the dashboard.
+- What she's earned today shows in the top bar, on her home screen, after each lesson, and on the parent dashboard. The time itself is granted in Google Family Link.
 - The rules live in `src/game/screenTime.ts`.
 
 **For the parent**

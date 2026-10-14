@@ -2,7 +2,7 @@ import { questLabel, streakAtRisk } from '../game/engine';
 import { dayKey } from '../game/dates';
 import { levelFor } from '../game/levels';
 import type { Progress } from '../game/types';
-import { BankPill } from './ScreenTime';
+import { ScreenPill } from './ScreenTime';
 
 export function TopBar({ progress, onStreak, onBank }: { progress: Progress; onStreak?: () => void; onBank?: () => void }) {
   const lvl = levelFor(progress.xp);
@@ -12,7 +12,7 @@ export function TopBar({ progress, onStreak, onBank }: { progress: Progress; onS
       <button className={`hud-item streak ${risk ? 'at-risk' : ''} ${progress.streak.current === 0 ? 'cold' : ''}`} onClick={onStreak} aria-label={`${progress.streak.current} day streak`}>
         <span className="hud-icon">🔥</span>{progress.streak.current}
       </button>
-      <BankPill progress={progress} onClick={onBank} />
+      <ScreenPill progress={progress} onClick={onBank} />
       <div className="hud-item gems" aria-label={`${progress.gems} gems`}>
         <span className="hud-icon">💎</span>{progress.gems}
       </div>
