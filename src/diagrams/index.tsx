@@ -10,6 +10,7 @@ import { gcseGeographyDiagrams } from './gcse-geography';
 import { gcseHistoryDiagrams } from './gcse-history';
 import { gcseMathsDiagrams } from './gcse-maths';
 import { gcsePhysicsDiagrams } from './gcse-physics';
+import { tripleDiagrams } from './gcse-triple';
 import { mathsDiagrams } from './maths';
 import { physicsDiagrams } from './physics';
 import { year7Diagrams } from './year7';
@@ -31,6 +32,7 @@ export const diagrams: Record<string, () => JSX.Element> = {
   ...gcseEnglishDiagrams,
   ...gcseHistoryDiagrams,
   ...gcseGeographyDiagrams,
+  ...tripleDiagrams,
 };
 
 export function Diagram({ id }: { id: string }) {
