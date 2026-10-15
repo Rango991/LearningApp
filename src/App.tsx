@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Confetti } from './components/Confetti';
 import { Emoji } from './components/Emoji';
 import { TopBar } from './components/Hud';
 import { Mascot } from './components/Mascot';
 import { applySession } from './game/engine';
+import { BIRTHDAY_GEMS, accentFor, birthdayGift, mitoAccessory, resultLine } from './game/mito';
 import type { Progress, RewardSummary, SessionKind, SessionResult } from './game/types';
 import { sfx } from './sound';
 import { useStore } from './store';
+import { AboutChat } from './screens/AboutChat';
 import { Badges } from './screens/Badges';
 import { Learn } from './screens/Learn';
 import { Me } from './screens/Me';
@@ -53,11 +56,34 @@ function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?:
   const setProgress = readOnly ? () => {} : store.setProgress;
   const [tab, setTab] = useState<Tab>('learn');
   const [plan, setPlan] = useState<SessionPlan | null>(null);
-  const [results, setResults] = useState<{ summary: RewardSummary; kind: SessionKind } | null>(null);
+  const [results, setResults] = useState<{ summary: RewardSummary; kind: SessionKind; line: string } | null>(null);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [birthdayNotice, setBirthdayNotice] = useState(false);
   const [parent, setParent] = useState(false);
   // In preview, show the results of a lesson against her data without saving them.
   const [previewProgress, setPreviewProgress] = useState<Progress | null>(null);
+  const colour = progress?.profile.about?.colour;
+
+  // Her favourite colour becomes the app's accent colour.
+  useEffect(() => {
+    const a = accentFor(progress?.profile.about);
+    const root = document.documentElement.style;
+    root.setProperty('--purple', a.main);
+    root.setProperty('--purple-dark', a.dark);
+    root.setProperty('--purple-soft', a.soft);
+    return () => { root.removeProperty('--purple'); root.removeProperty('--purple-dark'); root.removeProperty('--purple-soft'); };
+  }, [colour]);
+
+  // Birthday gems, once a year.
+  useEffect(() => {
+    if (readOnly || !progress) return;
+    const gifted = birthdayGift(progress);
+    if (gifted) { setProgress(gifted); setBirthdayNotice(true); }
+  }, []);
+
   if (!progress) return null;
+  const about = progress.profile.about;
+  const needsAbout = !readOnly && !about?.doneAt && !about?.skippedAt;
   const shown = (readOnly && results && previewProgress) || progress;
 
   function finish(result: SessionResult) {
@@ -65,15 +91,18 @@ function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?:
     setProgress(next);
     if (readOnly) setPreviewProgress(next);
     setPlan(null);
-    setResults({ summary, kind: result.kind });
+    setResults({ summary, kind: result.kind, line: resultLine(next, summary, result.kind, result.unitId) });
   }
 
   if (parent) return <ParentGate onClose={() => setParent(false)} />;
+  if (aboutOpen || (needsAbout && !plan && !results)) {
+    return <AboutChat progress={progress} setProgress={setProgress} editing={Boolean(about?.doneAt)} onClose={() => { setAboutOpen(false); window.scrollTo(0, 0); }} />;
+  }
   if (results) {
-    return <Results summary={results.summary} kind={results.kind} progress={shown} onDone={() => { setResults(null); setPreviewProgress(null); window.scrollTo(0, 0); }} />;
+    return <Results summary={results.summary} kind={results.kind} line={results.line} progress={shown} onDone={() => { setResults(null); setPreviewProgress(null); window.scrollTo(0, 0); }} />;
   }
   if (plan) {
-    return <Session plan={plan} accessory={progress.equipped} onQuit={() => setPlan(null)} onFinish={finish} />;
+    return <Session plan={plan} accessory={mitoAccessory(progress)} buddy={{ name: progress.profile.name, animal: about?.animal }} onQuit={() => setPlan(null)} onFinish={finish} />;
   }
 
   return (
@@ -90,7 +119,7 @@ function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?:
         {tab === 'practice' && <Practice progress={progress} onStart={setPlan} />}
         {tab === 'badges' && <Badges progress={progress} />}
         {tab === 'shop' && <Shop progress={progress} setProgress={setProgress} />}
-        {tab === 'me' && <Me progress={progress} setProgress={setProgress} onParent={() => (readOnly ? onExit?.() : setParent(true))} readOnly={readOnly} />}
+        {tab === 'me' && <Me progress={progress} setProgress={setProgress} onParent={() => (readOnly ? onExit?.() : setParent(true))} onAbout={() => setAboutOpen(true)} readOnly={readOnly} />}
       </main>
       <nav className="tabbar">
         {TABS.map((t) => (
@@ -100,6 +129,18 @@ function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?:
           </button>
         ))}
       </nav>
+
+      {birthdayNotice && (
+        <div className="modal-backdrop" onClick={() => setBirthdayNotice(false)}>
+          <Confetti />
+          <div className="modal pop-in" onClick={(e) => e.stopPropagation()}>
+            <Mascot mood="cheer" accessory="party-hat" size={110} bounce />
+            <h3>Happy birthday, {progress.profile.name}! 🎂</h3>
+            <p>I got you a present: <b>{BIRTHDAY_GEMS} 💎</b>. Have an amazing day!</p>
+            <button className="btn primary wide" onClick={() => setBirthdayNotice(false)}>Thanks, Mito!</button>
+          </div>
+        </div>
+      )}
 
       {streakNotice && (
         <div className="modal-backdrop" onClick={dismissStreakNotice}>
@@ -112,7 +153,7 @@ function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?:
               </>
             ) : (
               <>
-                <Mascot mood="sad" accessory={progress.equipped} size={90} />
+                <Mascot mood="sad" accessory={mitoAccessory(progress)} size={90} />
                 <h3>Your streak reset</h3>
                 <p>You had a {streakNotice.lostStreak}-day streak. No worries, everyone misses a day! Start a new one today. Tip: streak freezes in the shop protect it next time.</p>
               </>

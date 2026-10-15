@@ -2,6 +2,7 @@ import { correctAnswerText, findLesson, findQuestion, findUnit, subjects } from 
 import { lessonAccuracy, weakSpots } from '../game/engine';
 import { dayKey, lastNDays, parseDay } from '../game/dates';
 import { levelFor } from '../game/levels';
+import { AboutList } from '../components/AboutCard';
 import { ScreenTimePanel } from '../components/ScreenTime';
 import type { Progress } from '../game/types';
 
@@ -189,6 +190,13 @@ export function ParentDashboard({ progress }: { progress: Progress }) {
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section className="panel">
+        <h2>What {progress.profile.name} told Mito</h2>
+        {progress.profile.about?.doneAt
+          ? <AboutList about={progress.profile.about} />
+          : <p className="muted">{progress.profile.about?.skippedAt ? 'She said “maybe later”. She can start the chat from the Me tab any time.' : 'Mito will ask next time she opens the app.'}</p>}
       </section>
     </div>
   );

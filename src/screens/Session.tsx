@@ -7,7 +7,8 @@ import type { LearnCard } from '../content/types';
 import { Mascot } from '../components/Mascot';
 import { QuestionView, questionInstruction, type CheckFn, type CheckResult } from '../components/Questions';
 import { ActiveClock } from '../game/activeClock';
-import type { AnswerRecord, SessionKind, SessionResult } from '../game/types';
+import { encourage, praise as mitoPraise } from '../game/mito';
+import type { AnswerRecord, Pick, SessionKind, SessionResult } from '../game/types';
 import { sfx } from '../sound';
 
 export interface SessionPlan {
@@ -23,11 +24,12 @@ export interface SessionPlan {
 interface Props {
   plan: SessionPlan;
   accessory: string | null;
+  /** Her name and favourite animal, for personal praise. */
+  buddy?: { name: string; animal?: Pick };
   onQuit: () => void;
   onFinish: (result: SessionResult) => void;
 }
 
-const PRAISE = ['Nice one!', 'Brilliant!', 'Spot on!', 'Nailed it!', 'Correct!', 'Great job!', 'Yes!', 'Amazing!'];
 const COMBO_PRAISE: Record<number, string> = { 3: '3 in a row!', 5: '5 in a row! 🔥', 8: '8 in a row! Unstoppable!', 10: '10 in a row! Legend!' };
 const MAX_REPEATS = 2;
 
@@ -35,9 +37,10 @@ interface Feedback extends CheckResult {
   explain?: string;
   answerText: string;
   praise: string;
+  cheer: string | null;
 }
 
-export function Session({ plan, accessory, onQuit, onFinish }: Props) {
+export function Session({ plan, accessory, buddy, onQuit, onFinish }: Props) {
   const [phase, setPhase] = useState<'learn' | 'quiz'>(plan.learn?.length ? 'learn' : 'quiz');
   const [card, setCard] = useState(0);
   const [queue, setQueue] = useState(plan.keys);
@@ -80,7 +83,7 @@ export function Session({ plan, accessory, onQuit, onFinish }: Props) {
       const c = combo + 1;
       setCombo(c);
       maxCombo.current = Math.max(maxCombo.current, c);
-      praise = COMBO_PRAISE[c] ?? PRAISE[Math.floor(Math.random() * PRAISE.length)];
+      praise = COMBO_PRAISE[c] ?? mitoPraise(buddy?.animal, buddy?.name);
       if (COMBO_PRAISE[c]) sfx.combo(); else sfx.correct();
     } else {
       setCombo(0);
@@ -92,7 +95,7 @@ export function Session({ plan, accessory, onQuit, onFinish }: Props) {
         setQueue((q) => [...q, key]);
       }
     }
-    setFeedback({ ...r, explain: ref.question.explain, answerText: correctAnswerText(ref.question), praise });
+    setFeedback({ ...r, explain: ref.question.explain, answerText: correctAnswerText(ref.question), praise, cheer: r.correct ? null : encourage(buddy?.name) });
   }
 
   function next() {
@@ -182,6 +185,7 @@ export function Session({ plan, accessory, onQuit, onFinish }: Props) {
               {feedback.close && <p>Watch the spelling: <b>{feedback.answerText}</b></p>}
               {!feedback.correct && <p>Answer: <b>{feedback.answerText}</b></p>}
               {feedback.explain && (!feedback.correct || feedback.close) && <p className="explain">{feedback.explain}</p>}
+              {feedback.cheer && <p className="cheer">🧬 {feedback.cheer}</p>}
             </div>
             <button className={`btn wide ${feedback.correct ? 'success' : 'danger'}`} onClick={next} autoFocus>
               Continue

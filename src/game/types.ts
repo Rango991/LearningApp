@@ -57,10 +57,34 @@ export interface LessonRecord {
   lastCompleted: string;
 }
 
+/** A favourite thing she picked, or typed herself. */
+export interface Pick {
+  e: string;
+  label: string;
+}
+
+/** What she has told Mito about herself. Every field is optional: she can skip any question. */
+export interface About {
+  animal?: Pick;
+  food?: Pick;
+  hobby?: Pick;
+  /** An accent colour id from ACCENTS. */
+  colour?: string;
+  /** Day and month only, as "MM-DD". */
+  birthday?: string;
+  /** The subject id she finds hardest, or "none". */
+  hardest?: string;
+  goal?: string;
+  doneAt?: string;
+  skippedAt?: string;
+  /** Years she has already had her birthday gems, e.g. ["2026"]. */
+  birthdayGifts?: string[];
+}
+
 export interface Progress {
   version: 1;
   updatedAt: string;
-  profile: { name: string; createdAt: string };
+  profile: { name: string; createdAt: string; about?: About };
   xp: number;
   gems: number;
   dailyGoal: number;

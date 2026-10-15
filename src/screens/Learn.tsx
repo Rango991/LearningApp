@@ -6,9 +6,9 @@ import { DailyCard } from '../components/Hud';
 import { Mascot } from '../components/Mascot';
 import { ScreenCard } from '../components/ScreenTime';
 import {
-  checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, reviewAvailable, streakAtRisk, testedOut,
+  checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, testedOut,
 } from '../game/engine';
-import { dayKey } from '../game/dates';
+import { greeting, mitoAccessory, testPep } from '../game/mito';
 import type { Progress } from '../game/types';
 import { sfx } from '../sound';
 import type { SessionPlan } from './Session';
@@ -20,16 +20,6 @@ type Selected = { unit: Unit; lesson: Lesson; index: number } | { unit: Unit; ch
 
 function loadSubject(): string {
   try { return localStorage.getItem(SUBJECT_KEY) ?? subjects[0].id; } catch { return subjects[0].id; }
-}
-
-function greeting(p: Progress): string {
-  const hour = new Date().getHours();
-  const name = p.profile.name;
-  if (p.totals.lessons === 0) return `Hi ${name}! I’m Mito, the powerhouse of the cell. Pick a subject and tap a lesson to start!`;
-  if (streakAtRisk(p)) return `Your ${p.streak.current}-day streak is waiting, ${name}! One lesson keeps it alive 🔥`;
-  if ((p.daily[dayKey()]?.xp ?? 0) >= p.dailyGoal) return `Goal smashed today, ${name}! Anything extra is a bonus ⭐`;
-  if (reviewAvailable(p) >= 3) return `You’ve got ${reviewAvailable(p)} questions ready to practise. Fixing mistakes is how brains grow 🧠`;
-  return hour < 12 ? `Morning ${name}! Ready to learn something new?` : hour < 18 ? `Hey ${name}! Fancy a quick lesson?` : `Evening ${name}! A quick lesson before bed?`;
 }
 
 /** The unit's picture: the first lesson's emoji. */
@@ -75,7 +65,7 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
     <div className="learn-layout">
       <div className="learn-main">
         <div className="mascot-hello">
-          <Mascot mood="happy" accessory={progress.equipped} size={84} bounce />
+          <Mascot mood="happy" accessory={mitoAccessory(progress)} size={84} bounce />
           <p className="speech">{greeting(progress)}</p>
         </div>
 
@@ -150,7 +140,6 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
           </div>
         ))}
 
-        <p className="muted center small">GCSE units (AQA) coming next!</p>
       </div>
 
       <aside className="learn-side">
@@ -171,6 +160,7 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
                 {progress.checkpoints[selected.unit.id] !== undefined && (
                   <p>Best score: <b>{Math.round(progress.checkpoints[selected.unit.id] * 100)}%</b></p>
                 )}
+                <p className="mito-pep">🧬 {testPep(progress)}</p>
                 <button className="btn unit wide" onClick={() => start(selected)}>Start test</button>
               </>
             ) : (

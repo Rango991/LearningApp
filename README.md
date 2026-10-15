@@ -21,6 +21,7 @@ The content follows the National Curriculum and is pitched to lead into AQA GCSE
 - Wrong answers come back at the end of the lesson, so she always leaves having got them right
 - XP, levels, a daily XP goal, daily streak, streak freezes, 3 daily quests plus a bonus chest, 20+ badges and gems
 - A gem shop with streak freezes and outfits for Mito, the mitochondrion mascot
+- Mito gets to know her: a chat asks her favourite animal, colour, food and hobby, her birthday, her trickiest subject and a goal. Mito then uses them in greetings, praise and results, paints the app in her colour, and throws a birthday surprise (party hat and 50 gems). Answers can be changed in the Me tab and are shown on the parent dashboard. The lines live in `src/game/mito.ts`.
 - Practice tab: spaced repetition (Leitner boxes). Mistakes come back until fixed, and older questions resurface after 1, 3, 7, 14 and 30 days
 - Sounds, haptics, confetti, combos ("5 in a row! 🔥")
 

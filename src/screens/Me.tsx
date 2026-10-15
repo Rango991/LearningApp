@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { AboutList } from '../components/AboutCard';
 import { CloudSignIn } from '../components/CloudSignIn';
 import { Mascot } from '../components/Mascot';
 import { StreakWeek } from '../components/StreakWeek';
 import { questionsSeenCount, touch } from '../game/engine';
+import { mitoAccessory } from '../game/mito';
 import { levelFor } from '../game/levels';
 import type { Progress } from '../game/types';
 import { useStore } from '../store';
@@ -15,7 +17,7 @@ const GOALS = [
   { xp: 60, label: 'Intense', note: '~3 lessons' },
 ];
 
-export function Me({ progress, setProgress, onParent, readOnly = false }: { progress: Progress; setProgress: (p: Progress) => void; onParent: () => void; readOnly?: boolean }) {
+export function Me({ progress, setProgress, onParent, onAbout, readOnly = false }: { progress: Progress; setProgress: (p: Progress) => void; onParent: () => void; onAbout: () => void; readOnly?: boolean }) {
   const { cloudEmail, sync, lastSynced, refresh } = useStore();
   const [signingIn, setSigningIn] = useState(false);
   const lvl = levelFor(progress.xp);
@@ -26,7 +28,7 @@ export function Me({ progress, setProgress, onParent, readOnly = false }: { prog
   return (
     <div className="page">
       <div className="profile-head">
-        <Mascot mood="happy" accessory={progress.equipped} size={90} />
+        <Mascot mood="happy" accessory={mitoAccessory(progress)} size={90} />
         <div>
           <h1>{progress.profile.name}</h1>
           <p className="muted">Level {lvl.level} · {progress.xp} XP</p>
@@ -39,6 +41,21 @@ export function Me({ progress, setProgress, onParent, readOnly = false }: { prog
         <div className="stat-tile"><span className="stat-label">Lessons</span><span className="stat-value">📚 {progress.totals.lessons}</span></div>
         <div className="stat-tile"><span className="stat-label">Questions seen</span><span className="stat-value">🧠 {seen.seen}/{seen.total}</span></div>
       </div>
+
+      <section className="card">
+        <h3>About me</h3>
+        {progress.profile.about?.doneAt ? (
+          <>
+            <AboutList about={progress.profile.about} />
+            <button className="btn ghost wide" onClick={onAbout}>💬 Update with Mito</button>
+          </>
+        ) : (
+          <>
+            <p className="muted small">Tell Mito a bit about yourself, so it can cheer you on properly.</p>
+            <button className="btn primary wide" onClick={onAbout}>💬 Chat with Mito</button>
+          </>
+        )}
+      </section>
 
       <section className="card">
         <h3>This week</h3>

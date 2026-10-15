@@ -7,6 +7,7 @@ import { formatMinutes } from '../components/ScreenTime';
 import { earnedToday, nextBoostHint } from '../game/screenTime';
 import { achievementById } from '../game/achievements';
 import { questLabel } from '../game/engine';
+import { mitoAccessory } from '../game/mito';
 import type { Progress, RewardSummary, SessionKind } from '../game/types';
 import { sfx } from '../sound';
 
@@ -14,13 +15,15 @@ interface Props {
   summary: RewardSummary;
   progress: Progress;
   kind: SessionKind;
+  /** What Mito says about this session. */
+  line?: string;
   onDone: () => void;
 }
 
 type Step = 'main' | 'screen' | 'streak' | 'goal' | 'quests' | 'level' | `badge:${string}`;
 
 /** A sequence of celebration cards, one reward at a time, like a slot machine paying out. */
-export function Results({ summary, progress, kind, onDone }: Props) {
+export function Results({ summary, progress, kind, line, onDone }: Props) {
   const steps = useMemo<Step[]>(() => {
     const s: Step[] = ['main'];
     if (summary.screenMinutes > 0) s.push('screen');
@@ -49,7 +52,8 @@ export function Results({ summary, progress, kind, onDone }: Props) {
       <div className="results-card pop-in" key={step}>
         {step === 'main' && (
           <>
-            <Mascot mood={failedTest ? 'think' : 'cheer'} accessory={progress.equipped} size={130} bounce />
+            <Mascot mood={failedTest ? 'think' : 'cheer'} accessory={mitoAccessory(progress)} size={130} bounce />
+            {line && <p className="speech results-speech">{line}</p>}
             <h1>
               {kind === 'checkpoint'
                 ? summary.passedCheckpoint ? 'Unit test passed! 🏆' : 'Good try!'
