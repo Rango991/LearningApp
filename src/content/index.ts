@@ -7,6 +7,7 @@ import { geography } from './geography';
 import { history } from './history';
 import { gcseChemistry } from './gcse-chemistry';
 import { gcseEnglish } from './gcse-english';
+import { gcseHistory } from './gcse-history';
 import { gcsePhysics } from './gcse-physics';
 import { gcseMaths } from './gcse-maths';
 import { maths } from './maths';
@@ -19,7 +20,7 @@ export const subjects: Subject[] = [
   { id: 'physics', title: 'Physics', emoji: '🪐', colour: '#1c9df6', units: [...physics, ...gcsePhysics] },
   { id: 'maths', title: 'Maths', emoji: '📐', colour: '#ff8a3d', units: [...maths, ...gcseMaths] },
   { id: 'english', title: 'English', emoji: '📚', colour: '#e0457b', units: [...english, ...gcseEnglish] },
-  { id: 'history', title: 'History', emoji: '🏰', colour: '#b8742a', units: history },
+  { id: 'history', title: 'History', emoji: '🏰', colour: '#b8742a', units: [...history, ...gcseHistory] },
   { id: 'geography', title: 'Geography', emoji: '🌍', colour: '#0f9d8a', units: geography },
 ];
 
