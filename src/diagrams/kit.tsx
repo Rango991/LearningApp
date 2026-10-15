@@ -200,3 +200,75 @@ export function FormulaTriangle({ top, left, right, label, notes }: { top: strin
     </Svg>
   );
 }
+
+/** Events spaced evenly along a line, with labels alternating above and below. Not to scale. */
+export function Timeline({ events, label, colour = C.purple }: { events: { date: string; text: string; e: string }[]; label: string; colour?: string }) {
+  const n = events.length;
+  const step = 224 / (n - 1);
+  const maxChars = 15;
+  return (
+    <Svg h={210} label={label}>
+      <line x1={14} y1={105} x2={306} y2={105} stroke={C.line} strokeWidth={6} strokeLinecap="round" />
+      {events.map((ev, i) => {
+        const x = 48 + i * step;
+        const up = i % 2 === 0;
+        const lines = wrap(ev.text, maxChars);
+        return (
+          <g key={ev.date + ev.text}>
+            <line x1={x} y1={105} x2={x} y2={up ? 88 : 122} stroke={colour} strokeWidth={2} />
+            <circle cx={x} cy={105} r={6} fill={colour} />
+            <T x={x} y={up ? 78 : 132} size={12} fill={colour}>{ev.date}</T>
+            {lines.map((l, li) => (
+              <T key={li} x={x} y={up ? 62 - (lines.length - 1 - li) * 12 : 148 + li * 12} size={9.5} weight={700}>{l}</T>
+            ))}
+            <E e={ev.e} x={x} y={up ? 62 - lines.length * 12 - 8 : 148 + lines.length * 12 + 10} size={24} />
+          </g>
+        );
+      })}
+    </Svg>
+  );
+}
+
+/** Boxes joined by downward arrows, for a sequence or a chain of consequences. */
+export function Chain({ steps, label }: { steps: { t: string; fill: string }[]; label: string }) {
+  return (
+    <Svg h={8 + steps.length * 38} label={label}>
+      {steps.map((s, i) => {
+        const y = 6 + i * 38;
+        return (
+          <g key={s.t}>
+            <rect x={20} y={y} width={280} height={28} rx={10} fill={s.fill} />
+            <T x={160} y={y + 14} size={11.5}>{s.t}</T>
+            {i < steps.length - 1 && <Arrow x1={160} y1={y + 29} x2={160} y2={y + 37} width={2} color={C.muted} />}
+          </g>
+        );
+      })}
+    </Svg>
+  );
+}
+
+/** Two side-by-side panels, each with a title and a list of emoji items. */
+export function TwoCol({ label, left, right, footer }: { label: string; left: { title: string; sub: string; colour: string; fill: string; items: [string, string][] }; right: { title: string; sub: string; colour: string; fill: string; items: [string, string][] }; footer?: string }) {
+  const h = footer ? 200 : 186;
+  return (
+    <Svg h={h} label={label}>
+      {[left, right].map((p, pi) => {
+        const x = 8 + pi * 156;
+        return (
+          <g key={p.title}>
+            <rect x={x} y={8} width={148} height={170} rx={14} fill={p.fill} />
+            <T x={x + 74} y={28} size={13} fill={p.colour}>{p.title}</T>
+            <T x={x + 74} y={46} size={9.5} weight={700} fill={C.muted}>{p.sub}</T>
+            {p.items.map(([e, t], i) => (
+              <g key={t}>
+                <E e={e} x={x + 24} y={76 + i * 36} size={26} />
+                <T x={x + 44} y={76 + i * 36} size={10.5} anchor="start">{t}</T>
+              </g>
+            ))}
+          </g>
+        );
+      })}
+      {footer && <T x={160} y={192} size={10.5} weight={700} fill={C.muted}>{footer}</T>}
+    </Svg>
+  );
+}
