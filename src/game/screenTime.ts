@@ -1,11 +1,14 @@
 import { addDays, dayKey, parseDay } from './dates';
+import type { Unit } from '../content/types';
 import type { Progress } from './types';
 
 // The family's screen-time deal:
 //  - Weekdays: the first 20 minutes of study earn 1 minute each, every minute
 //    after that earns 1.5 minutes.
 //  - Weekends: the same, then doubled.
-//  - Passing a unit test (80%+) for the first time earns a 15 minute bonus.
+//  - Passing a unit test (80%+) earns a bonus of 5 minutes per lesson in the unit,
+//    up to 15, once per unit. Only once she has done every lesson in it: testing
+//    out unlocks the unit but pays no screen time.
 // The app only shows what she's earned; the time itself is granted in Family Link.
 // Study time is "active" time only (see Session.tsx), and it adds up across
 // the whole day, so three 10-minute sessions count the same as one 30-minute one.
@@ -14,8 +17,14 @@ export const SCREEN_RULES = {
   baseMinutes: 20,
   boostRate: 1.5,
   weekendMultiplier: 2,
-  unitTestBonus: 15,
+  unitTestBonusPerLesson: 5,
+  unitTestBonusMax: 15,
 };
+
+/** Screen-time bonus for passing a unit's test: 5 min a lesson, up to 15. */
+export function unitTestBonus(unit: Unit): number {
+  return Math.min(SCREEN_RULES.unitTestBonusMax, unit.lessons.length * SCREEN_RULES.unitTestBonusPerLesson);
+}
 
 export function isWeekend(day: string): boolean {
   const d = parseDay(day).getDay();

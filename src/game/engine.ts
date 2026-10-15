@@ -1,9 +1,9 @@
-import { allQuestionKeys, findLesson, findQuestion, qKey } from '../content';
+import { allQuestionKeys, findLesson, findQuestion, findUnit, qKey } from '../content';
 import type { Question, Unit } from '../content/types';
 import { achievementById, newlyEarned } from './achievements';
 import { addDays, daysBetween, dayKey } from './dates';
 import { levelFor } from './levels';
-import { SCREEN_RULES, bonusesOnDay, earnedOnDay } from './screenTime';
+import { bonusesOnDay, earnedOnDay, unitTestBonus } from './screenTime';
 import { MAX_FREEZES, shopItems } from './shop';
 import type {
   DayStats, Progress, Quest, QuestKind, RewardSummary, SessionResult,
@@ -293,7 +293,11 @@ export function applySession(p: Progress, result: SessionResult, now = new Date(
       if (before < 0.8) {
         next.totals.checkpointsPassed++;
         gems += GEMS.checkpointPass;
-        next.screenBonuses.push({ at: iso, unitId: result.unitId, minutes: SCREEN_RULES.unitTestBonus });
+      }
+      // Screen time only once she has done every lesson, and only once per unit.
+      const unit = findUnit(result.unitId)?.unit;
+      if (unit && isUnitComplete(next, unit) && !next.screenBonuses.some((b) => b.unitId === unit.id)) {
+        next.screenBonuses.push({ at: iso, unitId: unit.id, minutes: unitTestBonus(unit) });
       }
     }
   }

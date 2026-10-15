@@ -23,13 +23,13 @@ export function ScreenPill({ progress, onClick }: { progress: Progress; onClick?
 }
 
 function RulesText() {
-  const { baseMinutes, boostRate, weekendMultiplier, unitTestBonus } = SCREEN_RULES;
+  const { baseMinutes, boostRate, weekendMultiplier, unitTestBonusPerLesson, unitTestBonusMax } = SCREEN_RULES;
   return (
     <ul className="rules small">
       <li>First {baseMinutes} min of study each day = {baseMinutes} min screen time</li>
       <li>Every minute after that = {boostRate} min</li>
       <li>Weekends: everything ×{weekendMultiplier} 🎉</li>
-      <li>Pass a unit test (80%+): +{unitTestBonus} min bonus 🏆</li>
+      <li>Finish every lesson in a unit, then pass its test (80%+): +{unitTestBonusPerLesson} min per lesson, up to {unitTestBonusMax} min 🏆</li>
       <li>Only active time counts: no leaving lessons open!</li>
     </ul>
   );

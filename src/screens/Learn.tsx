@@ -9,6 +9,7 @@ import {
   checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, testedOut,
 } from '../game/engine';
 import { greeting, mitoAccessory, testPep } from '../game/mito';
+import { unitTestBonus } from '../game/screenTime';
 import type { Progress } from '../game/types';
 import { sfx } from '../sound';
 import type { SessionPlan } from './Session';
@@ -153,7 +154,14 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
             {'checkpoint' in selected ? (
               <>
                 <h3><Emoji e="🏆" size={30} /> {selected.unit.title}: unit test</h3>
-                <p className="muted">12 mixed questions from the whole unit. Score 80% to win the trophy, 20 💎 and 15 min of screen time.</p>
+                <p className="muted">12 mixed questions from the whole unit. Score 80% to win the trophy and 20 💎.</p>
+                {progress.screenBonuses.some((b) => b.unitId === selected.unit.id) ? (
+                  <p className="small muted">🎮 You’ve already earned this unit’s screen-time bonus.</p>
+                ) : isUnitComplete(progress, selected.unit) ? (
+                  <p className="bonus-line">🎮 Pass it for +{unitTestBonus(selected.unit)} min of screen time!</p>
+                ) : (
+                  <p className="small muted">🎮 Finish all {selected.unit.lessons.length} lessons first to earn +{unitTestBonus(selected.unit)} min of screen time.</p>
+                )}
                 {!isUnitComplete(progress, selected.unit) && !testedOut(progress, selected.unit) && (
                   <p className="test-out-note">⚡ Already know this? Pass the test to unlock every lesson in the unit and skip ahead.</p>
                 )}

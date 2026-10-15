@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { subjects } from '../src/content';
 import { ActiveClock } from '../src/game/activeClock';
 import { applySession, createProgress } from '../src/game/engine';
-import { earnedFor, earnedOnDay, earnedToday, isWeekend } from '../src/game/screenTime';
+import type { Progress } from '../src/game/types';
+import { earnedFor, earnedOnDay, earnedToday, isWeekend, unitTestBonus } from '../src/game/screenTime';
 
 describe('screen-time rules', () => {
   it('weekday: first 20 min 1:1, then 1.5x (50 min study = 65 min)', () => {
@@ -34,17 +35,39 @@ describe('screen-time rules', () => {
     expect(earnedOnDay(p, '2026-10-19')).toBe(57);
   });
 
-  it('gives 15 min once for passing a unit test, and reports what each session earned', () => {
-    const unit = subjects[0].units[0];
+  it('scales the unit test bonus: 5 min a lesson, up to 15', () => {
+    const units = subjects.flatMap((s) => s.units);
+    const two = units.find((u) => u.lessons.length === 2)!;
+    const three = units.find((u) => u.lessons.length === 3)!;
+    const five = units.find((u) => u.lessons.length === 5)!;
+    expect(unitTestBonus(two)).toBe(10);
+    expect(unitTestBonus(three)).toBe(15);
+    expect(unitTestBonus(five)).toBe(15);
+  });
+
+  it('pays the bonus once, and only after every lesson is done', () => {
+    const unit = subjects.flatMap((s) => s.units).find((u) => u.lessons.length === 2)!;
     const keys = unit.lessons.flatMap((l) => l.questions.map((q) => `${l.id}/${q.id}`)).slice(0, 10);
     const answers = keys.map((key) => ({ key, correct: true, given: 'x' }));
     const day = new Date('2026-10-19T17:00:00');
-    const first = applySession(createProgress('Test'), { kind: 'checkpoint', unitId: unit.id, answers, maxCombo: 10, seconds: 10 * 60 }, day);
-    expect(first.summary.screenBonus).toBe(15);
-    expect(first.summary.screenMinutes).toBe(10 + 15);
-    const again = applySession(first.progress, { kind: 'checkpoint', unitId: unit.id, answers, maxCombo: 10, seconds: 0 }, day);
-    expect(again.summary.screenBonus).toBe(0);
-    expect(earnedToday(again.progress, '2026-10-19')).toBe(25);
+    const test = (p: Progress, seconds = 0) => applySession(p, { kind: 'checkpoint', unitId: unit.id, answers, maxCombo: 10, seconds }, day);
+
+    // Testing out: passes and unlocks the unit, but no screen time.
+    const testedOut = test(createProgress('Test'), 10 * 60);
+    expect(testedOut.summary.passedCheckpoint).toBe(true);
+    expect(testedOut.summary.screenBonus).toBe(0);
+
+    // Do the lessons, then pass the test: now the bonus is paid.
+    let p = testedOut.progress;
+    for (const l of unit.lessons) {
+      p = applySession(p, { kind: 'lesson', lessonId: l.id, answers: [{ key: `${l.id}/${l.questions[0].id}`, correct: true, given: 'x' }], maxCombo: 1, seconds: 0 }, day).progress;
+    }
+    const earned = test(p);
+    expect(earned.summary.screenBonus).toBe(10);
+    expect(earnedToday(earned.progress, '2026-10-19')).toBe(10 + 10);
+
+    // Only once.
+    expect(test(earned.progress).summary.screenBonus).toBe(0);
   });
 });
 
