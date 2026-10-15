@@ -26,7 +26,7 @@ The content follows the National Curriculum and is pitched to lead into AQA GCSE
 - Sounds, haptics, confetti, combos ("5 in a row! 🔥")
 
 **Screen-time bank**
-- Study time earns tablet time. Weekdays: the first 20 min of study earn 1:1, then 1.5×. Weekends: the same, doubled. Passing a unit test the first time earns +15 min.
+- Study time earns tablet time. Weekdays: the first 20 min of study earn 1:1, then 1.5×. Weekends: the same, doubled. Passing a unit test, once every lesson in it is done, earns 2 min per lesson (max 10), once per unit.
 - Only *active* time counts: gaps of more than 2 minutes between taps are capped, and time while the app is in the background doesn't count.
 - What she's earned today shows in the top bar, on her home screen, after each lesson, and on the parent dashboard. The time itself is granted in Google Family Link.
 - The rules live in `src/game/screenTime.ts`.

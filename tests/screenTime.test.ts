@@ -35,14 +35,14 @@ describe('screen-time rules', () => {
     expect(earnedOnDay(p, '2026-10-19')).toBe(57);
   });
 
-  it('scales the unit test bonus: 5 min a lesson, up to 15', () => {
+  it('scales the unit test bonus: 2 min a lesson, up to 10', () => {
     const units = subjects.flatMap((s) => s.units);
     const two = units.find((u) => u.lessons.length === 2)!;
     const three = units.find((u) => u.lessons.length === 3)!;
-    const five = units.find((u) => u.lessons.length === 5)!;
-    expect(unitTestBonus(two)).toBe(10);
-    expect(unitTestBonus(three)).toBe(15);
-    expect(unitTestBonus(five)).toBe(15);
+    const six = units.find((u) => u.lessons.length === 6)!;
+    expect(unitTestBonus(two)).toBe(4);
+    expect(unitTestBonus(three)).toBe(6);
+    expect(unitTestBonus(six)).toBe(10);
   });
 
   it('pays the bonus once, and only after every lesson is done', () => {
@@ -63,8 +63,8 @@ describe('screen-time rules', () => {
       p = applySession(p, { kind: 'lesson', lessonId: l.id, answers: [{ key: `${l.id}/${l.questions[0].id}`, correct: true, given: 'x' }], maxCombo: 1, seconds: 0 }, day).progress;
     }
     const earned = test(p);
-    expect(earned.summary.screenBonus).toBe(10);
-    expect(earnedToday(earned.progress, '2026-10-19')).toBe(10 + 10);
+    expect(earned.summary.screenBonus).toBe(4);
+    expect(earnedToday(earned.progress, '2026-10-19')).toBe(10 + 4);
 
     // Only once.
     expect(test(earned.progress).summary.screenBonus).toBe(0);
