@@ -103,7 +103,7 @@ export const gcseHistory: Unit[] = [
         emoji: '🚀',
         learn: [
           card('🚀', 'The arms race', 'The USSR tested its first atomic bomb in 1949, ending the USA’s monopoly. Both sides built ever bigger nuclear weapons, then missiles. In 1957 the USSR launched Sputnik, the first satellite, starting the space race. In 1955 communist countries formed the Warsaw Pact to rival NATO.', ['arms race', 'Sputnik', 'Warsaw Pact'], 'cold-war-1950s'),
-          card('🇰🇷', 'Korea and Hungary', 'In 1950 communist North Korea invaded South Korea. UN forces, led by the USA, fought back, and China joined on the North’s side. The war ended in 1953 with Korea still divided. In 1956 Hungary tried to leave the Warsaw Pact, and Soviet tanks crushed the uprising.', ['Korean War', 'Hungarian Uprising']),
+          card('🪖', 'Korea and Hungary', 'In 1950 communist North Korea invaded South Korea. UN forces, led by the USA, fought back, and China joined on the North’s side. The war ended in 1953 with Korea still divided. In 1956 Hungary tried to leave the Warsaw Pact, and Soviet tanks crushed the uprising.', ['Korean War', 'Hungarian Uprising']),
         ],
         questions: [
           gap('q1', 'The USSR tested its first atomic bomb in ___', ['1949']),
