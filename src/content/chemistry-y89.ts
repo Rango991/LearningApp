@@ -84,4 +84,68 @@ export const chemistryY89: Unit[] = [
       },
     ],
   },
+  {
+    id: 'chem-materials',
+    title: 'Materials',
+    stage: Y89,
+    description: 'Polymers and plastics, ceramics and composites, alloys, and choosing the right material for the job.',
+    colour: '#5c7cfa',
+    lessons: [
+      {
+        id: 'cm-polymers',
+        title: 'Polymers & plastics',
+        emoji: '🧴',
+        learn: [
+          card('🧴', 'What polymers are', 'A polymer is a huge molecule made of many small units (monomers) joined in a chain. Poly(ethene), used for plastic bags, is made from thousands of ethene molecules. Natural polymers include wool, cotton, rubber, DNA and starch.', ['polymer', 'monomer'], 'polymer-types'),
+          card('♻️', 'The plastic problem', 'Most plastics are made from crude oil and aren’t biodegradable, so they last for hundreds of years in landfill and the oceans. Reduce, reuse and recycle; biodegradable plastics and plastics made from plants are alternatives.', ['biodegradable', 'recycle']),
+        ],
+        questions: [
+          gap('q1', 'The small units that join to make a polymer are ___.', ['monomers', 'monomer']),
+          mcq('q2', 'Which is a natural polymer?', ['Wool', 'Poly(ethene)', 'PVC', 'Nylon'], 0),
+          tf('q3', 'Most plastics are biodegradable.', false),
+          mcq('q4', 'Most plastics are made from…', ['Crude oil', 'Sand', 'Iron ore', 'Wood'], 0),
+          mcq('q5', 'Poly(ethene) is made from…', ['Ethene', 'Methane', 'Water', 'Salt'], 0),
+          order('q6', 'Put these from best to worst for the environment', ['Reduce', 'Reuse', 'Recycle', 'Landfill']),
+        ],
+      },
+      {
+        id: 'cm-ceramics',
+        title: 'Ceramics & composites',
+        emoji: '🏺',
+        learn: [
+          card('🏺', 'Ceramics', 'Ceramics (pottery, brick, glass and porcelain) are made by heating materials like clay to high temperatures. They are hard, have high melting points and are good insulators, but they are brittle and can shatter.', ['ceramic', 'brittle', 'insulator']),
+          card('🧱', 'Composites', 'A composite combines two or more materials to get the best of both. Reinforced concrete has steel rods for strength when it’s stretched or bent. Fibreglass and carbon fibre are light but strong, so they’re used in bikes, boats and aircraft.', ['composite', 'reinforced concrete', 'carbon fibre'], 'material-properties'),
+        ],
+        questions: [
+          mcq('q1', 'Ceramics are…', ['Hard but brittle', 'Soft and bendy', 'Good conductors', 'Magnetic'], 0),
+          mcq('q2', 'What is a composite?', ['Two or more materials combined', 'A pure element', 'A type of plastic only', 'A liquid'], 0),
+          mcq('q3', 'Why put steel rods in concrete?', ['To make it stronger when stretched or bent', 'To make it lighter', 'To change its colour', 'To make it melt'], 0),
+          tf('q4', 'Carbon fibre is light and strong.', true),
+          mcq('q5', 'Which is a ceramic?', ['A brick', 'A copper wire', 'A plastic bag', 'A wool jumper'], 0),
+          gap('q6', 'A material that breaks easily without bending is ___.', ['brittle']),
+        ],
+      },
+      {
+        id: 'cm-choosing',
+        title: 'Alloys & choosing materials',
+        emoji: '🛠️',
+        learn: [
+          card('🛠️', 'Properties decide the use', 'Engineers choose materials by their properties: strength, hardness, density, flexibility, conductivity, melting point and cost. Copper is used for wires because it conducts electricity and can be drawn into wires; aluminium is used for planes because it is strong and has a low density.', ['properties', 'density', 'ductile']),
+          card('🪙', 'Alloys', 'An alloy is a metal mixed with another element to improve it. Steel (iron with carbon) is stronger than iron. Brass (copper and zinc) is hard and doesn’t rust. Pure gold is soft, so jewellery gold is mixed with copper or silver.', ['alloy', 'steel', 'brass'], 'alloy-layers'),
+        ],
+        questions: [
+          match('q1', 'Match the material to a good use', [
+            ['Copper', 'Electrical wires'],
+            ['Aluminium', 'Aircraft bodies'],
+            ['Ceramic', 'A mug'],
+          ]),
+          mcq('q2', 'What is an alloy?', ['A metal mixed with another element', 'A pure metal', 'A plastic', 'A ceramic'], 0),
+          mcq('q3', 'Steel is iron mixed with…', ['Carbon', 'Copper', 'Gold', 'Water'], 0),
+          tf('q4', 'Pure gold is very hard.', false, 'It’s soft, so it is mixed with other metals.'),
+          mcq('q5', 'Why is aluminium good for aircraft?', ['It is strong, with a low density', 'It is very heavy', 'It is magnetic', 'It melts easily'], 0),
+          gap('q6', 'Brass is an alloy of copper and ___.', ['zinc']),
+        ],
+      },
+    ],
+  },
 ];

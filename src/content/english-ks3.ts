@@ -226,4 +226,128 @@ export const englishKs3: Unit[] = [
       },
     ],
   },
+  {
+    id: 'eng-narrative',
+    title: 'Writing stories',
+    stage: Y89,
+    description: 'Gripping openings, showing character through action and dialogue, and shaping a story to a strong ending.',
+    colour: '#d9480f',
+    lessons: [
+      {
+        id: 'enw-openings',
+        title: 'Gripping openings',
+        emoji: '🎣',
+        learn: [
+          card('🎣', 'Hook the reader', 'Start in the middle of the action, with a line of speech, a mysterious statement, or one vivid detail. Avoid “One day I woke up…”. “The letter had been under the door for three days before anyone dared to open it” makes the reader ask questions.', ['hook', 'in medias res'], 'story-arc'),
+          card('🌫️', 'Setting the scene', 'Show the setting through a character’s senses rather than listing what’s there. Choose a few precise details: the flickering strip light, the smell of bleach, the squeak of trainers. Use the weather or setting to hint at the mood (pathetic fallacy).', ['setting', 'senses'], 'five-senses'),
+        ],
+        questions: [
+          mcq('q1', 'Which is the most gripping opening?', ['“Don’t open it,” she whispered, but it was too late.', 'One day I woke up and had breakfast.', 'This is a story about a girl.', 'It was a normal day.'], 0),
+          mcq('q2', 'Starting in the middle of the action is called…', ['In medias res', 'A cliffhanger', 'Foreshadowing', 'A flashback'], 0),
+          tf('q3', 'Listing everything in a room is the best way to describe it.', false, 'A few precise details work better.'),
+          mcq('q4', 'Using the weather to hint at a mood is…', ['Pathetic fallacy', 'Alliteration', 'Onomatopoeia', 'A simile'], 0),
+          mcq('q5', 'Why open with a mystery?', ['To make the reader ask questions and keep reading', 'To confuse the teacher', 'To save words', 'To end quickly'], 0),
+          gap('q6', 'Describing smells, sounds and textures uses the ___.', ['senses']),
+        ],
+      },
+      {
+        id: 'enw-character',
+        title: 'Characters & dialogue',
+        emoji: '🗨️',
+        learn: [
+          card('🧍', 'Show, don’t tell', 'Instead of “Sam was nervous”, show it: “Sam picked at the skin around his thumbnail and kept glancing at the door.” The reader works out the feeling, which is more powerful.', ['show, don’t tell'], 'show-dont-tell'),
+          card('🗨️', 'Dialogue that works', 'Use speech to reveal character and move the story on, not for small talk. Punctuate it properly: a new line for each new speaker, with punctuation inside the speech marks. Swap “said” for “muttered” or “snapped” sometimes, but don’t overdo it.', ['dialogue', 'speech marks']),
+        ],
+        questions: [
+          mcq('q1', 'Which sentence shows rather than tells?', ['Her hands shook as she reached for the handle.', 'She was scared.', 'She felt very scared.', 'She was quite frightened.'], 0),
+          mcq('q2', 'Which is punctuated correctly?', ['“Leave me alone,” snapped Mia.', '“Leave me alone” snapped Mia.', '“Leave me alone”, snapped Mia.', 'Leave me alone, “snapped Mia.”'], 0),
+          tf('q3', 'Each new speaker starts on a new line.', true),
+          mcq('q4', 'Good dialogue should…', ['Reveal character or move the story on', 'Be about the weather', 'Repeat what the narrator said', 'Fill space'], 0),
+          mcq('q5', '“Sam was nervous” is an example of…', ['Telling', 'Showing', 'Dialogue', 'Setting'], 0),
+          gap('q6', 'The rule is: show, don’t ___.', ['tell']),
+        ],
+      },
+      {
+        id: 'enw-endings',
+        title: 'Structure & endings',
+        emoji: '🔚',
+        learn: [
+          card('🧭', 'Shape your story', 'Plan the beginning, a problem that builds to a climax, and an ending. Keep to one or two characters and a short time span: a great short story is one moment, not a whole life.', ['plan', 'climax'], 'story-arc'),
+          card('🔚', 'Strong endings', 'Avoid “and then I woke up and it was all a dream”. Try a cyclical ending that returns to the opening image, a twist, or an ending that leaves a question. Make sure the character has changed or learned something.', ['cyclical ending', 'twist']),
+        ],
+        questions: [
+          tf('q1', '“It was all a dream” is a strong ending.', false),
+          mcq('q2', 'A cyclical ending…', ['Returns to the opening image', 'Starts a new story', 'Has no ending', 'Lists events'], 0),
+          mcq('q3', 'A good short story usually covers…', ['One key moment or a short time', 'A whole life', 'Lots of characters', 'Everything that happened'], 0),
+          mcq('q4', 'What is a twist ending?', ['A surprise the reader didn’t expect', 'A happy ending', 'A sad ending', 'A summary'], 0),
+          tf('q5', 'By the end, the main character has often changed or learned something.', true),
+          order('q6', 'Put the parts of a story plan in order', ['Opening', 'Problem builds', 'Climax', 'Ending']),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'eng-poetry',
+    title: 'Reading poems',
+    stage: Y89,
+    description: 'Working out what a poem is about, its imagery and sounds, and how its form and structure shape the meaning.',
+    colour: '#7048e8',
+    lessons: [
+      {
+        id: 'enp-meaning',
+        title: 'What is the poem about?',
+        emoji: '📖',
+        learn: [
+          card('📖', 'First reading', 'Read the poem twice: once for sense and once slowly. Ask: who is speaking (the speaker), who to, and what is happening? What is the mood or tone: angry, tender, regretful, joyful?', ['speaker', 'tone', 'mood'], 'poem-questions'),
+          card('🧩', 'Themes', 'A theme is a big idea the poem explores, like love, loss, nature, power or identity. Look at the title and the last lines: they often hold the key to the poem’s message.', ['theme', 'message']),
+        ],
+        questions: [
+          mcq('q1', 'The voice in a poem is called the…', ['Speaker', 'Publisher', 'Reader', 'Editor'], 0),
+          mcq('q2', 'Tone means…', ['The attitude or feeling of the poem', 'The number of lines', 'The rhyme scheme', 'The title'], 0),
+          tf('q3', 'The title and last lines often help you find the message.', true),
+          mcq('q4', 'Which is a theme?', ['Loss', 'A stanza', 'A rhyme', 'A comma'], 0),
+          mcq('q5', 'How many times should you read an unseen poem?', ['At least twice', 'Once', 'Never', 'Ten times'], 0),
+          gap('q6', 'A big idea a poem explores is its ___.', ['theme']),
+        ],
+      },
+      {
+        id: 'enp-language',
+        title: 'Imagery & sound',
+        emoji: '🎨',
+        learn: [
+          card('🎨', 'Imagery', 'Similes, metaphors and personification create pictures in the reader’s mind. Ask what the image suggests: “the city’s iron heart” makes the city sound strong but cold and mechanical.', ['imagery', 'metaphor', 'personification'], 'figurative'),
+          card('🔊', 'Sound', 'Alliteration, sibilance (repeated s sounds), onomatopoeia and rhyme change how a poem sounds. Harsh sounds (k, t, d) can sound violent; soft sounds (s, l, m) can sound gentle, or sinister.', ['sibilance', 'alliteration', 'onomatopoeia']),
+        ],
+        questions: [
+          match('q1', 'Match the example to the technique', [
+            ['“The wind howled”', 'Personification'],
+            ['“Silent, slithering snakes”', 'Sibilance'],
+            ['“Crash!”', 'Onomatopoeia'],
+          ]),
+          mcq('q2', 'What does “the city’s iron heart” suggest?', ['The city is strong but cold', 'The city is full of metal hearts', 'The city is warm and kind', 'Nothing'], 0),
+          tf('q3', 'Harsh sounds like k and t can create a violent effect.', true),
+          mcq('q4', 'Imagery is…', ['Language that creates pictures in the mind', 'A rhyme scheme', 'A type of stanza', 'The title'], 0),
+          mcq('q5', 'Repeated s sounds are called…', ['Sibilance', 'Assonance', 'Rhyme', 'Metre'], 0),
+          gap('q6', 'A comparison that says something IS something else is a ___.', ['metaphor']),
+        ],
+      },
+      {
+        id: 'enp-form',
+        title: 'Form & structure',
+        emoji: '🏛️',
+        learn: [
+          card('🏛️', 'Form', 'Form is the type of poem and its shape. A sonnet has 14 lines and is often about love. A ballad tells a story with a regular rhythm. Free verse has no regular rhyme or rhythm, which can feel natural, or chaotic.', ['sonnet', 'ballad', 'free verse']),
+          card('↩️', 'Structure', 'Enjambment runs a sentence over a line break, which can speed things up or create surprise. A caesura is a pause in the middle of a line. A volta is a turn in the poem’s thought. Stanza breaks and repeated lines (refrains) also shape the meaning.', ['enjambment', 'caesura', 'volta', 'refrain'], 'enjambment'),
+        ],
+        questions: [
+          gap('q1', 'A sonnet has ___ lines.', ['14']),
+          mcq('q2', 'Poetry with no regular rhyme or rhythm is…', ['Free verse', 'A sonnet', 'A ballad', 'A limerick'], 0),
+          mcq('q3', 'A sentence running over a line break is…', ['Enjambment', 'Caesura', 'A refrain', 'A volta'], 0),
+          mcq('q4', 'A pause in the middle of a line is a…', ['Caesura', 'Stanza', 'Rhyme', 'Couplet'], 0),
+          tf('q5', 'A volta is a turn or change in the poem’s thought.', true),
+          mcq('q6', 'A line repeated through a poem is a…', ['Refrain', 'Volta', 'Caesura', 'Metaphor'], 0),
+        ],
+      },
+    ],
+  },
 ];

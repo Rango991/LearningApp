@@ -81,4 +81,138 @@ export const biologyY89: Unit[] = [
       },
     ],
   },
+  {
+    id: 'bio-health',
+    title: 'Health & disease',
+    stage: Y89,
+    description: 'Pathogens and how they spread, your body’s defences and immune system, and vaccines and antibiotics.',
+    colour: '#c2255c',
+    lessons: [
+      {
+        id: 'bh-pathogens',
+        title: 'Germs & how they spread',
+        emoji: '🦠',
+        learn: [
+          card('🦠', 'Pathogens', 'Pathogens are microorganisms that cause disease: bacteria (like salmonella), viruses (like flu and measles), fungi (like athlete’s foot) and protists (like malaria). Viruses are much smaller than bacteria and can only reproduce inside cells.', ['pathogen', 'bacteria', 'virus'], 'pathogens'),
+          card('🤧', 'How they spread', 'Diseases spread through the air (coughs and sneezes), by touch, in dirty water or food, and through animals (like mosquitoes carrying malaria). Washing hands, covering coughs, clean water and cooking food properly all cut the spread.', ['spread', 'hygiene']),
+        ],
+        questions: [
+          match('q1', 'Match the disease to its type of pathogen', [
+            ['Flu', 'Virus'],
+            ['Salmonella', 'Bacteria'],
+            ['Athlete’s foot', 'Fungus'],
+            ['Malaria', 'Protist'],
+          ]),
+          tf('q2', 'Viruses can reproduce on their own, outside cells.', false),
+          mcq('q3', 'Which helps stop diseases spreading?', ['Washing your hands', 'Sharing cups', 'Coughing into your hand, then touching things', 'Eating undercooked chicken'], 0),
+          mcq('q4', 'Malaria is spread by…', ['Mosquitoes', 'Handshakes', 'Cold weather', 'Water bottles'], 0),
+          gap('q5', 'A microorganism that causes disease is a ___.', ['pathogen']),
+          mcq('q6', 'Which is the smallest?', ['A virus', 'A bacterium', 'A human cell', 'A fungus'], 0),
+        ],
+      },
+      {
+        id: 'bh-defences',
+        title: 'Your body’s defences',
+        emoji: '🛡️',
+        learn: [
+          card('🛡️', 'First line of defence', 'Your skin is a barrier. Your nose has hairs and mucus to trap germs, tiny hairs called cilia sweep mucus out of your airways, and stomach acid kills germs in food. Tears contain enzymes that kill bacteria.', ['skin', 'mucus', 'cilia', 'stomach acid'], 'body-defences'),
+          card('⚪', 'White blood cells', 'If germs get in, white blood cells attack. Some engulf and digest pathogens. Others make antibodies that stick to one specific pathogen, and antitoxins that neutralise its poisons. Afterwards, memory cells remember it, so you can fight it faster next time: you’re immune.', ['white blood cells', 'antibodies', 'immunity']),
+        ],
+        questions: [
+          mcq('q1', 'Which is part of the first line of defence?', ['Skin', 'Antibodies', 'Antibiotics', 'Memory cells'], 0),
+          mcq('q2', 'What do antibodies do?', ['Stick to a specific pathogen', 'Kill all cells', 'Make mucus', 'Digest food'], 0),
+          tf('q3', 'Stomach acid kills many germs in food.', true),
+          mcq('q4', 'Why don’t you usually catch chickenpox twice?', ['Memory cells remember it, so you’re immune', 'You become allergic', 'Only children can catch it', 'Antibiotics stop it'], 0),
+          gap('q5', 'Tiny hairs that sweep mucus out of your airways are called ___.', ['cilia']),
+          mcq('q6', 'Antitoxins…', ['Neutralise the poisons pathogens make', 'Kill viruses inside cells', 'Make you sneeze', 'Build muscles'], 0),
+        ],
+      },
+      {
+        id: 'bh-medicine',
+        title: 'Vaccines & antibiotics',
+        emoji: '💉',
+        learn: [
+          card('💉', 'Vaccines', 'A vaccine contains a dead or weakened pathogen (or part of one). Your white blood cells make antibodies and memory cells without you getting ill, so you’re protected. If most people are vaccinated, the disease can’t spread easily: herd immunity.', ['vaccine', 'herd immunity'], 'vaccine-antibiotic'),
+          card('💊', 'Antibiotics', 'Antibiotics, like penicillin (discovered by Alexander Fleming in 1928), kill bacteria but do nothing against viruses. Overusing them has led to antibiotic-resistant bacteria, so only take them when needed and always finish the course.', ['antibiotic', 'penicillin', 'resistance']),
+        ],
+        questions: [
+          mcq('q1', 'What does a vaccine contain?', ['A dead or weakened pathogen', 'Antibiotics', 'Only sugar', 'Live bacteria that make you ill'], 0),
+          tf('q2', 'Antibiotics work against viruses like colds and flu.', false, 'They only kill bacteria.'),
+          gap('q3', 'Penicillin was discovered by Alexander ___.', ['Fleming']),
+          mcq('q4', 'What is herd immunity?', ['When so many people are immune that a disease can’t spread easily', 'Immunity in cows', 'Never getting ill', 'A type of antibiotic'], 0),
+          mcq('q5', 'Why are some bacteria now antibiotic-resistant?', ['Antibiotics have been overused', 'Bacteria grew bigger', 'Because of vaccines', 'Because of hand washing'], 0),
+          tf('q6', 'Vaccines help your body make memory cells.', true),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'bio-plants',
+    title: 'Plants',
+    stage: Y89,
+    description: 'How roots, stems and leaves are adapted, how water and minerals move, and seeds, pollinators and food security.',
+    colour: '#2f9e44',
+    lessons: [
+      {
+        id: 'bp-parts',
+        title: 'Roots, stems & leaves',
+        emoji: '🌱',
+        learn: [
+          card('🌱', 'The parts of a plant', 'Roots anchor the plant and absorb water and minerals; root hair cells have a large surface area to do this. The stem holds the plant up and carries water and food. Leaves make food by photosynthesis. Flowers are for reproduction.', ['root hair cell', 'stem', 'leaf'], 'plant-parts'),
+          card('🍃', 'Leaves are adapted', 'Leaves are broad and thin, to catch light and let gases in and out quickly. Palisade cells near the top are packed with chloroplasts. Stomata (tiny pores, mostly underneath) let carbon dioxide in and oxygen and water vapour out; guard cells open and close them.', ['palisade cell', 'stomata', 'guard cells']),
+        ],
+        questions: [
+          match('q1', 'Match the part to its job', [
+            ['Roots', 'Absorb water and minerals'],
+            ['Stem', 'Supports and transports'],
+            ['Leaves', 'Photosynthesis'],
+            ['Flowers', 'Reproduction'],
+          ]),
+          mcq('q2', 'Why are root hair cells long and thin?', ['A big surface area to absorb water', 'To store food', 'To make seeds', 'To catch light'], 0),
+          gap('q3', 'Tiny pores on leaves are called ___.', ['stomata']),
+          tf('q4', 'Palisade cells contain lots of chloroplasts.', true),
+          mcq('q5', 'What opens and closes the stomata?', ['Guard cells', 'Root hairs', 'Xylem', 'Petals'], 0),
+          mcq('q6', 'Why are leaves thin?', ['So gases can diffuse in and out quickly', 'To be heavy', 'To store water', 'To hold flowers'], 0),
+        ],
+      },
+      {
+        id: 'bp-transport',
+        title: 'Water & minerals',
+        emoji: '💧',
+        learn: [
+          card('💧', 'Transport in plants', 'Xylem tubes carry water and minerals up from the roots. Phloem tubes carry sugars made in the leaves to the rest of the plant. Water evaporating from the leaves (transpiration) pulls more water up the stem.', ['xylem', 'phloem', 'transpiration'], 'xylem-phloem'),
+          card('🧪', 'Minerals', 'Plants need minerals from the soil. Nitrates are used to make proteins for growth: without them, leaves turn yellow and growth is stunted. Magnesium is needed to make chlorophyll. Farmers add fertilisers to replace the minerals crops use up.', ['nitrates', 'magnesium', 'fertiliser']),
+        ],
+        questions: [
+          mcq('q1', 'Which tubes carry water up the plant?', ['Xylem', 'Phloem', 'Stomata', 'Root hairs'], 0),
+          mcq('q2', 'Phloem carries…', ['Sugars', 'Only water', 'Oxygen', 'Soil'], 0),
+          gap('q3', 'Water evaporating from the leaves is called ___.', ['transpiration']),
+          mcq('q4', 'A plant short of nitrates has…', ['Yellow leaves and stunted growth', 'Purple flowers', 'Extra-big leaves', 'More roots'], 0),
+          tf('q5', 'Magnesium is needed to make chlorophyll.', true),
+          mcq('q6', 'Why do farmers use fertilisers?', ['To replace minerals in the soil', 'To kill insects', 'To water plants', 'To warm the soil'], 0),
+        ],
+      },
+      {
+        id: 'bp-seeds',
+        title: 'Seeds & food security',
+        emoji: '🌻',
+        learn: [
+          card('🌻', 'Seeds and dispersal', 'After pollination and fertilisation, the ovule becomes a seed and the ovary becomes a fruit. Seeds are spread out so new plants don’t compete with the parent: by wind (sycamore, dandelion), animals (berries, burrs), water (coconut) or bursting pods (peas).', ['seed dispersal'], 'seed-dispersal'),
+          card('🐝', 'Insects and food security', 'About a third of the food we eat depends on insect pollination, especially by bees. Pesticides, habitat loss and disease have reduced insect numbers, which threatens food security. Planting wildflowers and using fewer pesticides helps.', ['pollination', 'food security']),
+        ],
+        questions: [
+          match('q1', 'Match the plant to how its seeds spread', [
+            ['Dandelion', 'Wind'],
+            ['Burdock burrs', 'Animal fur'],
+            ['Coconut', 'Water'],
+          ]),
+          mcq('q2', 'After fertilisation, the ovule becomes…', ['A seed', 'A petal', 'A leaf', 'A root'], 0),
+          mcq('q3', 'Why do plants spread their seeds?', ['So new plants don’t compete with the parent', 'To feed birds', 'To stay close together', 'To make flowers'], 0),
+          tf('q4', 'About a third of our food depends on insect pollination.', true),
+          mcq('q5', 'Which helps pollinating insects?', ['Planting wildflowers', 'Using more pesticides', 'Cutting down hedges', 'Paving over gardens'], 0),
+          gap('q6', 'Having enough safe food for everyone is called food ___.', ['security']),
+        ],
+      },
+    ],
+  },
 ];

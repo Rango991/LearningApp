@@ -375,4 +375,135 @@ export const geographyKs3: Unit[] = [
       },
     ],
   },
+  {
+    id: 'geo-china-india',
+    title: 'China & India',
+    stage: Y89,
+    description: 'Two Asian giants: their places and people, their fast-growing economies, and the challenges that growth brings.',
+    colour: '#d6336c',
+    lessons: [
+      {
+        id: 'gci-places',
+        title: 'Two giants',
+        emoji: '🐉',
+        learn: [
+          card('🗺️', 'Where and how big', 'China and India are in Asia and each has about 1.4 billion people; India overtook China as the most populous country in 2023. China’s capital is Beijing and India’s is New Delhi. The Himalayas, the world’s highest mountains (including Everest), lie between them.', ['population', 'Himalayas'], 'china-india'),
+          card('🌊', 'Rivers and climate', 'Great rivers support farming and cities: the Yangtze and Yellow rivers in China, and the Ganges in India. Much of India has a monsoon climate: a long dry season, then heavy summer rains that farmers depend on but which can cause floods.', ['monsoon', 'Ganges', 'Yangtze']),
+        ],
+        questions: [
+          mcq('q1', 'Which country has had the most people since 2023?', ['India', 'China', 'USA', 'Russia'], 0),
+          gap('q2', 'The capital of China is ___.', ['Beijing']),
+          mcq('q3', 'The mountains between China and India are the…', ['Himalayas', 'Alps', 'Andes', 'Rockies'], 0),
+          mcq('q4', 'What is a monsoon?', ['A season of very heavy rain', 'A type of mountain', 'A desert wind', 'A river'], 0),
+          tf('q5', 'The Ganges is a major river in India.', true),
+          mcq('q6', 'Roughly how many people live in each of China and India?', ['About 1.4 billion', 'About 14 million', 'About 140 million', 'About 14 billion'], 0),
+        ],
+      },
+      {
+        id: 'gci-economy',
+        title: 'Growing economies',
+        emoji: '🏭',
+        learn: [
+          card('🏭', 'China: the world’s factory', 'Since the 1980s China has opened up to trade and built huge numbers of factories, making everything from phones to toys. Hundreds of millions of people have moved from the countryside to cities for work, and hundreds of millions have been lifted out of poverty.', ['manufacturing', 'rural-urban migration'], 'china-india-economy'),
+          card('💻', 'India: services and tech', 'India’s economy has grown fast too, especially services like IT, software and call centres, centred on cities like Bengaluru. But many people still farm small plots, and there are big gaps between rich and poor.', ['services', 'IT', 'inequality']),
+        ],
+        questions: [
+          mcq('q1', 'China is called “the world’s factory” because it…', ['Makes a huge share of the world’s manufactured goods', 'Has no farms', 'Has closed its factories', 'Only grows food'], 0),
+          mcq('q2', 'India’s fast-growing sector is especially…', ['Services like IT and software', 'Coal mining', 'Whaling', 'Fishing'], 0),
+          gap('q3', 'India’s best-known tech city is ___.', ['Bengaluru', 'Bangalore']),
+          tf('q4', 'Millions of people in China moved from the countryside to cities for work.', true),
+          mcq('q5', 'A big challenge in India is…', ['The gap between rich and poor', 'Too few people', 'No rivers', 'Too much snow'], 0),
+          mcq('q6', 'What do both countries have in common?', ['Fast economic growth', 'Small populations', 'No cities', 'Only cold deserts'], 0),
+        ],
+      },
+      {
+        id: 'gci-challenges',
+        title: 'Challenges',
+        emoji: '😷',
+        learn: [
+          card('😷', 'Pollution', 'Fast growth has brought air pollution from coal power stations, traffic and factories; cities like Delhi and Beijing have had dangerous smog. Both countries are now building huge amounts of solar and wind power.', ['air pollution', 'smog', 'renewable energy'], 'growth-challenges'),
+          card('🏙️', 'Megacities', 'Both countries have several megacities, like Shanghai and Mumbai. Rapid growth brings jobs but also traffic, slums and pressure on water and housing. China has built vast high-speed railways and metro systems to cope.', ['megacity', 'infrastructure']),
+        ],
+        questions: [
+          mcq('q1', 'What has caused smog in Delhi and Beijing?', ['Coal power, traffic and factories', 'The sea', 'Snow', 'Forests'], 0),
+          tf('q2', 'China and India are building lots of solar and wind power.', true),
+          mcq('q3', 'Which is a megacity in China?', ['Shanghai', 'Mumbai', 'Lagos', 'Cairo'], 0),
+          mcq('q4', 'A problem of fast-growing cities is…', ['Pressure on housing and water', 'Too few people', 'No jobs', 'Too much farmland'], 0),
+          gap('q5', 'Thick, polluted haze over a city is called ___.', ['smog']),
+          mcq('q6', 'Which is a megacity in India?', ['Mumbai', 'Shanghai', 'Beijing', 'Tokyo'], 0),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'geo-coasts',
+    title: 'Coasts',
+    stage: Y89,
+    description: 'How waves erode the coast, the landforms they create, and how coasts like Holderness are managed.',
+    colour: '#1c7ed6',
+    lessons: [
+      {
+        id: 'gc-waves',
+        title: 'Waves & erosion',
+        emoji: '🌊',
+        learn: [
+          card('🌊', 'Constructive and destructive waves', 'Waves are made by wind blowing over the sea. The distance the wind blows over is the fetch: the longer it is, the bigger the waves. Constructive waves are gentle, with a strong swash that builds beaches. Destructive waves are tall and frequent, with a strong backwash that drags material away.', ['fetch', 'swash', 'backwash'], 'wave-types'),
+          card('🪨', 'Erosion', 'Hydraulic action: waves force air into cracks, blasting rock apart. Abrasion: rocks hurled by waves scrape the cliff. Attrition: rocks knock together and become smaller and rounder. Solution: some rocks, like chalk, dissolve in seawater.', ['hydraulic action', 'abrasion', 'attrition']),
+        ],
+        questions: [
+          mcq('q1', 'The distance the wind blows over the sea is the…', ['Fetch', 'Swash', 'Backwash', 'Tide'], 0),
+          match('q2', 'Match the wave to its effect', [
+            ['Constructive wave', 'Builds up beaches'],
+            ['Destructive wave', 'Drags material away'],
+          ]),
+          match('q3', 'Match the erosion process', [
+            ['Hydraulic action', 'Air forced into cracks'],
+            ['Abrasion', 'Rocks scrape the cliff'],
+            ['Attrition', 'Rocks knock together and get smaller'],
+          ]),
+          tf('q4', 'A longer fetch makes bigger waves.', true),
+          gap('q5', 'Water rushing up the beach after a wave breaks is the ___.', ['swash']),
+          mcq('q6', 'Chalk dissolving in seawater is…', ['Solution', 'Attrition', 'Abrasion', 'Deposition'], 0),
+        ],
+      },
+      {
+        id: 'gc-landforms',
+        title: 'Coastal landforms',
+        emoji: '🏝️',
+        learn: [
+          card('🏝️', 'Headlands to stacks', 'Soft rock erodes into bays, while hard rock is left sticking out as headlands. On a headland, a crack grows into a cave, then an arch when it breaks right through. The arch roof collapses, leaving a stack, which wears down into a stump. Old Harry Rocks in Dorset are stacks.', ['headland', 'bay', 'cave', 'arch', 'stack'], 'coast-landforms'),
+          card('🏖️', 'Longshore drift and spits', 'Waves hit the beach at an angle (with the wind) but drain straight back, zig-zagging sand along the coast: longshore drift. Where the coast changes direction, the sand builds out into a spit, like Spurn Head in Yorkshire.', ['longshore drift', 'spit']),
+        ],
+        questions: [
+          order('q1', 'Put the headland landforms in order', ['Crack', 'Cave', 'Arch', 'Stack', 'Stump']),
+          mcq('q2', 'Bays form in…', ['Softer rock', 'Harder rock', 'Granite only', 'Ice'], 0),
+          mcq('q3', 'Longshore drift moves sand…', ['Along the coast in a zig-zag', 'Straight out to sea', 'Up the cliffs', 'Nowhere'], 0),
+          gap('q4', 'A ridge of sand built out where the coast changes direction is a ___.', ['spit']),
+          tf('q5', 'Old Harry Rocks are stacks.', true),
+          mcq('q6', 'What happens when an arch roof collapses?', ['A stack is left', 'A bay forms', 'A spit forms', 'A beach forms'], 0),
+        ],
+      },
+      {
+        id: 'gc-management',
+        title: 'Managing coasts',
+        emoji: '🧱',
+        learn: [
+          card('🧱', 'Hard engineering', 'Sea walls reflect waves, groynes (wooden fences down the beach) trap sand moving by longshore drift, and rock armour absorbs the waves’ energy. They work, but they’re expensive and can cause more erosion further along the coast.', ['sea wall', 'groynes', 'rock armour'], 'coast-defences'),
+          card('🌾', 'Soft engineering and Holderness', 'Beach nourishment adds sand to widen beaches; managed retreat lets some land flood to create salt marsh. The Holderness coast in Yorkshire is one of Europe’s fastest-eroding coastlines, losing nearly 2 m a year. Mappleton is protected by rock armour and groynes, but places further south lose more land.', ['beach nourishment', 'managed retreat', 'Holderness']),
+        ],
+        questions: [
+          match('q1', 'Match the defence to how it works', [
+            ['Sea wall', 'Reflects waves'],
+            ['Groynes', 'Trap sand'],
+            ['Rock armour', 'Absorbs wave energy'],
+          ]),
+          tf('q2', 'Hard engineering is cheap and has no side effects.', false, 'It’s expensive and can increase erosion further along the coast.'),
+          mcq('q3', 'Adding sand to a beach is called…', ['Beach nourishment', 'Managed retreat', 'Rock armour', 'Abrasion'], 0),
+          mcq('q4', 'The Holderness coast is eroding by about…', ['Nearly 2 m a year', '1 cm a century', '100 m a day', 'It isn’t eroding'], 0),
+          mcq('q5', 'Letting some land flood to make salt marsh is…', ['Managed retreat', 'A sea wall', 'Groynes', 'Drilling'], 0),
+          gap('q6', 'Wooden fences built down a beach to trap sand are ___.', ['groynes']),
+        ],
+      },
+    ],
+  },
 ];
