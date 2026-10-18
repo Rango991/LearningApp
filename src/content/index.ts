@@ -14,12 +14,13 @@ import { tripleBiology, tripleChemistry, triplePhysics } from './gcse-triple';
 import { gcseMaths } from './gcse-maths';
 import { maths } from './maths';
 import { physics } from './physics';
+import { physicsY89 } from './physics-y89';
 import type { Lesson, Question, Subject, Unit } from './types';
 
 export const subjects: Subject[] = [
   { id: 'biology', title: 'Biology', emoji: '🧬', colour: '#22b07d', units: [...biologyY7, ...biologyKs3, ...gcseBiology, ...tripleBiology] },
   { id: 'chemistry', title: 'Chemistry', emoji: '⚗️', colour: '#8e5cf7', units: [...chemistry, ...gcseChemistry, ...tripleChemistry] },
-  { id: 'physics', title: 'Physics', emoji: '🪐', colour: '#1c9df6', units: [...physics, ...gcsePhysics, ...triplePhysics] },
+  { id: 'physics', title: 'Physics', emoji: '🪐', colour: '#1c9df6', units: [...physics, ...physicsY89, ...gcsePhysics, ...triplePhysics] },
   { id: 'maths', title: 'Maths', emoji: '📐', colour: '#ff8a3d', units: [...maths, ...gcseMaths] },
   { id: 'english', title: 'English', emoji: '📚', colour: '#e0457b', units: [...english, ...gcseEnglish] },
   { id: 'history', title: 'History', emoji: '🏰', colour: '#b8742a', units: [...history, ...gcseHistory] },

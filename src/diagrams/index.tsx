@@ -13,6 +13,7 @@ import { gcsePhysicsDiagrams } from './gcse-physics';
 import { tripleDiagrams } from './gcse-triple';
 import { mathsDiagrams } from './maths';
 import { physicsDiagrams } from './physics';
+import { physicsY89Diagrams } from './physics-y89';
 import { year7Diagrams } from './year7';
 
 // All lesson diagrams by id. Content refers to them with `diagram: 'id'` on a learn card.
@@ -20,6 +21,7 @@ export const diagrams: Record<string, () => JSX.Element> = {
   ...biologyDiagrams,
   ...chemistryDiagrams,
   ...physicsDiagrams,
+  ...physicsY89Diagrams,
   ...mathsDiagrams,
   ...gcseBiologyDiagrams,
   ...gcseChemistryDiagrams,
