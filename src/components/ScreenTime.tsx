@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Emoji } from './Emoji';
 import { dayKey, parseDay } from '../game/dates';
-import { SCREEN_RULES, earnedHistory, earnedToday, isWeekend, nextBoostHint, studyMinutes } from '../game/screenTime';
+import { SCREEN_RULES, bonusesOnDay, earnedHistory, earnedOnDay, earnedToday, isWeekend, nextBoostHint, studyMinutes } from '../game/screenTime';
 import type { Progress } from '../game/types';
 
 export function formatMinutes(mins: number): string {
@@ -50,6 +50,9 @@ export function ScreenCard({ progress }: { progress: Progress }) {
         {isWeekend(today) && <span className="weekend-badge">Weekend ×2</span>}
       </div>
       <p className="small">You’ve studied <b>{Math.floor(studyMinutes(progress, today))} min</b> today</p>
+      {bonusesOnDay(progress, today) > 0 && (
+        <p className="small muted">{formatMinutes(earnedOnDay(progress, today))} from studying + {formatMinutes(bonusesOnDay(progress, today))} unit test bonus 🏆</p>
+      )}
       <p className="bank-hint small">⚡ {nextBoostHint(progress, today)}</p>
       <button className="btn link small" onClick={() => setShowRules(!showRules)}>{showRules ? 'Hide the rules' : 'How do I earn it?'}</button>
       {showRules && <RulesText />}
@@ -67,15 +70,19 @@ export function ScreenTimePanel({ progress }: { progress: Progress }) {
       <div className="screen-balance">
         <span className="kpi-label">Today{isWeekend(today) ? ' (weekend ×2)' : ''}</span>
         <span className="screen-balance-value">{formatMinutes(earnedToday(progress, today))}</span>
-        <span className="small muted">from {Math.round(studyMinutes(progress, today))} min of study</span>
+        <span className="small muted">
+          {formatMinutes(earnedOnDay(progress, today))} from {Math.round(studyMinutes(progress, today))} min of study
+          {bonusesOnDay(progress, today) > 0 && <> + {formatMinutes(bonusesOnDay(progress, today))} unit test bonus</>}
+        </span>
       </div>
-      <p className="small muted">Earned each day (study minutes underneath)</p>
+      <p className="small muted">Earned each day (study minutes underneath; 🏆 = unit test bonus included)</p>
       <div className="earned-week">
         {history.map((h) => (
           <div key={h.day} className={`earned-day ${h.day === today ? 'today' : ''}`}>
             <span className="small muted">{parseDay(h.day).toLocaleDateString('en-GB', { weekday: 'short' })}{h.weekend ? ' ×2' : ''}</span>
             <b>{h.earned}</b>
             <span className="small muted">{h.studied}m</span>
+            {h.bonus > 0 && <span className="small muted">🏆+{h.bonus}</span>}
           </div>
         ))}
       </div>

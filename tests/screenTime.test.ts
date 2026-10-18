@@ -3,7 +3,7 @@ import { subjects } from '../src/content';
 import { ActiveClock } from '../src/game/activeClock';
 import { applySession, createProgress } from '../src/game/engine';
 import type { Progress } from '../src/game/types';
-import { earnedFor, earnedOnDay, earnedToday, isWeekend, unitTestBonus } from '../src/game/screenTime';
+import { earnedFor, earnedOnDay, earnedToday, isWeekend, nextBoostHint, unitTestBonus } from '../src/game/screenTime';
 
 describe('screen-time rules', () => {
   it('weekday: first 20 min 1:1, then 1.5x (50 min study = 65 min)', () => {
@@ -15,6 +15,21 @@ describe('screen-time rules', () => {
   it('weekend: the same, doubled (50 min study = 130 min)', () => {
     expect(earnedFor(10, true)).toBe(20);
     expect(earnedFor(50, true)).toBe(130);
+  });
+
+  it('Saturday with 42 min of study earns (20 + 22 x 1.5) x 2 = 106 min', () => {
+    let p = createProgress('Test');
+    const lesson = subjects[0].units[0].lessons[0];
+    const key = `${lesson.id}/${lesson.questions[0].id}`;
+    p = applySession(p, { kind: 'lesson', lessonId: lesson.id, answers: [{ key, correct: true, given: 'x' }], maxCombo: 1, seconds: 42 * 60 }, new Date('2026-10-17T11:00:00')).progress;
+    expect(earnedOnDay(p, '2026-10-17')).toBe(106);
+    expect(earnedToday(p, '2026-10-17')).toBe(106);
+  });
+
+  it('explains the weekend boost in minutes, not as a confusing 3x', () => {
+    const p = createProgress('Test');
+    expect(nextBoostHint(p, '2026-10-17')).toBe('Weekend: every study minute is worth 2 min now, and 3 min after 20 more min of study!');
+    expect(nextBoostHint(p, '2026-10-19')).toBe('20 more min of study today unlocks the 1.5× boost!');
   });
 
   it('knows which days are weekends', () => {

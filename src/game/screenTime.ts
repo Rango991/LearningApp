@@ -61,12 +61,16 @@ export function nextBoostHint(p: Progress, today = dayKey()): string {
   const weekend = isWeekend(today);
   const studied = studyMinutes(p, today);
   const toBoost = SCREEN_RULES.baseMinutes - studied;
-  const x = weekend ? SCREEN_RULES.weekendMultiplier : 1;
+  const { boostRate, weekendMultiplier } = SCREEN_RULES;
   if (toBoost > 0) {
     const mins = Math.ceil(toBoost);
-    return `${mins} more min of study today unlocks the ${SCREEN_RULES.boostRate * x}× boost!`;
+    return weekend
+      ? `Weekend: every study minute is worth ${weekendMultiplier} min now, and ${boostRate * weekendMultiplier} min after ${mins} more min of study!`
+      : `${mins} more min of study today unlocks the ${boostRate}× boost!`;
   }
-  return `Boost active: every study minute is worth ${SCREEN_RULES.boostRate * x} min${weekend ? ' (weekend double!)' : ''}`;
+  return weekend
+    ? `Boost active: every study minute is worth ${boostRate * weekendMultiplier} min today (${boostRate}× boost, doubled for the weekend)`
+    : `Boost active: every study minute is worth ${boostRate} min`;
 }
 
 /** Earned minutes for each of the last n days, oldest first. */
@@ -77,6 +81,8 @@ export function earnedHistory(p: Progress, n: number, today = dayKey()) {
       day,
       weekend: isWeekend(day),
       studied: Math.round(studyMinutes(p, day)),
+      fromStudy: earnedOnDay(p, day),
+      bonus: bonusesOnDay(p, day),
       earned: earnedOnDay(p, day) + bonusesOnDay(p, day),
     };
   });
