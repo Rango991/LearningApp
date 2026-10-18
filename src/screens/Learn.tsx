@@ -6,7 +6,7 @@ import { DailyCard } from '../components/Hud';
 import { Mascot } from '../components/Mascot';
 import { ScreenCard } from '../components/ScreenTime';
 import {
-  checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, testedOut,
+  GEMS, checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, testedOut,
 } from '../game/engine';
 import { greeting, mitoAccessory, testPep } from '../game/mito';
 import { unitTestBonus } from '../game/screenTime';
@@ -26,9 +26,19 @@ function loadSubject(): string {
 /** The unit's picture: the first lesson's emoji. */
 const unitEmoji = (u: Unit) => u.lessons[0]?.emoji ?? '📘';
 
+const started = (p: Progress, u: Unit) => u.lessons.some((l) => p.lessons[l.id]) || p.checkpoints[u.id] !== undefined;
+
+/** Scroll a unit into view once React has drawn it. */
+function scrollToUnit(id: string) {
+  window.setTimeout(() => document.getElementById(`unit-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+}
+
 export function Learn({ progress, onStart }: { progress: Progress; onStart: (plan: SessionPlan) => void }) {
   const [selected, setSelected] = useState<Selected | null>(null);
   const [subjectId, setSubjectId] = useState(loadSubject);
+  const [jumpOpen, setJumpOpen] = useState(false);
+  // Finished and tested-out units are folded to their banner unless she opens them.
+  const [opened, setOpened] = useState<Set<string>>(() => new Set());
   const subject = findSubject(subjectId);
 
   function pickSubject(id: string) {
@@ -37,11 +47,32 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
     try { localStorage.setItem(SUBJECT_KEY, id); } catch { /* not important */ }
   }
 
-  // The "current" lesson is the first unlocked one not yet done, so it gets the START bubble.
-  let current: string | null = null;
-  for (const u of subject.units) {
-    const i = u.lessons.findIndex((x, li) => !progress.lessons[x.id] && isLessonUnlocked(progress, u, li));
-    if (i >= 0) { current = u.lessons[i].id; break; }
+  function toggleUnit(id: string) {
+    sfx.tap();
+    setOpened((o) => { const n = new Set(o); if (n.has(id)) n.delete(id); else n.add(id); return n; });
+  }
+
+  // The "current" lesson gets the START bubble and the Continue button: the first
+  // unlocked lesson not yet done, skipping units she has already tested out of.
+  let current: { unit: Unit; lesson: Lesson; index: number } | null = null;
+  for (const skipTestedOut of [true, false]) {
+    for (const u of subject.units) {
+      if (skipTestedOut && testedOut(progress, u)) continue;
+      const i = u.lessons.findIndex((x, li) => !progress.lessons[x.id] && isLessonUnlocked(progress, u, li));
+      if (i >= 0) { current = { unit: u, lesson: u.lessons[i], index: i }; break; }
+    }
+    if (current) break;
+  }
+  const foldable = (u: Unit) => (isUnitComplete(progress, u) || testedOut(progress, u)) && u.id !== current?.unit.id;
+
+  // A subject she hasn't tried yet, to suggest.
+  const untried = subjects.find((s) => s.id !== subject.id && !s.units.some((u) => started(progress, u)));
+
+  function jumpTo(u: Unit) {
+    sfx.tap();
+    setJumpOpen(false);
+    setOpened((o) => new Set(o).add(u.id));
+    scrollToUnit(u.id);
   }
 
   function start(sel: Selected) {
@@ -85,6 +116,28 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
           ))}
         </div>
 
+        {untried && (
+          <div className="card suggest-card">
+            <Emoji e={untried.emoji} size={36} />
+            <p>You haven’t tried <b>{untried.title}</b> yet. Fancy something new?</p>
+            <button className="btn primary small-btn" onClick={() => pickSubject(untried.id)}>Try it</button>
+          </div>
+        )}
+
+        <div className="learn-nav">
+          {current && (
+            <button
+              className="btn unit continue-btn"
+              style={{ ['--unit' as string]: current.unit.colour }}
+              onClick={() => { sfx.tap(); setSelected(current); scrollToUnit(current!.unit.id); }}
+            >
+              <Emoji e={current.lesson.emoji} size={30} />
+              <span className="continue-text"><b>Continue: {current.lesson.title}</b><span>{current.unit.title}</span></span>
+            </button>
+          )}
+          <button className="btn ghost jump-btn" onClick={() => { sfx.tap(); setJumpOpen(true); }}>🗺️ Jump to unit</button>
+        </div>
+
         {unitsByStage(subject).map(({ stage, units }) => (
           <div key={stage} className="stage">
             <h2 className="stage-title"><span>{stage}</span></h2>
@@ -93,21 +146,32 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
               const done = unit.lessons.filter((l) => progress.lessons[l.id]).length;
               const testScore = progress.checkpoints[unit.id];
               const skipped = testedOut(progress, unit);
+              const canFold = foldable(unit);
+              const folded = canFold && !opened.has(unit.id);
               return (
-                <section key={unit.id} className="unit" style={{ ['--unit' as string]: unit.colour }}>
-                  <div className="unit-banner">
+                <section key={unit.id} id={`unit-${unit.id}`} className={`unit ${folded ? 'folded' : ''}`} style={{ ['--unit' as string]: unit.colour }}>
+                  <div
+                    className={`unit-banner ${canFold ? 'foldable' : ''}`}
+                    onClick={canFold ? () => toggleUnit(unit.id) : undefined}
+                    role={canFold ? 'button' : undefined}
+                    aria-expanded={canFold ? !folded : undefined}
+                  >
                     <div className="unit-text">
                       <p className="unit-kicker">Unit {unitNumber} · {done}/{unit.lessons.length} lessons{skipped ? ' · tested out ✓' : ''}</p>
                       <h2>{unit.title}</h2>
-                      <p className="unit-desc">{unit.description}</p>
+                      {!folded && <p className="unit-desc">{unit.description}</p>}
+                      {canFold && <p className="unit-toggle">{folded ? 'Show lessons ▾' : 'Hide lessons ▴'}</p>}
                     </div>
-                    <Emoji e={unitEmoji(unit)} size={72} className="unit-art" />
+                    <Emoji e={unitEmoji(unit)} size={folded ? 48 : 72} className="unit-art" />
                   </div>
-                  <div className="path">
+                  {skipped && done < unit.lessons.length && (
+                    <p className="tested-out-nudge">⭐ You tested out of this one! Do its lessons for stars, plus {GEMS.testedOutLesson} 💎 extra for each new one.</p>
+                  )}
+                  {!folded && <div className="path">
                     {unit.lessons.map((lesson, li) => {
                       const unlocked = isLessonUnlocked(progress, unit, li);
                       const { stars, gold } = lessonStars(progress, lesson.id);
-                      const isCurrent = lesson.id === current;
+                      const isCurrent = lesson.id === current?.lesson.id;
                       return (
                         <div key={lesson.id} className="path-row" style={{ transform: `translateX(${OFFSETS[li % OFFSETS.length]}px)` }}>
                           {isCurrent && <span className="start-bubble">START</span>}
@@ -134,7 +198,7 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
                       </button>
                       <div className="node-caption">Unit test</div>
                     </div>
-                  </div>
+                  </div>}
                 </section>
               );
             })}
@@ -147,6 +211,36 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
         <ScreenCard progress={progress} />
         <DailyCard progress={progress} />
       </aside>
+
+      {jumpOpen && (
+        <div className="sheet-backdrop" onClick={() => setJumpOpen(false)}>
+          <div className="sheet jump-sheet pop-up" onClick={(e) => e.stopPropagation()} style={{ ['--unit' as string]: subject.colour }}>
+            <h3><Emoji e={subject.emoji} size={28} /> {subject.title}: jump to a unit</h3>
+            {(() => {
+              let n = 0;
+              return unitsByStage(subject).map(({ stage, units }) => (
+                <div key={stage} className="jump-stage">
+                  <h4>{stage}</h4>
+                  {units.map((u) => {
+                    n++;
+                    const done = u.lessons.filter((l) => progress.lessons[l.id]).length;
+                    const here = u.id === current?.unit.id;
+                    const status = here ? 'next up' : isUnitComplete(progress, u) ? '✓ done' : testedOut(progress, u) ? '✓ tested out' : done ? `${done}/${u.lessons.length}` : '';
+                    return (
+                      <button key={u.id} className={`jump-row ${here ? 'here' : ''}`} style={{ ['--unit' as string]: u.colour }} onClick={() => jumpTo(u)}>
+                        <span className="jump-num">{n}</span>
+                        <Emoji e={unitEmoji(u)} size={26} />
+                        <span className="jump-title">{u.title}</span>
+                        <span className="jump-status">{status}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ));
+            })()}
+          </div>
+        </div>
+      )}
 
       {selected && (
         <div className="sheet-backdrop" onClick={() => setSelected(null)}>
@@ -177,6 +271,9 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
                 <p className="muted">{selected.lesson.learn.length} quick cards, then {selected.lesson.questions.length} questions.</p>
                 {progress.lessons[selected.lesson.id] && (
                   <p>Best score: <b>{Math.round(progress.lessons[selected.lesson.id].bestAccuracy * 100)}%</b> · Completed {progress.lessons[selected.lesson.id].completions}×</p>
+                )}
+                {!progress.lessons[selected.lesson.id] && testedOut(progress, selected.unit) && (
+                  <p className="bonus-line">⭐ You tested out of this unit, so this lesson earns {GEMS.testedOutLesson} 💎 extra.</p>
                 )}
                 {isLessonUnlocked(progress, selected.unit, selected.index) ? (
                   <button className="btn unit wide" onClick={() => start(selected)}>

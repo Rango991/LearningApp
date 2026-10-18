@@ -3,6 +3,7 @@ import { lessonAccuracy, weakSpots } from '../game/engine';
 import { dayKey, lastNDays, parseDay } from '../game/dates';
 import { levelFor } from '../game/levels';
 import { AboutList } from '../components/AboutCard';
+import { RewardsPanel, type RewardsControl } from '../components/RewardsPanel';
 import { ScreenTimePanel } from '../components/ScreenTime';
 import type { Progress } from '../game/types';
 
@@ -29,7 +30,7 @@ function mastery(acc: number | null): { label: string; cls: string } {
   return { label: 'Needs work', cls: 'weak' };
 }
 
-export function ParentDashboard({ progress }: { progress: Progress }) {
+export function ParentDashboard({ progress, rewards }: { progress: Progress; rewards?: RewardsControl }) {
   const today = dayKey();
   const days = lastNDays(today, 14);
   const week = lastNDays(today, 7);
@@ -66,6 +67,8 @@ export function ParentDashboard({ progress }: { progress: Progress }) {
       </div>
 
       <ScreenTimePanel progress={progress} />
+
+      {rewards && <RewardsPanel name={progress.profile.name} gems={progress.gems} claims={progress.claims ?? []} control={rewards} />}
 
       <section className="panel">
         <h2>Minutes studied: last 14 days</h2>

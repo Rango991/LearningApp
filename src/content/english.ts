@@ -71,6 +71,25 @@ export const english: Unit[] = [
           tf('q6', 'You start a new line each time a new person speaks.', true),
         ],
       },
+      {
+        id: 'en-apostrophe-owners',
+        title: 'Apostrophes: who owns it?',
+        emoji: '🎒',
+        learn: [
+          card('🎒', 'Count the owners first', 'Before you add an apostrophe for belonging, ask: how many owners? One owner: add ’s. One girl owns a bag → the girl’s bag. More than one owner, and the word already ends in s: add just ’. Two girls share a bag → the girls’ bag.', ['possession', 'owner'], 'apostrophe-owners'),
+          card('🧒', 'Plurals without an s', 'Some plurals don’t end in s: children, men, women, people. Add ’s to these: the children’s toys, the women’s team. Names ending in s can take ’s too: James’s coat.', ['plural']),
+          card('🐱', 'It’s or its?', 'Try saying “it is” (or “it has”) instead. If it makes sense, use it’s: it’s raining = it is raining. If not, use its, with no apostrophe: the dog wagged its tail. Its is like his and her: none of them need an apostrophe.', ['its', 'it’s']),
+        ],
+        questions: [
+          mcq('q1', 'One dog has a bone. Which is correct?', ['the dog’s bone', 'the dogs’ bone', 'the dogs bone'], 0),
+          mcq('q2', 'Five dogs share a bowl. Which is correct?', ['the dogs’ bowl', 'the dog’s bowl', 'the dogs bowl'], 0),
+          mcq('q3', 'Which is correct?', ['the children’s toys', 'the childrens’ toys', 'the childrens toys'], 0),
+          mcq('q4', 'Fill the gap: The school lost ___ keys.', ['its', 'it’s', 'its’'], 0, 'You can’t say “the school lost it is keys”, so no apostrophe.'),
+          mcq('q5', 'Fill the gap: ___ been raining all day.', ['It’s', 'Its', 'Its’'], 0, '“It has been raining” makes sense, so it’s.'),
+          mcq('q6', '“My sister’s friends are here.” How many sisters?', ['One', 'More than one', 'You can’t tell'], 0),
+          mcq('q7', '“My brothers’ room is messy.” How many brothers share it?', ['More than one', 'One', 'You can’t tell'], 0),
+        ],
+      },
     ],
   },
   {

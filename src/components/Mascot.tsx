@@ -2,6 +2,10 @@
 
 export type Mood = 'happy' | 'cheer' | 'sad' | 'think';
 
+// Body colours come from CSS variables so a shop skin recolours Mito everywhere.
+const EDGE = { stroke: 'var(--mito-edge, #e8743b)' };
+const EDGE_FILL = { fill: 'var(--mito-edge, #e8743b)' };
+
 interface Props {
   mood?: Mood;
   accessory?: string | null;
@@ -22,21 +26,21 @@ export function Mascot({ mood = 'happy', accessory = null, size = 96, bounce = f
       {/* arms */}
       {mood === 'cheer' ? (
         <>
-          <path d="M22 62 L8 38" stroke="#e8743b" strokeWidth="7" strokeLinecap="round" />
-          <path d="M98 62 L112 38" stroke="#e8743b" strokeWidth="7" strokeLinecap="round" />
+          <path d="M22 62 L8 38" style={EDGE} strokeWidth="7" strokeLinecap="round" />
+          <path d="M98 62 L112 38" style={EDGE} strokeWidth="7" strokeLinecap="round" />
         </>
       ) : (
         <>
-          <path d="M20 72 L10 84" stroke="#e8743b" strokeWidth="7" strokeLinecap="round" />
-          <path d="M100 72 L110 84" stroke="#e8743b" strokeWidth="7" strokeLinecap="round" />
+          <path d="M20 72 L10 84" style={EDGE} strokeWidth="7" strokeLinecap="round" />
+          <path d="M100 72 L110 84" style={EDGE} strokeWidth="7" strokeLinecap="round" />
         </>
       )}
       {/* feet */}
-      <ellipse cx="44" cy="106" rx="9" ry="5" fill="#e8743b" />
-      <ellipse cx="76" cy="106" rx="9" ry="5" fill="#e8743b" />
+      <ellipse cx="44" cy="106" rx="9" ry="5" style={EDGE_FILL} />
+      <ellipse cx="76" cy="106" rx="9" ry="5" style={EDGE_FILL} />
       {/* body */}
-      <ellipse cx="60" cy="68" rx="44" ry="36" fill="#ff9f6b" stroke="#e8743b" strokeWidth="4" />
-      <ellipse cx="60" cy="72" rx="34" ry="26" fill="#ffb98f" />
+      <ellipse cx="60" cy="68" rx="44" ry="36" style={{ fill: 'var(--mito-body, #ff9f6b)', stroke: 'var(--mito-edge, #e8743b)' }} strokeWidth="4" />
+      <ellipse cx="60" cy="72" rx="34" ry="26" style={{ fill: 'var(--mito-belly, #ffb98f)' }} />
       {/* cheeks */}
       <circle cx="34" cy="72" r="6" fill="#ff7aa2" opacity="0.5" />
       <circle cx="86" cy="72" r="6" fill="#ff7aa2" opacity="0.5" />
@@ -125,6 +129,53 @@ function Accessory({ id }: { id: string }) {
           <circle cx="72" cy="29" r="2.5" fill="#22b07d" />
         </g>
       );
+    case 'goggles':
+      return (
+        <g>
+          <path d="M16 57 h88" stroke="#5b6b7a" strokeWidth="4" />
+          <circle cx="47" cy="58" r="12" fill="#bfe9ff" fillOpacity="0.55" stroke="#2f8fd8" strokeWidth="4" />
+          <circle cx="73" cy="58" r="12" fill="#bfe9ff" fillOpacity="0.55" stroke="#2f8fd8" strokeWidth="4" />
+        </g>
+      );
+    case 'flower-crown':
+      return (
+        <g>
+          <path d="M30 40 Q60 20 90 40" fill="none" stroke="#3fa53a" strokeWidth="4" />
+          {[[34, 38, '#ff7aa2'], [47, 31, '#ffc800'], [60, 28, '#b38cff'], [73, 31, '#ff7aa2'], [86, 38, '#ffc800']].map(([x, y, c]) => (
+            <g key={`${x}`}>
+              <circle cx={x as number} cy={y as number} r="6" fill={c as string} />
+              <circle cx={x as number} cy={y as number} r="2.2" fill="#fff6cc" />
+            </g>
+          ))}
+        </g>
+      );
+    case 'pirate':
+      return (
+        <g>
+          <path d="M26 38 Q60 -2 94 38 Q60 28 26 38 Z" fill="#2b2140" />
+          <circle cx="60" cy="22" r="5" fill="#fff" />
+          <path d="M54 30 l12 -4 M54 26 l12 4" stroke="#fff" strokeWidth="2" />
+        </g>
+      );
+    case 'grad-cap':
+      return (
+        <g>
+          <path d="M42 24 v10 q18 8 36 0 v-10 z" fill="#3b2a4a" />
+          <polygon points="60,8 100,22 60,34 20,22" fill="#2b2140" />
+          <path d="M60 21 L92 26 L92 42" fill="none" stroke="#ffc800" strokeWidth="2.5" />
+          <circle cx="92" cy="43" r="3" fill="#ffc800" />
+        </g>
+      );
+    case 'astronaut':
+      return (
+        <g>
+          <circle cx="60" cy="64" r="54" fill="#dff3ff" fillOpacity="0.3" stroke="#cfd8e3" strokeWidth="5" />
+          <path d="M30 34 q10 -14 26 -18" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" opacity="0.8" />
+          <rect x="54" y="2" width="12" height="8" rx="3" fill="#cfd8e3" />
+        </g>
+      );
+    case 'halo':
+      return <ellipse cx="60" cy="16" rx="24" ry="7" fill="none" stroke="#ffc800" strokeWidth="5" />;
     default:
       return null;
   }

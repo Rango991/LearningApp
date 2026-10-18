@@ -286,7 +286,7 @@ export const chemistry: Unit[] = [
           mcq('q4', 'What colour does litmus go in an alkali?', ['Red', 'Blue', 'Green', 'Purple'], 1),
           tf('q5', 'Vinegar is an alkali.', false, 'Vinegar is a weak acid (about pH 3).'),
           mcq('q6', 'Which of these is alkaline?', ['Lemon juice', 'Soap', 'Vinegar', 'Cola'], 1),
-          gap('q7', 'A substance that can burn skin is ___.', ['corrosive']),
+          gap('q7', 'The hazard word on a label for a substance that can burn skin and eyes is ___.', ['corrosive']),
         ],
       },
       {

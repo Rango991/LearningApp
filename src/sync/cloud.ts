@@ -54,3 +54,25 @@ export async function pushProgress(p: Progress): Promise<void> {
   const { error } = await db().from('progress').upsert({ user_id: userId, data: p, updated_at: p.updatedAt });
   if (error) throw error;
 }
+
+/**
+ * The parent's reward list and "given" marks. The phone only reads her progress,
+ * so these travel the other way in the family account's own settings
+ * (user metadata), which both devices can read and write. No extra table needed.
+ */
+export interface FamilyInbox {
+  rewards: Progress['rewards'];
+  given: string[];
+}
+
+export async function pullInbox(): Promise<FamilyInbox | null> {
+  const { data, error } = await db().auth.getUser();
+  if (error) throw error;
+  const family = data.user?.user_metadata?.family as Partial<FamilyInbox> | undefined;
+  return family ? { rewards: family.rewards, given: family.given ?? [] } : null;
+}
+
+export async function pushInbox(inbox: FamilyInbox): Promise<void> {
+  const { error } = await db().auth.updateUser({ data: { family: inbox } });
+  if (error) throw error;
+}

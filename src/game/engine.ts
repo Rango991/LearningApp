@@ -24,6 +24,8 @@ export const GEMS = {
   checkpointPass: 20,
   levelUp: 25,
   allQuests: 20,
+  /** First time she does a lesson in a unit she has already tested out of. */
+  testedOutLesson: 10,
 };
 
 /** Leitner intervals in days for boxes 0-5. */
@@ -284,6 +286,9 @@ export function applySession(p: Progress, result: SessionResult, now = new Date(
     r.lastCompleted = iso;
     next.lessons[result.lessonId] = r;
     next.totals.lessons++;
+    // Extra gems for going back to learn a unit she skipped by passing its test.
+    const unit = findLesson(result.lessonId)?.unit;
+    if (r.completions === 1 && unit && testedOut(next, unit)) gems += GEMS.testedOutLesson;
   }
   if (result.kind === 'checkpoint' && result.unitId) {
     const before = next.checkpoints[result.unitId] ?? 0;
@@ -416,10 +421,40 @@ export function buyItem(p: Progress, itemId: string): BuyResult {
   } else {
     if (next.owned.includes(item.id)) return { ok: false, reason: 'You already own this' };
     next.owned.push(item.id);
-    next.equipped = item.id;
+    if (item.kind === 'skin') next.skin = item.id;
+    else next.equipped = item.id;
   }
   next.gems -= item.price;
   return { ok: true, progress: touch(next) };
+}
+
+/** Spend gems on a real-world reward a parent set up. A parent then marks it as given. */
+export function claimReward(p: Progress, rewardId: string, now = new Date()): BuyResult {
+  const reward = p.rewards?.items.find((r) => r.id === rewardId);
+  if (!reward) return { ok: false, reason: 'That reward isn’t available any more' };
+  if (p.gems < reward.price) return { ok: false, reason: `You need ${reward.price - p.gems} more gems` };
+  const next = clone(p);
+  next.gems -= reward.price;
+  next.claims = [...(next.claims ?? []), {
+    id: `${reward.id}-${now.getTime()}`, rewardId: reward.id, title: reward.title, emoji: reward.emoji, price: reward.price, at: now.toISOString(),
+  }].slice(-50);
+  return { ok: true, progress: touch(next, now) };
+}
+
+/**
+ * Take in the parent's reward list and "given" marks. The list is replaced only
+ * when the parent's copy is newer; given marks only ever get added.
+ */
+export function applyFamilyRewards(p: Progress, inbox: { rewards: Progress['rewards']; given: string[] }): Progress {
+  let next = p;
+  const incoming = inbox.rewards;
+  if (incoming && (!p.rewards || incoming.updatedAt > p.rewards.updatedAt)) next = { ...next, rewards: incoming };
+  const given = new Set(inbox.given);
+  if (next.claims?.some((c) => !c.givenAt && given.has(c.id))) {
+    const at = new Date().toISOString();
+    next = { ...next, claims: next.claims.map((c) => (!c.givenAt && given.has(c.id) ? { ...c, givenAt: at } : c)) };
+  }
+  return next === p ? p : touch({ ...next });
 }
 
 export function touch(p: Progress, now = new Date()): Progress {

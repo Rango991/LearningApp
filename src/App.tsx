@@ -6,6 +6,7 @@ import { Mascot } from './components/Mascot';
 import { applySession } from './game/engine';
 import { BIRTHDAY_GEMS, accentFor, birthdayGift, mitoAccessory, resultLine } from './game/mito';
 import type { Progress, RewardSummary, SessionKind, SessionResult } from './game/types';
+import { SKINS } from './game/shop';
 import { sfx } from './sound';
 import { useStore } from './store';
 import { AboutChat } from './screens/AboutChat';
@@ -39,10 +40,20 @@ export function App() {
 }
 
 /** The parent's phone: the dashboard, plus a read-only look at her side of the app. */
+const VIEWING_KEY = 'brainboost:viewing';
+
 function ParentRoot() {
-  const [viewing, setViewing] = useState(false);
-  if (viewing) return <StudentApp readOnly onExit={() => { setViewing(false); window.scrollTo(0, 0); }} />;
-  return <ParentApp onViewHer={() => { setViewing(true); window.scrollTo(0, 0); }} />;
+  // Remembered for this browser tab, so a reload doesn't drop the parent out of the preview.
+  const [viewing, setViewingState] = useState(() => {
+    try { return sessionStorage.getItem(VIEWING_KEY) === '1'; } catch { return false; }
+  });
+  const setViewing = (v: boolean) => {
+    setViewingState(v);
+    try { if (v) sessionStorage.setItem(VIEWING_KEY, '1'); else sessionStorage.removeItem(VIEWING_KEY); } catch { /* not important */ }
+    window.scrollTo(0, 0);
+  };
+  if (viewing) return <StudentApp readOnly onExit={() => setViewing(false)} />;
+  return <ParentApp onViewHer={() => setViewing(true)} />;
 }
 
 /**
@@ -73,6 +84,17 @@ function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?:
     root.setProperty('--purple-soft', a.soft);
     return () => { root.removeProperty('--purple'); root.removeProperty('--purple-dark'); root.removeProperty('--purple-soft'); };
   }, [colour]);
+
+  // Mito's colour from the shop.
+  const skin = progress?.skin ?? 'default';
+  useEffect(() => {
+    const c = SKINS[skin] ?? SKINS.default;
+    const root = document.documentElement.style;
+    root.setProperty('--mito-body', c.body);
+    root.setProperty('--mito-edge', c.edge);
+    root.setProperty('--mito-belly', c.belly);
+    return () => { root.removeProperty('--mito-body'); root.removeProperty('--mito-edge'); root.removeProperty('--mito-belly'); };
+  }, [skin]);
 
   // Birthday gems, once a year.
   useEffect(() => {

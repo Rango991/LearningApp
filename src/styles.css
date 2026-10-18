@@ -29,7 +29,8 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; background: var(--bg); }
-body { overscroll-behavior-y: none; }
+/* Chrome only stops pull-to-refresh when the root scroller (html) opts out. */
+html, body { overscroll-behavior-y: none; }
 h1, h2, h3, h4 { font-weight: 900; margin: 0 0 8px; line-height: 1.2; }
 h1 { font-size: 1.7rem; }
 h2 { font-size: 1.3rem; }
@@ -534,3 +535,53 @@ mark.kw { background: color-mix(in srgb, var(--unit) 18%, white); color: inherit
 .results-speech::before { left: 50%; top: -9px; transform: translateX(-50%) rotate(135deg); }
 .mito-pep { background: var(--purple-soft); border-radius: 14px; padding: 10px 14px; font-weight: 700; }
 .feedback .cheer { font-weight: 700; opacity: 0.9; }
+
+/* ---------------- Learn: continue, jump to unit, folded units */
+.unit { scroll-margin-top: 84px; }
+.learn-nav { display: flex; gap: 10px; flex-wrap: wrap; margin: 4px 0 8px; }
+.continue-btn { flex: 1 1 260px; display: flex; align-items: center; gap: 12px; text-align: left; color: #fff; }
+.continue-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.continue-text b { overflow: hidden; text-overflow: ellipsis; }
+.continue-text span { font-size: 0.82rem; opacity: 0.9; font-weight: 700; }
+.jump-btn { flex: 0 0 auto; }
+.jump-sheet { max-height: 78vh; overflow-y: auto; }
+.jump-stage h4 { margin: 14px 0 6px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.jump-row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; margin-bottom: 6px; background: #fff; border: 2px solid var(--line); border-left: 6px solid var(--unit); border-radius: 14px; font: inherit; font-weight: 800; text-align: left; cursor: pointer; color: inherit; }
+.jump-row:active { transform: translateY(1px); }
+.jump-row.here { background: color-mix(in srgb, var(--unit) 12%, white); }
+.jump-num { width: 24px; text-align: center; color: var(--muted); font-size: 0.85rem; }
+.jump-title { flex: 1; min-width: 0; }
+.jump-status { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+.unit-banner.foldable { cursor: pointer; }
+.unit.folded { margin-bottom: 14px; }
+.unit.folded .unit-banner { padding: 12px 18px; }
+.unit-toggle { margin: 4px 0 0; font-size: 0.82rem; font-weight: 800; opacity: 0.9; }
+.tested-out-nudge { margin: 10px 4px 0; background: #fff6cc; border-radius: 12px; padding: 8px 12px; font-weight: 800; font-size: 0.88rem; color: #6b5200; }
+.suggest-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; }
+.suggest-card p { flex: 1; margin: 0; font-weight: 700; }
+
+/* ---------------- Shop sections and real rewards */
+.shop-section { margin-bottom: 22px; }
+.shop-section h2 { margin: 6px 0 2px; }
+.shop-section > .muted { margin: 0 0 10px; }
+.shop-preview { display: flex; justify-content: center; margin-bottom: 4px; }
+.claim-list, .reward-list { list-style: none; padding: 0; margin: 10px 0; }
+.claim-list li, .reward-list li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 0; border-bottom: 1px solid var(--line); font-weight: 700; }
+.claim-status { margin-left: auto; font-size: 0.8rem; font-weight: 800; color: var(--orange, #d9822b); }
+.claim-status.given { color: var(--green-dark); }
+.claim-list .btn { margin-left: auto; }
+.reward-title { flex: 1; }
+.reward-price { font-weight: 900; color: var(--blue); }
+.idea-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.idea-row .chip { cursor: pointer; font-size: 0.85rem; }
+.reward-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+.emoji-pick { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
+.emoji-choice { background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 4px; cursor: pointer; }
+.emoji-choice.selected { border-color: var(--purple); background: var(--purple-soft); }
+.text-input { font: inherit; padding: 10px 12px; border: 2px solid var(--line); border-radius: 12px; min-width: 0; }
+.reward-form > .text-input { flex: 1 1 200px; }
+.price-field { display: flex; align-items: center; gap: 6px; font-weight: 800; }
+.price-field .text-input { width: 90px; }
+.shop-section .shop-grid { grid-template-columns: repeat(auto-fill, minmax(min(150px, 44%), 1fr)); gap: 10px; }
+.shop-section .shop-item { padding: 12px; }
+.shop-section .shop-item h4 { margin: 6px 0 2px; }

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { subjects } from '../src/content';
 import { markGap } from '../src/game/answers';
 import {
-  applySession, buildReview, buyItem, createProgress, ensureQuests, mistakeKeys, reconcileStreak,
+  applyFamilyRewards, applySession, buildReview, buyItem, claimReward, createProgress, ensureQuests, mistakeKeys, reconcileStreak,
 } from '../src/game/engine';
 import { levelFor } from '../src/game/levels';
 import type { AnswerRecord, Progress } from '../src/game/types';
@@ -187,5 +187,62 @@ describe('signed numbers', () => {
     expect(markGap('+200', ['200'])).toBe('correct');
     expect(markGap('−400', ['-400'])).toBe('correct');
     expect(markGap('400', ['-400'])).toBe('wrong');
+  });
+});
+
+describe('skins and real rewards', () => {
+  const rich = (): Progress => ({ ...createProgress('Test'), gems: 2000 });
+
+  it('buys a skin and puts it on Mito', () => {
+    const r = buyItem(rich(), 'skin-gold');
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.progress.skin).toBe('skin-gold');
+      expect(r.progress.gems).toBe(500);
+      expect(r.progress.equipped).toBeNull();
+    }
+  });
+
+  it('claims a parent reward and takes the gems', () => {
+    const p = { ...rich(), rewards: { items: [{ id: 'film', title: 'Pick the film', emoji: '🎬', price: 400 }], updatedAt: '2026-10-01T00:00:00Z' } };
+    const r = claimReward(p, 'film', new Date('2026-10-02T10:00:00Z'));
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.progress.gems).toBe(1600);
+      expect(r.progress.claims).toHaveLength(1);
+      expect(r.progress.claims![0].givenAt).toBeUndefined();
+    }
+    expect(claimReward({ ...p, gems: 10 }, 'film').ok).toBe(false);
+    expect(claimReward(p, 'missing').ok).toBe(false);
+  });
+
+  it('takes the parent’s newer reward list and given marks, but not an older list', () => {
+    const base = { ...rich(), rewards: { items: [], updatedAt: '2026-10-05T00:00:00Z' } };
+    const claimed = claimReward({ ...base, rewards: { items: [{ id: 'x', title: 'X', emoji: '🎬', price: 10 }], updatedAt: base.rewards.updatedAt } }, 'x');
+    if (!claimed.ok) throw new Error('claim failed');
+    const id = claimed.progress.claims![0].id;
+    const older = applyFamilyRewards(claimed.progress, { rewards: { items: [], updatedAt: '2026-10-01T00:00:00Z' }, given: [id] });
+    expect(older.rewards!.items).toHaveLength(1);
+    expect(older.claims![0].givenAt).toBeDefined();
+    const newer = applyFamilyRewards(claimed.progress, { rewards: { items: [], updatedAt: '2026-10-09T00:00:00Z' }, given: [] });
+    expect(newer.rewards!.items).toHaveLength(0);
+    const same = applyFamilyRewards(claimed.progress, { rewards: claimed.progress.rewards, given: [] });
+    expect(same).toBe(claimed.progress);
+  });
+});
+
+describe('tested-out units', () => {
+  it('gives bonus gems the first time she does a lesson in a unit she tested out of', () => {
+    const unit = subjects[0].units[0];
+    const l = unit.lessons[1];
+    const p = { ...createProgress('Test'), checkpoints: { [unit.id]: 0.9 } };
+    const run = (prog: Progress) => applySession(prog, {
+      kind: 'lesson', lessonId: l.id, maxCombo: 1, seconds: 60,
+      answers: [{ key: `${l.id}/${l.questions[0].id}`, correct: false, given: 'x' }],
+    }, at('2026-10-03'));
+    const first = run(p);
+    const plain = run(createProgress('Test'));
+    expect(first.summary.gemsGained - plain.summary.gemsGained).toBe(10);
+    expect(run(first.progress).summary.gemsGained).toBeLessThan(first.summary.gemsGained);
   });
 });

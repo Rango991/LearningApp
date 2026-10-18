@@ -115,7 +115,30 @@ export interface Progress {
   quests: { day: string; items: Quest[]; bonusClaimed: boolean };
   owned: string[]; // shop item ids
   equipped: string | null; // mascot accessory
+  /** Mito's colour, a skin item id from the shop (null = the usual orange). */
+  skin?: string | null;
+  /** Real-world rewards a parent set up, which she can claim with gems. */
+  rewards?: { items: FamilyReward[]; updatedAt: string };
+  /** Rewards she has claimed. A parent marks them as given. */
+  claims?: RewardClaim[];
   settings: { sound: boolean; parentPin: string | null };
+}
+
+export interface FamilyReward {
+  id: string;
+  title: string;
+  emoji: string;
+  price: number;
+}
+
+export interface RewardClaim {
+  id: string;
+  rewardId: string;
+  title: string;
+  emoji: string;
+  price: number;
+  at: string;
+  givenAt?: string;
 }
 
 /** One answered question within a session. `correct` is for the first attempt. */

@@ -178,7 +178,35 @@ function CompareConnectives() {
   );
 }
 
+function ApostropheOwners() {
+  const box = (x: number, y: number, w: number, h: number, fill: string, lines: [string, string, string?]) => (
+    <g>
+      <rect x={x} y={y} width={w} height={h} rx={10} fill={fill} />
+      <T x={x + w / 2} y={y + 15} size={11}>{lines[0]}</T>
+      <T x={x + w / 2} y={y + 32} size={12} fill={C.purple}>{lines[1]}</T>
+      {lines[2] && <T x={x + w / 2} y={y + 50} size={10} weight={700} fill={C.muted}>{lines[2]}</T>}
+    </g>
+  );
+  return (
+    <Svg label="Apostrophes for belonging: count the owners. One owner, add apostrophe s: the girl’s bag. More than one owner ending in s, add just an apostrophe: the girls’ bag. A plural without s, add apostrophe s: the children’s toys">
+      <Box x={90} y={4} w={140} h={28} fill={C.goldSoft} stroke={C.line} size={12}>How many owners?</Box>
+      <Arrow x1={130} y1={34} x2={76} y2={60} color={C.muted} width={2} />
+      <Arrow x1={190} y1={34} x2={236} y2={60} color={C.muted} width={2} />
+      {box(8, 64, 136, 62, C.blueSoft, ['One owner', 'add ’s', 'the girl’s bag'])}
+      <Box x={176} y={64} w={136} h={26} fill={C.pink + '33'} stroke={C.line} size={11}>More than one</Box>
+      <Arrow x1={220} y1={92} x2={208} y2={108} color={C.muted} width={2} />
+      <Arrow x1={268} y1={92} x2={280} y2={108} color={C.muted} width={2} />
+      {box(160, 112, 76, 62, C.greenSoft, ['ends in s', 'add ’', 'girls’ bag'])}
+      {box(240, 112, 76, 62, C.orangeSoft, ['no s', 'add ’s', 'children’s'])}
+      <T x={76} y={150} size={10} weight={700} fill={C.muted}>Tip: its = belonging,</T>
+      <T x={76} y={164} size={10} weight={700} fill={C.muted}>it’s = it is</T>
+      <T x={160} y={192} size={9.5} weight={700} fill={C.muted}>count the owners, then add the apostrophe</T>
+    </Svg>
+  );
+}
+
 export const englishKs3Diagrams: Record<string, () => JSX.Element> = {
+  'apostrophe-owners': ApostropheOwners,
   'english-timeline': EnglishTimeline,
   'loan-words': LoanWords,
   petal: Petal,

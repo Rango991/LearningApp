@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
-import { ensureQuests, migrate, reconcileStreak } from './game/engine';
+import { applyFamilyRewards, ensureQuests, migrate, reconcileStreak } from './game/engine';
 import type { Progress } from './game/types';
 import { setSoundEnabled } from './sound';
-import { cloudConfigured, currentEmail, pullProgress, pushProgress } from './sync/cloud';
+import { cloudConfigured, currentEmail, pullInbox, pullProgress, pushInbox, pushProgress, type FamilyInbox } from './sync/cloud';
 import { loadProgress, loadRole, requestPersistentStorage, saveProgress, saveRole, type Role } from './sync/local';
 
 export type SyncState = 'off' | 'signed-out' | 'syncing' | 'synced' | 'error';
@@ -27,6 +27,10 @@ interface Store {
   /** Re-check the cloud account and pull the latest data. Resolves to the progress now in use. */
   refresh: () => Promise<Progress | null>;
   resetDevice: () => void;
+  /** The parent's reward list and "given" marks, as last read from the family account. */
+  inbox: FamilyInbox | null;
+  /** Save the reward list and "given" marks to the family account (if signed in). */
+  saveInbox: (inbox: FamilyInbox) => Promise<boolean>;
 }
 
 const Ctx = createContext<Store | null>(null);
@@ -59,6 +63,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [sync, setSync] = useState<SyncState>(cloudConfigured ? 'signed-out' : 'off');
   const [lastSynced, setLastSynced] = useState<Date | null>(null);
   const [streakNotice, setStreakNotice] = useState<StreakNotice | null>(null);
+  const [inbox, setInbox] = useState<FamilyInbox | null>(null);
   const pushTimer = useRef<number | undefined>(undefined);
   const roleRef = useRef(role);
   roleRef.current = role;
@@ -85,7 +90,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     push(p);
   }, [push]);
 
-  const refresh = useCallback(async (): Promise<Progress | null> => {
+  const refreshProgress = useCallback(async (): Promise<Progress | null> => {
     const email = await currentEmail();
     setCloudEmail(email);
     if (!email) {
@@ -122,6 +127,31 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       return loadProgress();
     }
   }, [push]);
+
+  const refresh = useCallback(async (): Promise<Progress | null> => {
+    const current = await refreshProgress();
+    if (!cloudConfigured || !(await currentEmail())) return current;
+    let latest: FamilyInbox | null = null;
+    try { latest = await pullInbox(); } catch { return current; }
+    setInbox(latest);
+    // On her tablet, take in any new rewards or "given" marks from the parent.
+    if (latest && current && roleRef.current === 'student') {
+      const next = applyFamilyRewards(current, latest);
+      if (next !== current) {
+        setProgressState(next);
+        saveProgress(next);
+        push(next);
+        return next;
+      }
+    }
+    return current;
+  }, [refreshProgress, push]);
+
+  const saveInbox = useCallback(async (next: FamilyInbox): Promise<boolean> => {
+    setInbox(next);
+    if (!cloudConfigured || !(await currentEmail())) return false;
+    try { await pushInbox(next); return true; } catch { return false; }
+  }, []);
 
   // First load
   useEffect(() => {
@@ -186,7 +216,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       value={{
         ready, role, progress, cloudEmail, sync, lastSynced, streakNotice,
         dismissStreakNotice: () => setStreakNotice(null),
-        setRole, setProgress, refresh, resetDevice,
+        setRole, setProgress, refresh, resetDevice, inbox, saveInbox,
       }}
     >
       {children}

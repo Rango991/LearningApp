@@ -1,13 +1,21 @@
 import { useState } from 'react';
 import { CloudSignIn } from '../components/CloudSignIn';
+import type { RewardsControl } from '../components/RewardsPanel';
 import { touch } from '../game/engine';
+import type { FamilyReward, Progress } from '../game/types';
 import { useStore } from '../store';
 import { cloudConfigured, signOut } from '../sync/cloud';
 import { ParentDashboard } from './ParentDashboard';
 
+/** Ids of claims already marked as given, from both her progress and the parent's own marks. */
+function givenIds(progress: Progress, extra: string[] = []): string[] {
+  return [...new Set([...extra, ...(progress.claims ?? []).filter((c) => c.givenAt).map((c) => c.id)])];
+}
+
 /** The parent's own phone: signs in to the family account and mirrors the tablet's progress. */
 export function ParentApp({ onViewHer }: { onViewHer: () => void }) {
-  const { progress, cloudEmail, sync, lastSynced, refresh, setRole, ready } = useStore();
+  const { progress, cloudEmail, sync, lastSynced, refresh, setRole, ready, inbox, saveInbox } = useStore();
+  const [saveError, setSaveError] = useState(false);
 
   if (!cloudConfigured) {
     return (
@@ -31,6 +39,23 @@ export function ParentApp({ onViewHer }: { onViewHer: () => void }) {
     );
   }
 
+  // The phone can't change her progress, so the reward list and "given" marks go via the family account.
+  function phoneRewards(p: Progress): RewardsControl {
+    const items = inbox?.rewards?.items ?? p.rewards?.items ?? [];
+    const given = givenIds(p, inbox?.given);
+    const save = async (nextItems: FamilyReward[], nextGiven: string[]) => {
+      const ok = await saveInbox({ rewards: { items: nextItems, updatedAt: new Date().toISOString() }, given: nextGiven });
+      setSaveError(!ok);
+    };
+    return {
+      items,
+      given,
+      onSave: (nextItems) => void save(nextItems, given),
+      onGiven: (id) => void saveInbox({ rewards: inbox?.rewards ?? p.rewards, given: [...given, id] }).then((ok) => setSaveError(!ok)),
+      note: saveError ? 'Couldn’t save that. Check you’re online and try again.' : 'Changes reach her tablet next time it opens the app or comes online.',
+    };
+  }
+
   return (
     <div className="parent-shell">
       <header className="parent-bar">
@@ -43,7 +68,7 @@ export function ParentApp({ onViewHer }: { onViewHer: () => void }) {
           <button className="btn primary wide" onClick={onViewHer}>👀 See {progress.profile.name}’s app</button>
         </div>
       )}
-      {progress ? <ParentDashboard progress={progress} /> : (
+      {progress ? <ParentDashboard progress={progress} rewards={phoneRewards(progress)} /> : (
         <div className="welcome">
           <p className="muted">No progress has been uploaded yet. Sign in to <b>{cloudEmail}</b> on her tablet (Me → Cloud sync) and it’ll appear here.</p>
         </div>
@@ -57,7 +82,7 @@ export function ParentApp({ onViewHer }: { onViewHer: () => void }) {
 
 /** The parent area on her tablet, behind a PIN. */
 export function ParentGate({ onClose }: { onClose: () => void }) {
-  const { progress, setProgress, resetDevice } = useStore();
+  const { progress, setProgress, resetDevice, saveInbox } = useStore();
   const pin = progress?.settings.parentPin ?? null;
   const [entry, setEntry] = useState('');
   const [first, setFirst] = useState<string | null>(null);
@@ -101,6 +126,25 @@ export function ParentGate({ onClose }: { onClose: () => void }) {
     );
   }
 
+  // On her tablet the parent area changes her progress directly, and keeps the family account in step.
+  function tabletRewards(p: Progress): RewardsControl {
+    const given = givenIds(p);
+    return {
+      items: p.rewards?.items ?? [],
+      given,
+      onSave: (items) => {
+        const rewards = { items, updatedAt: new Date().toISOString() };
+        setProgress(touch({ ...p, rewards }));
+        void saveInbox({ rewards, given });
+      },
+      onGiven: (id) => {
+        const at = new Date().toISOString();
+        setProgress(touch({ ...p, claims: (p.claims ?? []).map((c) => (c.id === id ? { ...c, givenAt: at } : c)) }));
+        void saveInbox({ rewards: p.rewards, given: [...given, id] });
+      },
+    };
+  }
+
   return (
     <div className="parent-shell">
       <header className="parent-bar">
@@ -108,7 +152,7 @@ export function ParentGate({ onClose }: { onClose: () => void }) {
         <span className="brand small-brand">Parent area</span>
         <span />
       </header>
-      <ParentDashboard progress={progress} />
+      <ParentDashboard progress={progress} rewards={tabletRewards(progress)} />
       <section className="panel danger-zone">
         <h2>Device</h2>
         <button className="btn ghost" onClick={() => setProgress(touch({ ...progress, settings: { ...progress.settings, parentPin: null } }))}>Change PIN</button>
