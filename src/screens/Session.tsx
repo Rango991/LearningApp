@@ -142,6 +142,7 @@ export function Session({ plan, accessory, buddy, onQuit, onFinish }: Props) {
               </>
             )}
             <RichText text={plan.learn[card].body} keywords={plan.learn[card].keywords} />
+            {plan.learn[card].code && <pre className="code-block">{plan.learn[card].code}</pre>}
           </div>
           <div className="session-actions">
             {card > 0 && <button className="btn ghost" onClick={() => setCard(card - 1)}>Back</button>}
@@ -167,6 +168,7 @@ export function Session({ plan, accessory, buddy, onQuit, onFinish }: Props) {
             <p className="eyebrow">{questionInstruction(ref.question)}</p>
           )}
           {ref.question.type !== 'gap' && <h2 className="prompt">{ref.question.prompt}</h2>}
+          {ref.question.code && <pre className="code-block">{ref.question.code}</pre>}
           <QuestionView key={`${key}#${index}`} q={ref.question} locked={Boolean(feedback)} onReady={(fn) => setCheck(() => fn)} />
         </main>
       )}

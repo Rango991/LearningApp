@@ -1,7 +1,12 @@
 // Content model. A subject has units, a unit has lessons, a lesson has
 // short "learn" cards followed by questions.
 
-export interface McqQuestion {
+/** Any question can show a short block of code above its answers. */
+interface QuestionBase {
+  code?: string;
+}
+
+export interface McqQuestion extends QuestionBase {
   type: 'mcq';
   id: string;
   prompt: string;
@@ -10,7 +15,7 @@ export interface McqQuestion {
   explain?: string;
 }
 
-export interface TrueFalseQuestion {
+export interface TrueFalseQuestion extends QuestionBase {
   type: 'tf';
   id: string;
   prompt: string;
@@ -18,7 +23,7 @@ export interface TrueFalseQuestion {
   explain?: string;
 }
 
-export interface GapQuestion {
+export interface GapQuestion extends QuestionBase {
   type: 'gap';
   id: string;
   /** Use ___ to mark the gap. */
@@ -29,7 +34,7 @@ export interface GapQuestion {
   explain?: string;
 }
 
-export interface MatchQuestion {
+export interface MatchQuestion extends QuestionBase {
   type: 'match';
   id: string;
   prompt: string;
@@ -37,7 +42,7 @@ export interface MatchQuestion {
   explain?: string;
 }
 
-export interface OrderQuestion {
+export interface OrderQuestion extends QuestionBase {
   type: 'order';
   id: string;
   prompt: string;
@@ -55,6 +60,8 @@ export interface LearnCard {
   keywords?: string[];
   /** Id of a diagram in src/diagrams, shown above the text. */
   diagram?: string;
+  /** A short block of code, shown under the text. */
+  code?: string;
 }
 
 export interface Lesson {

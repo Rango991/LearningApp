@@ -585,3 +585,7 @@ mark.kw { background: color-mix(in srgb, var(--unit) 18%, white); color: inherit
 .shop-section .shop-grid { grid-template-columns: repeat(auto-fill, minmax(min(150px, 44%), 1fr)); gap: 10px; }
 .shop-section .shop-item { padding: 12px; }
 .shop-section .shop-item h4 { margin: 6px 0 2px; }
+
+/* ---------------- code blocks (Computing) */
+.code-block { text-align: left; background: #1f1b2e; color: #f2efff; font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-size: 0.95rem; line-height: 1.5; padding: 12px 14px; border-radius: 12px; margin: 0 0 16px; overflow-x: auto; white-space: pre; }
+.code-block.small-code { font-size: 0.82rem; padding: 8px 10px; margin: 4px 0 8px; }

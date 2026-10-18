@@ -141,6 +141,7 @@ export function ParentDashboard({ progress, rewards }: { progress: Progress; rew
                 <span className="small muted">wrong {w.wrong} of {w.seen} {w.fixed ? '· ✅ fixed' : ''}</span>
               </div>
               <p className="weak-q">{w.question.prompt.replace('___', '_____')}</p>
+              {w.question.code && <pre className="code-block small-code">{w.question.code}</pre>}
               {w.lastWrongAnswer && <p className="small">Her answer: <span className="bad-text">{w.lastWrongAnswer}</span></p>}
               <p className="small">Correct: <span className="good-text">{correctAnswerText(w.question)}</span></p>
             </li>
@@ -159,6 +160,7 @@ export function ParentDashboard({ progress, rewards }: { progress: Progress; rew
               <li key={i} className="mistake-item">
                 <p className="small muted">{when(m.at)} · {ref.lesson.title}</p>
                 <p className="weak-q">{ref.question.prompt}</p>
+                {ref.question.code && <pre className="code-block small-code">{ref.question.code}</pre>}
                 <div className="answer-pair">
                   <span>She said: <span className="bad-text">{m.given}</span></span>
                   <span>Answer: <span className="good-text">{correctAnswerText(ref.question)}</span></span>

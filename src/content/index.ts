@@ -13,6 +13,7 @@ import { gcsePhysics } from './gcse-physics';
 import { tripleBiology, tripleChemistry, triplePhysics } from './gcse-triple';
 import { gcseMaths } from './gcse-maths';
 import { maths } from './maths';
+import { computing } from './computing';
 import { physics } from './physics';
 import { physicsY89 } from './physics-y89';
 import { biologyY89 } from './biology-y89';
@@ -34,6 +35,7 @@ export const subjects: Subject[] = [
   { id: 'english', title: 'English', emoji: '📚', colour: '#e0457b', units: [...english, ...englishKs3, ...gcseEnglish, ...gcseEnglishExtra] },
   { id: 'history', title: 'History', emoji: '🏰', colour: '#b8742a', units: [...history, ...historyY89, ...gcseHistory, ...gcseHistoryExtra] },
   { id: 'geography', title: 'Geography', emoji: '🌍', colour: '#0f9d8a', units: [...geography, ...geographyKs3, ...gcseGeography, ...gcseGeographyExtra] },
+  { id: 'computing', title: 'Computing', emoji: '💻', colour: '#0ea5e9', units: computing },
 ];
 
 export function findSubject(id: string): Subject {

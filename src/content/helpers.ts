@@ -1,4 +1,4 @@
-import type { GapQuestion, LearnCard, MatchQuestion, McqQuestion, OrderQuestion, TrueFalseQuestion } from './types';
+import type { GapQuestion, LearnCard, MatchQuestion, McqQuestion, OrderQuestion, Question, TrueFalseQuestion } from './types';
 
 // Short-hand builders so content files read like a worksheet.
 
@@ -20,3 +20,10 @@ export const order = (id: string, prompt: string, items: string[], explain?: str
 
 export const card = (emoji: string, title: string, body: string, keywords?: string[], diagram?: string): LearnCard =>
   ({ emoji, title, body, keywords, diagram });
+
+/** A learn card with a block of code under its text. */
+export const codeCard = (emoji: string, title: string, body: string, code: string, keywords?: string[], diagram?: string): LearnCard =>
+  ({ emoji, title, body, keywords, diagram, code });
+
+/** Shows a block of code with a question, e.g. withCode('print(2 + 3)', gap('q1', 'It prints ___', ['5'])). */
+export const withCode = <T extends Question>(code: string, q: T): T => ({ ...q, code });
