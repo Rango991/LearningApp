@@ -53,6 +53,7 @@ export function ParentApp({ onViewHer }: { onViewHer: () => void }) {
       onSave: (nextItems) => void save(nextItems, given),
       onGiven: (id) => void saveInbox({ rewards: inbox?.rewards ?? p.rewards, given: [...given, id] }).then((ok) => setSaveError(!ok)),
       note: saveError ? 'Couldn’t save that. Check you’re online and try again.' : 'Changes reach her tablet next time it opens the app or comes online.',
+      noteIsError: saveError,
     };
   }
 

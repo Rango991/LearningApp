@@ -8,8 +8,10 @@ export interface RewardsControl {
   given: string[];
   onSave: (items: FamilyReward[]) => void;
   onGiven: (claimId: string) => void;
-  /** Shown under the heading, e.g. when changes can't reach her tablet. */
+  /** Shown under the heading, e.g. how changes reach her tablet. */
   note?: string;
+  /** Show the note as an error (in red). */
+  noteIsError?: boolean;
 }
 
 const IDEAS: Omit<FamilyReward, 'id'>[] = [
@@ -42,7 +44,7 @@ export function RewardsPanel({ name, gems, claims, control }: { name: string; ge
       <p className="muted small">
         Rewards {name} can claim with gems in her shop, so her gems have something real to save up for.
       </p>
-      {control.note && <p className="small form-message">{control.note}</p>}
+      {control.note && <p className={`small ${control.noteIsError ? 'form-message' : 'muted'}`}>{control.note}</p>}
 
       {sorted.length > 0 && (
         <>
