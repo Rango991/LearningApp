@@ -101,7 +101,6 @@ function BreathingModel() {
     <Svg label="Breathing in: the ribs move out, the diaphragm flattens, the chest gets bigger and air rushes in. Breathing out: the ribs move in, the diaphragm domes upwards and air is pushed out">
       {panel(6, true)}
       {panel(164, false)}
-      <T x={160} y={140} size={9} weight={700} fill={C.red}>diaphragm</T>
     </Svg>
   );
 }

@@ -146,7 +146,7 @@ function InterestBars() {
       <T x={52} y={16} size={10} anchor="start">simple</T>
       <rect x={104} y={10} width={12} height={12} rx={2} fill={C.purple} />
       <T x={122} y={16} size={10} anchor="start">compound</T>
-      <T x={220} y={16} size={10} weight={700} fill={C.muted}>£100 at 10% a year</T>
+      <T x={310} y={16} size={10} weight={700} anchor="end" fill={C.muted}>£100 at 10% a year</T>
     </Svg>
   );
 }

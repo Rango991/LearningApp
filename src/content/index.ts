@@ -18,6 +18,9 @@ import { physicsY89 } from './physics-y89';
 import { biologyY89 } from './biology-y89';
 import { chemistryY89 } from './chemistry-y89';
 import { mathsY89 } from './maths-y89';
+import { englishKs3 } from './english-ks3';
+import { historyY89 } from './history-y89';
+import { geographyKs3 } from './geography-ks3';
 import type { Lesson, Question, Subject, Unit } from './types';
 
 export const subjects: Subject[] = [
@@ -25,9 +28,9 @@ export const subjects: Subject[] = [
   { id: 'chemistry', title: 'Chemistry', emoji: '⚗️', colour: '#8e5cf7', units: [...chemistry, ...chemistryY89, ...gcseChemistry, ...tripleChemistry] },
   { id: 'physics', title: 'Physics', emoji: '🪐', colour: '#1c9df6', units: [...physics, ...physicsY89, ...gcsePhysics, ...triplePhysics] },
   { id: 'maths', title: 'Maths', emoji: '📐', colour: '#ff8a3d', units: [...maths, ...mathsY89, ...gcseMaths] },
-  { id: 'english', title: 'English', emoji: '📚', colour: '#e0457b', units: [...english, ...gcseEnglish] },
-  { id: 'history', title: 'History', emoji: '🏰', colour: '#b8742a', units: [...history, ...gcseHistory] },
-  { id: 'geography', title: 'Geography', emoji: '🌍', colour: '#0f9d8a', units: [...geography, ...gcseGeography] },
+  { id: 'english', title: 'English', emoji: '📚', colour: '#e0457b', units: [...english, ...englishKs3, ...gcseEnglish] },
+  { id: 'history', title: 'History', emoji: '🏰', colour: '#b8742a', units: [...history, ...historyY89, ...gcseHistory] },
+  { id: 'geography', title: 'Geography', emoji: '🌍', colour: '#0f9d8a', units: [...geography, ...geographyKs3, ...gcseGeography] },
 ];
 
 export function findSubject(id: string): Subject {
