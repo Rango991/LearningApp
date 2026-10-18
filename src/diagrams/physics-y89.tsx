@@ -509,7 +509,121 @@ function Glasses() {
   );
 }
 
+// ---------- static & motors ----------
+
+function Charge({ x, y, sign, r = 13 }: { x: number; y: number; sign: '+' | '−'; r?: number }) {
+  const pos = sign === '+';
+  return (
+    <g>
+      <circle cx={x} cy={y} r={r} fill={pos ? C.redSoft : C.blueSoft} stroke={pos ? C.red : C.blue} strokeWidth={2} />
+      <T x={x} y={y + 1} size={r * 1.3} fill={pos ? C.red : C.blue}>{sign}</T>
+    </g>
+  );
+}
+
+function StaticBalloon() {
+  return (
+    <Svg label="Rubbing a balloon on a jumper: electrons move from the jumper to the balloon, so the balloon becomes negative and the jumper is left positive">
+      <rect x={14} y={30} width={110} height={120} rx={14} fill={C.purpleSoft} stroke={C.purple} strokeWidth={2} />
+      {[[44, 60], [94, 60], [44, 100], [94, 100], [69, 80], [69, 125]].map(([x, y], i) => <T key={i} x={x} y={y} size={20} fill={C.red}>+</T>)}
+      <ellipse cx={240} cy={86} rx={50} ry={60} fill={C.redSoft} stroke={C.red} strokeWidth={2} />
+      <path d="M240 146 l-6 10 h12 z" fill={C.red} />
+      <path d="M240 156 q-6 16 4 30" fill="none" stroke={C.muted} strokeWidth={1.5} />
+      {[[220, 60], [260, 60], [212, 96], [268, 96], [240, 78], [240, 116]].map(([x, y], i) => <T key={i} x={x} y={y} size={22} fill={C.blue}>−</T>)}
+      <Arrow x1={130} y1={70} x2={184} y2={70} color={C.blue} width={2.5} />
+      <Arrow x1={130} y1={100} x2={184} y2={100} color={C.blue} width={2.5} />
+      <T x={157} y={56} size={9.5} fill={C.blue}>electrons</T>
+      <T x={69} y={166} size={10.5}>Jumper</T>
+      <T x={69} y={180} size={9.5} weight={700} fill={C.red}>loses electrons: +</T>
+      <T x={240} y={14} size={10.5}>Balloon</T>
+      <T x={160} y={194} size={9.5} weight={700} fill={C.blue}>balloon gains electrons: −</T>
+    </Svg>
+  );
+}
+
+function Charges() {
+  const rows: { a: '+' | '−'; b: '+' | '−'; attract: boolean }[] = [
+    { a: '−', b: '−', attract: false },
+    { a: '+', b: '−', attract: true },
+    { a: '+', b: '+', attract: false },
+  ];
+  return (
+    <Svg h={180} label="Like charges repel, opposite charges attract">
+      {rows.map((r, i) => {
+        const y = 32 + i * 52;
+        return (
+          <g key={i}>
+            <Charge x={90} y={y} sign={r.a} />
+            <Charge x={170} y={y} sign={r.b} />
+            {r.attract ? (
+              <>
+                <Arrow x1={108} y1={y} x2={124} y2={y} color={C.green} width={2.5} />
+                <Arrow x1={152} y1={y} x2={136} y2={y} color={C.green} width={2.5} />
+              </>
+            ) : (
+              <>
+                <Arrow x1={72} y1={y} x2={46} y2={y} color={C.red} width={2.5} />
+                <Arrow x1={188} y1={y} x2={214} y2={y} color={C.red} width={2.5} />
+              </>
+            )}
+            <T x={236} y={y} size={11.5} anchor="start" fill={r.attract ? C.green : C.red}>{r.attract ? 'attract' : 'repel'}</T>
+          </g>
+        );
+      })}
+      <T x={160} y={170} size={10} weight={700} fill={C.muted}>like charges repel · opposite charges attract</T>
+    </Svg>
+  );
+}
+
+function MotorEffect() {
+  return (
+    <Svg label="The motor effect: a wire carrying current between the north and south poles of a magnet feels a force at right angles to the field">
+      <rect x={14} y={50} width={70} height={90} rx={6} fill={C.red} />
+      <rect x={236} y={50} width={70} height={90} rx={6} fill={C.blue} />
+      <T x={49} y={95} size={22} fill="#fff">N</T>
+      <T x={271} y={95} size={22} fill="#fff">S</T>
+      {[62, 95, 128].map((y) => <Arrow key={y} x1={88} y1={y} x2={230} y2={y} color={C.muted} width={1.5} />)}
+      <circle cx={160} cy={95} r={14} fill="#fff" stroke={C.ink} strokeWidth={2.5} />
+      <circle cx={160} cy={95} r={4} fill={C.ink} />
+      <Arrow x1={160} y1={78} x2={160} y2={24} color={C.purple} width={3.5} />
+      <T x={172} y={34} size={11} anchor="start" fill={C.purple}>force</T>
+      <T x={160} y={148} size={9.5} weight={700}>wire: current out of the page</T>
+      <T x={160} y={166} size={9.5} weight={700} fill={C.muted}>magnetic field: N → S</T>
+      <T x={160} y={188} size={10} fill={C.muted}>reverse the current and the force reverses</T>
+    </Svg>
+  );
+}
+
+function DcMotor() {
+  return (
+    <Svg label="A DC motor: a coil between two magnets; current flows in opposite directions along its two sides, so one side is pushed up and the other down, and a split-ring commutator keeps it turning the same way">
+      <rect x={10} y={40} width={50} height={90} rx={6} fill={C.red} />
+      <rect x={260} y={40} width={50} height={90} rx={6} fill={C.blue} />
+      <T x={35} y={85} size={20} fill="#fff">N</T>
+      <T x={285} y={85} size={20} fill="#fff">S</T>
+      <polygon points="100,60 220,60 200,110 120,110" fill="none" stroke={C.orange} strokeWidth={4} strokeLinejoin="round" />
+      <Arrow x1={126} y1={64} x2={194} y2={64} color={C.orange} width={2} />
+      <Arrow x1={184} y1={106} x2={136} y2={106} color={C.orange} width={2} />
+      <Arrow x1={100} y1={60} x2={100} y2={20} color={C.purple} width={3} />
+      <Arrow x1={220} y1={60} x2={220} y2={100} color={C.purple} width={3} />
+      <T x={92} y={24} size={10} anchor="end" fill={C.purple}>up</T>
+      <T x={228} y={100} size={10} anchor="start" fill={C.purple}>down</T>
+      <line x1={150} y1={110} x2={150} y2={136} stroke={C.orange} strokeWidth={3} />
+      <line x1={170} y1={110} x2={170} y2={136} stroke={C.orange} strokeWidth={3} />
+      <path d="M146 150 A14 14 0 0 1 158 136" fill="none" stroke={C.brown} strokeWidth={5} />
+      <path d="M162 136 A14 14 0 0 1 174 150" fill="none" stroke={C.brown} strokeWidth={5} />
+      <Label x={194} y={158} px={174} py={146}>split-ring commutator</Label>
+      <T x={160} y={176} size={10} weight={700} fill={C.muted}>one side pushed up, the other down:</T>
+      <T x={160} y={190} size={10} fill={C.purple}>the coil spins</T>
+    </Svg>
+  );
+}
+
 export const physicsY89Diagrams: Record<string, () => JSX.Element> = {
+  'static-balloon': StaticBalloon,
+  charges: Charges,
+  'motor-effect': MotorEffect,
+  'dc-motor': DcMotor,
   'density-blocks': DensityBlocks,
   displacement: Displacement,
   'ks3-heating-curve': Ks3HeatingCurve,
