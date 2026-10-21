@@ -28,20 +28,20 @@ export function StudyChestsCard({ progress }: { progress: Progress }) {
           const open = mins >= c.minutes;
           return (
             <li key={c.minutes} className={open ? 'open' : ''}>
-              <Emoji e={open ? '✅' : '🎁'} size={30} />
-              <b>{c.gems} 💎</b>
+              <Emoji e={open ? '✅' : '🎁'} size={30} className="chest-icon" />
+              <b>{c.gems} <Emoji e="💎" size={14} /></b>
               <span>{c.minutes} min</span>
             </li>
           );
         })}
       </ul>
-      <p className="small muted">From chests today: <b>{opened} 💎</b>. Chests open when you finish a lesson.</p>
+      <p className="small muted">From chests today: <b>{opened}</b> <Emoji e="💎" size={14} />. Chests open when you finish a lesson.</p>
 
       <h3 className="chests-week-title">Beat last week</h3>
       <p className="small">
         {week.won
-          ? <>You beat last week! <b>+{WEEKLY_GOAL.gems} 💎</b> won. 🏆</>
-          : <>Study <b>{formatMinutes(week.target)}</b> this week to win <b>{WEEKLY_GOAL.gems} 💎</b>. Last week: {formatMinutes(week.lastWeek)}.</>}
+          ? <>You beat last week! <b>+{WEEKLY_GOAL.gems}</b> <Emoji e="💎" size={14} /> won. 🏆</>
+          : <>Study <b>{formatMinutes(week.target)}</b> this week to win <b>{WEEKLY_GOAL.gems}</b> <Emoji e="💎" size={14} />. Last week: {formatMinutes(week.lastWeek)}.</>}
       </p>
       <div className="chests-track"><div className="chests-fill week" style={{ width: `${Math.min(100, (week.thisWeek / week.target) * 100)}%` }} /></div>
       <p className="small muted">
