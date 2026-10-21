@@ -5,6 +5,7 @@ import { addDays, daysBetween, dayKey } from './dates';
 import { levelFor } from './levels';
 import { bonusesOnDay, earnedOnDay, unitTestBonus } from './screenTime';
 import { MAX_FREEZES, shopItems } from './shop';
+import { chestsCrossed, weeklyStatus, WEEKLY_GOAL } from './studyChests';
 import type {
   DayStats, Progress, Quest, QuestKind, RewardSummary, SessionResult,
 } from './types';
@@ -313,6 +314,8 @@ export function applySession(p: Progress, result: SessionResult, now = new Date(
   // Daily stats and goal
   const day = next.daily[today] ?? emptyDay();
   const goalWasMet = day.xp >= next.dailyGoal;
+  const minutesBefore = day.seconds / 60;
+  const weekWasWon = weeklyStatus(next, today).won;
   day.xp += xpGained;
   day.lessons += 1;
   day.answered += total;
@@ -321,6 +324,12 @@ export function applySession(p: Progress, result: SessionResult, now = new Date(
   next.daily[today] = day;
   const goalJustMet = !goalWasMet && day.xp >= next.dailyGoal;
   if (goalJustMet) next.totals.goalDays++;
+
+  // Study chests for time spent today, and the beat-last-week chest
+  const studyChests = chestsCrossed(minutesBefore, day.seconds / 60);
+  for (const c of studyChests) gems += c.gems;
+  const weeklyWon = !weekWasWon && weeklyStatus(next, today).won;
+  if (weeklyWon) gems += WEEKLY_GOAL.gems;
 
   // Streak
   let streakExtended = false;
@@ -402,6 +411,8 @@ export function applySession(p: Progress, result: SessionResult, now = new Date(
       passedCheckpoint,
       screenMinutes,
       screenBonus,
+      studyChests,
+      weeklyWon,
     },
   };
 }

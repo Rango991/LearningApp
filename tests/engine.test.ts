@@ -5,6 +5,7 @@ import {
   applyFamilyRewards, applySession, buildReview, buyItem, claimReward, createProgress, ensureQuests, mistakeKeys, reconcileStreak,
 } from '../src/game/engine';
 import { levelFor } from '../src/game/levels';
+import { chestsCrossed, weekStart, weeklyStatus } from '../src/game/studyChests';
 import type { AnswerRecord, Progress } from '../src/game/types';
 
 const at = (day: string, hour = 17) => new Date(`${day}T${String(hour).padStart(2, '0')}:00:00`);
@@ -244,5 +245,49 @@ describe('tested-out units', () => {
     const plain = run(createProgress('Test'));
     expect(first.summary.gemsGained - plain.summary.gemsGained).toBe(10);
     expect(run(first.progress).summary.gemsGained).toBeLessThan(first.summary.gemsGained);
+  });
+});
+
+describe('study chests', () => {
+  const study = (p: Progress, day: string, minutes: number) =>
+    applySession(p, { kind: 'review', answers: [], maxCombo: 0, seconds: minutes * 60 }, at(day));
+
+  it('opens each chest once as her time passes its mark', () => {
+    expect(chestsCrossed(0, 40).map((c) => c.minutes)).toEqual([15, 30]);
+    expect(chestsCrossed(40, 76).map((c) => c.gems)).toEqual([35, 55, 80]);
+    expect(chestsCrossed(80, 200)).toEqual([]);
+
+    const p = createProgress('Test', at('2026-10-21'));
+    const a = study(p, '2026-10-21', 20);
+    expect(a.summary.studyChests.map((c) => c.minutes)).toEqual([15]);
+    const b = study(a.progress, '2026-10-21', 5);
+    expect(b.summary.studyChests).toEqual([]);
+    const c = study(b.progress, '2026-10-21', 25);
+    expect(c.summary.studyChests.map((x) => x.minutes)).toEqual([30, 45]);
+    expect(c.progress.gems - b.progress.gems).toBeGreaterThanOrEqual(55);
+    // A new day starts the chests again.
+    expect(study(c.progress, '2026-10-22', 16).summary.studyChests.map((x) => x.minutes)).toEqual([15]);
+  });
+
+  it('weeks start on Monday', () => {
+    expect(weekStart('2026-10-21')).toBe('2026-10-19');
+    expect(weekStart('2026-10-19')).toBe('2026-10-19');
+    expect(weekStart('2026-10-25')).toBe('2026-10-19');
+  });
+
+  it('pays the weekly chest once for beating last week by 30 minutes', () => {
+    let p = createProgress('Test', at('2026-10-12'));
+    p = study(p, '2026-10-14', 100).progress; // last week: 100 min
+    expect(weeklyStatus(p, '2026-10-20').target).toBe(130);
+    const a = study(p, '2026-10-19', 100);
+    expect(a.summary.weeklyWon).toBe(false);
+    const b = study(a.progress, '2026-10-20', 30);
+    expect(b.summary.weeklyWon).toBe(true);
+    expect(study(b.progress, '2026-10-21', 30).summary.weeklyWon).toBe(false);
+  });
+
+  it('never sets the weekly target below an hour', () => {
+    const p = createProgress('Test', at('2026-10-21'));
+    expect(weeklyStatus(p, '2026-10-21').target).toBe(60);
   });
 });

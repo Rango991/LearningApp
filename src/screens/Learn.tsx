@@ -5,6 +5,7 @@ import { Emoji } from '../components/Emoji';
 import { DailyCard } from '../components/Hud';
 import { Mascot } from '../components/Mascot';
 import { ScreenCard } from '../components/ScreenTime';
+import { StudyChestsCard } from '../components/StudyChests';
 import {
   GEMS, checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, testedOut,
 } from '../game/engine';
@@ -209,6 +210,7 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
 
       <aside className="learn-side">
         <ScreenCard progress={progress} />
+        <StudyChestsCard progress={progress} />
         <DailyCard progress={progress} />
       </aside>
 

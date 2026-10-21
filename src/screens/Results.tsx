@@ -7,6 +7,9 @@ import { formatMinutes } from '../components/ScreenTime';
 import { earnedToday, nextBoostHint } from '../game/screenTime';
 import { achievementById } from '../game/achievements';
 import { questLabel } from '../game/engine';
+import { nextChest, WEEKLY_GOAL } from '../game/studyChests';
+import { studyMinutes } from '../game/screenTime';
+import { dayKey } from '../game/dates';
 import { mitoAccessory } from '../game/mito';
 import type { Progress, RewardSummary, SessionKind } from '../game/types';
 import { sfx } from '../sound';
@@ -20,13 +23,14 @@ interface Props {
   onDone: () => void;
 }
 
-type Step = 'main' | 'screen' | 'streak' | 'goal' | 'quests' | 'level' | `badge:${string}`;
+type Step = 'main' | 'screen' | 'chests' | 'streak' | 'goal' | 'quests' | 'level' | `badge:${string}`;
 
 /** A sequence of celebration cards, one reward at a time, like a slot machine paying out. */
 export function Results({ summary, progress, kind, line, onDone }: Props) {
   const steps = useMemo<Step[]>(() => {
     const s: Step[] = ['main'];
     if (summary.screenMinutes > 0) s.push('screen');
+    if (summary.studyChests.length || summary.weeklyWon) s.push('chests');
     if (summary.streakExtended) s.push('streak');
     if (summary.goalJustMet) s.push('goal');
     if (summary.questsCompleted.length) s.push('quests');
@@ -81,6 +85,24 @@ export function Results({ summary, progress, kind, line, onDone }: Props) {
             <p className="muted">⚡ {nextBoostHint(progress)}</p>
           </>
         )}
+
+        {step === 'chests' && (() => {
+          const mins = studyMinutes(progress, dayKey());
+          const coming = nextChest(mins);
+          return (
+            <>
+              <Emoji e="🎁" size={110} className="big-emoji" />
+              <h1>{summary.weeklyWon && !summary.studyChests.length ? 'You beat last week!' : summary.studyChests.length > 1 ? 'Study chests opened!' : 'Study chest opened!'}</h1>
+              <ul className="quest-list">
+                {summary.studyChests.map((c) => (
+                  <li key={c.minutes} className="quest done"><span>🎁 {c.minutes} min of study today</span><b>+{c.gems} 💎</b></li>
+                ))}
+                {summary.weeklyWon && <li className="quest done bonus"><span>🏆 Beat last week</span><b>+{WEEKLY_GOAL.gems} 💎</b></li>}
+              </ul>
+              <p className="muted">{coming ? `${Math.ceil(coming.minutes - mins)} more min for a ${coming.gems}-gem chest!` : 'Every chest opened today. Amazing!'}</p>
+            </>
+          );
+        })()}
 
         {step === 'streak' && (
           <>

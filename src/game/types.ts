@@ -174,4 +174,8 @@ export interface RewardSummary {
   /** Screen-time minutes this session added to the bank (including any bonus). */
   screenMinutes: number;
   screenBonus: number;
+  /** Study chests opened by this session's time. */
+  studyChests: { minutes: number; gems: number }[];
+  /** This session took her past last week's study total. */
+  weeklyWon: boolean;
 }
