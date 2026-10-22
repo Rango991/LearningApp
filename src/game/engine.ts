@@ -3,6 +3,7 @@ import type { Question, Unit } from '../content/types';
 import { achievementById, newlyEarned } from './achievements';
 import { addDays, daysBetween, dayKey } from './dates';
 import { levelFor } from './levels';
+import { lessonPassed } from './mastery';
 import { bonusesOnDay, earnedOnDay, unitTestBonus } from './screenTime';
 import { MAX_FREEZES, shopItems } from './shop';
 import { chestsCrossed, weeklyStatus, WEEKLY_GOAL } from './studyChests';
@@ -186,7 +187,9 @@ export function reviewAvailable(p: Progress, today = dayKey()): number {
  *  follow whatever order her school teaches them in. */
 export function isLessonUnlocked(p: Progress, unit: Unit, lessonIndex: number): boolean {
   if (lessonIndex === 0 || testedOut(p, unit)) return true;
-  return Boolean(p.lessons[unit.lessons[lessonIndex - 1].id]);
+  // Lessons she has already done stay open, even from before the pass mark existed.
+  if (p.lessons[unit.lessons[lessonIndex].id]) return true;
+  return lessonPassed(p, unit.lessons[lessonIndex - 1].id);
 }
 
 /** Passing the unit test unlocks every lesson in it, so she can skip what she already knows. */
@@ -413,6 +416,13 @@ export function applySession(p: Progress, result: SessionResult, now = new Date(
       screenBonus,
       studyChests,
       weeklyWon,
+      needsRetry: result.kind === 'lesson' && Boolean(result.lessonId) && !lessonPassed(next, result.lessonId!),
+      retryUnlocksNext: (() => {
+        const found = result.lessonId ? findLesson(result.lessonId) : undefined;
+        if (!found) return false;
+        const i = found.unit.lessons.findIndex((l) => l.id === result.lessonId);
+        return i + 1 < found.unit.lessons.length && !isLessonUnlocked(next, found.unit, i + 1);
+      })(),
     },
   };
 }

@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { subjects } from '../src/content';
 import { markGap } from '../src/game/answers';
 import {
-  applyFamilyRewards, applySession, buildReview, buyItem, claimReward, createProgress, ensureQuests, mistakeKeys, reconcileStreak,
+  applyFamilyRewards, applySession, buildReview, buyItem, claimReward, createProgress, ensureQuests, isLessonUnlocked, mistakeKeys, reconcileStreak,
 } from '../src/game/engine';
+import { newlyEarned } from '../src/game/achievements';
 import { levelFor } from '../src/game/levels';
 import { chestsCrossed, weekStart, weeklyStatus } from '../src/game/studyChests';
 import type { AnswerRecord, Progress } from '../src/game/types';
@@ -236,7 +237,8 @@ describe('tested-out units', () => {
   it('gives bonus gems the first time she does a lesson in a unit she tested out of', () => {
     const unit = subjects[0].units[0];
     const l = unit.lessons[1];
-    const p = { ...createProgress('Test'), checkpoints: { [unit.id]: 0.9 } };
+    // Already has the unit badge from passing the test, so only the lesson bonus differs.
+    const p = { ...createProgress('Test'), checkpoints: { [unit.id]: 0.9 }, achievements: { [`unit-${unit.id}`]: '2026-10-02' } };
     const run = (prog: Progress) => applySession(prog, {
       kind: 'lesson', lessonId: l.id, maxCombo: 1, seconds: 60,
       answers: [{ key: `${l.id}/${l.questions[0].id}`, correct: false, given: 'x' }],
@@ -289,5 +291,45 @@ describe('study chests', () => {
   it('never sets the weekly target below an hour', () => {
     const p = createProgress('Test', at('2026-10-21'));
     expect(weeklyStatus(p, '2026-10-21').target).toBe(60);
+  });
+});
+
+describe('lesson pass mark', () => {
+  const unit = subjects[0].units[0];
+  const [l0, l1] = unit.lessons;
+  const doLesson = (p: Progress, l: typeof l0, score: number) => {
+    const qs = l.questions.slice(0, 10);
+    const right = Math.round(score * qs.length);
+    return applySession(p, {
+      kind: 'lesson', lessonId: l.id, maxCombo: 1, seconds: 60,
+      answers: qs.map((q, i) => ({ key: `${l.id}/${q.id}`, correct: i < right, given: 'x' })),
+    }, at('2026-10-22'));
+  };
+
+  it('needs 70% first try to unlock the next lesson, and asks her to try again', () => {
+    const weak = doLesson(createProgress('Test'), l0, 0.4);
+    expect(weak.summary.needsRetry).toBe(true);
+    expect(isLessonUnlocked(weak.progress, unit, 1)).toBe(false);
+    const passed = doLesson(weak.progress, l0, 1);
+    expect(passed.summary.needsRetry).toBe(false);
+    expect(isLessonUnlocked(passed.progress, unit, 1)).toBe(true);
+  });
+
+  it('keeps lessons she already did open', () => {
+    let p = doLesson(createProgress('Test'), l0, 0.4).progress;
+    p = { ...p, lessons: { ...p.lessons, [l1.id]: { completions: 1, bestAccuracy: 0.9, lastCompleted: '2026-10-20' } } };
+    expect(isLessonUnlocked(p, unit, 1)).toBe(true);
+  });
+
+  it('gives the unit badge for 70%+ on every lesson, or for passing the unit test', () => {
+    const badge = `unit-${unit.id}`;
+    const all = (acc: number): Progress => ({
+      ...createProgress('Test'),
+      lessons: Object.fromEntries(unit.lessons.map((l) => [l.id, { completions: 1, bestAccuracy: acc, lastCompleted: '2026-10-20' }])),
+    });
+    expect(newlyEarned(all(0.5)).some((a) => a.id === badge)).toBe(false);
+    expect(newlyEarned(all(0.7)).some((a) => a.id === badge)).toBe(true);
+    const tested = { ...createProgress('Test'), checkpoints: { [unit.id]: 0.8 } };
+    expect(newlyEarned(tested).some((a) => a.id === badge)).toBe(true);
   });
 });

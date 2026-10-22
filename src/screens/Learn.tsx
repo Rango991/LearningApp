@@ -5,6 +5,7 @@ import { Emoji } from '../components/Emoji';
 import { DailyCard } from '../components/Hud';
 import { Mascot } from '../components/Mascot';
 import { ScreenCard } from '../components/ScreenTime';
+import { LESSON_PASS, needsRedo } from '../game/mastery';
 import { StudyChestsCard } from '../components/StudyChests';
 import {
   GEMS, checkpointQuestions, isLessonUnlocked, isUnitComplete, lessonStars, testedOut,
@@ -54,17 +55,21 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
   }
 
   // The "current" lesson gets the START bubble and the Continue button: the first
-  // unlocked lesson not yet done, skipping units she has already tested out of.
+  // unlocked lesson not yet done (or one to redo), skipping units she has tested out of.
   let current: { unit: Unit; lesson: Lesson; index: number } | null = null;
   for (const skipTestedOut of [true, false]) {
     for (const u of subject.units) {
       if (skipTestedOut && testedOut(progress, u)) continue;
-      const i = u.lessons.findIndex((x, li) => !progress.lessons[x.id] && isLessonUnlocked(progress, u, li));
+      // Either the next new lesson, or one under the pass mark that's blocking the next.
+      const i = u.lessons.findIndex((x, li) => (!progress.lessons[x.id] && isLessonUnlocked(progress, u, li))
+        || (needsRedo(progress, x.id) && li + 1 < u.lessons.length && !isLessonUnlocked(progress, u, li + 1)));
       if (i >= 0) { current = { unit: u, lesson: u.lessons[i], index: i }; break; }
     }
     if (current) break;
   }
-  const foldable = (u: Unit) => (isUnitComplete(progress, u) || testedOut(progress, u)) && u.id !== current?.unit.id;
+  // Finished units fold away, unless one of their lessons still needs a redo.
+  const foldable = (u: Unit) => (isUnitComplete(progress, u) || testedOut(progress, u)) && u.id !== current?.unit.id
+    && !u.lessons.some((l) => needsRedo(progress, l.id));
 
   // A subject she hasn't tried yet, to suggest.
   const untried = subjects.find((s) => s.id !== subject.id && !s.units.some((u) => started(progress, u)));
@@ -186,6 +191,7 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
                           <div className="node-stars" aria-label={`${stars} stars`}>
                             {[0, 1, 2].map((s) => <span key={s} className={s < stars ? 'on' : ''}>★</span>)}
                           </div>
+                          {needsRedo(progress, lesson.id) && <span className="redo-tag">Redo</span>}
                         </div>
                       );
                     })}
@@ -274,15 +280,22 @@ export function Learn({ progress, onStart }: { progress: Progress; onStart: (pla
                 {progress.lessons[selected.lesson.id] && (
                   <p>Best score: <b>{Math.round(progress.lessons[selected.lesson.id].bestAccuracy * 100)}%</b> · Completed {progress.lessons[selected.lesson.id].completions}×</p>
                 )}
+                {needsRedo(progress, selected.lesson.id) && (
+                  <p className="retry-note">Get {Math.round(LESSON_PASS * 100)}% first try to pass this lesson{selected.index + 1 < selected.unit.lessons.length ? ' and unlock the next one' : ''}.</p>
+                )}
                 {!progress.lessons[selected.lesson.id] && testedOut(progress, selected.unit) && (
                   <p className="bonus-line">⭐ You tested out of this unit, so this lesson earns {GEMS.testedOutLesson} 💎 extra.</p>
                 )}
                 {isLessonUnlocked(progress, selected.unit, selected.index) ? (
                   <button className="btn unit wide" onClick={() => start(selected)}>
-                    {progress.lessons[selected.lesson.id] ? 'Practise again' : 'Start'} · up to +{selected.lesson.questions.length * 2 + 13} XP
+                    {needsRedo(progress, selected.lesson.id) ? 'Redo' : progress.lessons[selected.lesson.id] ? 'Practise again' : 'Start'} · up to +{selected.lesson.questions.length * 2 + 13} XP
                   </button>
                 ) : (
-                  <p className="locked-note">🔒 Finish “{selected.unit.lessons[selected.index - 1].title}” to unlock this, or pass the unit test to skip ahead.</p>
+                  <p className="locked-note">
+                    🔒 {progress.lessons[selected.unit.lessons[selected.index - 1].id]
+                      ? `Get ${Math.round(LESSON_PASS * 100)}% on “${selected.unit.lessons[selected.index - 1].title}” to unlock this`
+                      : `Finish “${selected.unit.lessons[selected.index - 1].title}” to unlock this`}, or pass the unit test to skip ahead.
+                  </p>
                 )}
               </>
             )}

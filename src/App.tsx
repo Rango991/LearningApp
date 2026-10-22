@@ -67,7 +67,7 @@ function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?:
   const setProgress = readOnly ? () => {} : store.setProgress;
   const [tab, setTab] = useState<Tab>('learn');
   const [plan, setPlan] = useState<SessionPlan | null>(null);
-  const [results, setResults] = useState<{ summary: RewardSummary; kind: SessionKind; line: string } | null>(null);
+  const [results, setResults] = useState<{ summary: RewardSummary; kind: SessionKind; line: string; plan: SessionPlan } | null>(null);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [birthdayNotice, setBirthdayNotice] = useState(false);
   const [parent, setParent] = useState(false);
@@ -112,8 +112,8 @@ function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?:
     const { progress: next, summary } = applySession(progress!, result);
     setProgress(next);
     if (readOnly) setPreviewProgress(next);
+    setResults({ summary, kind: result.kind, line: resultLine(next, summary, result.kind, result.unitId), plan: plan! });
     setPlan(null);
-    setResults({ summary, kind: result.kind, line: resultLine(next, summary, result.kind, result.unitId) });
   }
 
   if (parent) return <ParentGate onClose={() => setParent(false)} />;
@@ -121,7 +121,9 @@ function StudentApp({ readOnly = false, onExit }: { readOnly?: boolean; onExit?:
     return <AboutChat progress={progress} setProgress={setProgress} editing={Boolean(about?.doneAt)} onClose={() => { setAboutOpen(false); window.scrollTo(0, 0); }} />;
   }
   if (results) {
-    return <Results summary={results.summary} kind={results.kind} line={results.line} progress={shown} onDone={() => { setResults(null); setPreviewProgress(null); window.scrollTo(0, 0); }} />;
+    return <Results summary={results.summary} kind={results.kind} line={results.line} progress={shown}
+      onDone={() => { setResults(null); setPreviewProgress(null); window.scrollTo(0, 0); }}
+      onRetry={results.summary.needsRetry ? () => { setPlan(results.plan); setResults(null); window.scrollTo(0, 0); } : undefined} />;
   }
   if (plan) {
     return <Session plan={plan} accessory={mitoAccessory(progress)} buddy={{ name: progress.profile.name, animal: about?.animal }} onQuit={() => setPlan(null)} onFinish={finish} />;

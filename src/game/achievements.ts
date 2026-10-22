@@ -1,5 +1,6 @@
 import { subjects } from '../content';
 import { levelFor } from './levels';
+import { lessonPassed } from './mastery';
 import type { Progress } from './types';
 
 export interface Achievement {
@@ -22,9 +23,11 @@ const unitAchievements: Achievement[] = subjects.flatMap((s) =>
     id: `unit-${u.id}`,
     emoji: '🏅',
     title: `${u.title.split(':')[0]} complete`,
-    description: `Finish every lesson in “${u.title}”.`,
+    description: `Score 70%+ on every lesson in “${u.title}”, or pass its unit test.`,
     gems: 30,
-    progress: count(u.lessons.length, (p) => u.lessons.filter((l) => p.lessons[l.id]).length),
+    progress: count(u.lessons.length, (p) => ((p.checkpoints[u.id] ?? 0) >= 0.8
+      ? u.lessons.length
+      : u.lessons.filter((l) => lessonPassed(p, l.id)).length)),
   })),
 );
 

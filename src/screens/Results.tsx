@@ -7,6 +7,7 @@ import { formatMinutes } from '../components/ScreenTime';
 import { earnedToday, nextBoostHint } from '../game/screenTime';
 import { achievementById } from '../game/achievements';
 import { questLabel } from '../game/engine';
+import { LESSON_PASS } from '../game/mastery';
 import { nextChest, WEEKLY_GOAL } from '../game/studyChests';
 import { studyMinutes } from '../game/screenTime';
 import { dayKey } from '../game/dates';
@@ -21,12 +22,14 @@ interface Props {
   /** What Mito says about this session. */
   line?: string;
   onDone: () => void;
+  /** Set when she should have another go at the lesson (under the pass mark). */
+  onRetry?: () => void;
 }
 
 type Step = 'main' | 'screen' | 'chests' | 'streak' | 'goal' | 'quests' | 'level' | `badge:${string}`;
 
 /** A sequence of celebration cards, one reward at a time, like a slot machine paying out. */
-export function Results({ summary, progress, kind, line, onDone }: Props) {
+export function Results({ summary, progress, kind, line, onDone, onRetry }: Props) {
   const steps = useMemo<Step[]>(() => {
     const s: Step[] = ['main'];
     if (summary.screenMinutes > 0) s.push('screen');
@@ -61,9 +64,14 @@ export function Results({ summary, progress, kind, line, onDone }: Props) {
             <h1>
               {kind === 'checkpoint'
                 ? summary.passedCheckpoint ? 'Unit test passed! 🏆' : 'Good try!'
-                : summary.perfect ? 'Perfect lesson!' : kind === 'review' ? 'Practice complete!' : 'Lesson complete!'}
+                : summary.perfect ? 'Perfect lesson!' : kind === 'review' ? 'Practice complete!' : summary.needsRetry ? 'Nearly there!' : 'Lesson complete!'}
             </h1>
             {failedTest && <p className="muted">You need 80% to pass. Have another go once you’ve practised.</p>}
+            {summary.needsRetry && (
+              <p className="retry-note">
+                You need <b>{Math.round(LESSON_PASS * 100)}%</b> first try to pass this lesson{summary.retryUnlocksNext ? ' and unlock the next one' : ''}. Have another go while it’s fresh!
+              </p>
+            )}
             <div className="stat-row">
               <div className="stat-tile xp"><span className="stat-label">Total XP</span><span className="stat-value">⚡ {summary.xpGained}</span></div>
               <div className="stat-tile acc"><span className="stat-label">{summary.accuracy >= 0.9 ? 'Amazing' : summary.accuracy >= 0.7 ? 'Good' : 'Score'}</span><span className="stat-value">🎯 {Math.round(summary.accuracy * 100)}%</span></div>
@@ -161,7 +169,8 @@ export function Results({ summary, progress, kind, line, onDone }: Props) {
         })()}
       </div>
       <footer className="session-footer">
-        <button className="btn primary wide" onClick={next} autoFocus>Continue</button>
+        {onRetry && <button className="btn primary wide" onClick={onRetry} autoFocus>Try again</button>}
+        <button className={`btn ${onRetry ? 'ghost' : 'primary'} wide`} onClick={next} autoFocus={!onRetry}>Continue</button>
       </footer>
     </div>
   );

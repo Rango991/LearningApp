@@ -178,4 +178,8 @@ export interface RewardSummary {
   studyChests: { minutes: number; gems: number }[];
   /** This session took her past last week's study total. */
   weeklyWon: boolean;
+  /** A lesson she has never scored the pass mark on, so she should try it again. */
+  needsRetry: boolean;
+  /** Passing it would unlock the next lesson in the unit. */
+  retryUnlocksNext: boolean;
 }
